@@ -1,0 +1,14 @@
+<div class="p-2" style="max-height: 20vh;">
+    <p-mega-menu [model]="mid_itens" [style]="{ 'border-radius': '3rem', display: 'flex' }"
+        styleClass="p-4 bg-surface-0 dark:bg-surface-900 border">
+        <ng-template #start>
+                <img pBadge value="1" src="logo_clear.svg" alt="" >
+        </ng-template>
+        <ng-template #item let-item>
+        </ng-template>
+        <ng-template #end>
+            <app-auto-run-button></app-auto-run-button>
+        </ng-template>
+    </p-mega-menu>
+</div>
+

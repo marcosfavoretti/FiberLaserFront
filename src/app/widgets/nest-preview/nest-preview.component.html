@@ -1,0 +1,9 @@
+<!-- <div class="p-3 shadow-lg production-table" [ngStyle]="{'display': 'grid', 'grid-template-columns': 'repeat(3, 1fr)', 'gap': '10px'}"  > -->
+<div [ngClass]="nestCss.get(plates[0].platesType)?.table">
+    @for (plate of plates; track $index) {
+    <plate [ngClass]="
+        'position-relative' +
+        plate.Done? '': 'gray-mask' + 
+        nestCss.get(plates[0].platesType)?.plate" [plate]="plate"></plate>
+    }
+</div>

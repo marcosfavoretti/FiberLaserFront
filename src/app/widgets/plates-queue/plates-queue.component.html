@@ -1,0 +1,12 @@
+<div class="p-2">
+    <div class="d-flex align-items-center gap-2 text-white">
+        <i class="pi pi-arrow-circle-right"></i>
+        <h2 class="fst-italic">Para Fazer</h2>
+    </div>
+    @if (production && production.length > 0) {
+    <queue-list [data]="displayInfo"></queue-list>
+    }
+    @else {
+        <i class="text-white pi pi-spin pi-spinner"></i>
+    }
+</div>

@@ -1,0 +1,46 @@
+@switch (plate.platesType){
+@case (types.DEFAULT) {
+<div class="d-flex flex-column p-2 bg-secondary-subtle border border-black">
+    <div class="d-flex justify-content-between  ">
+        <div class="d-flex flex-column">
+            <span class="title-responsive">{{plate.CodCliente}}</span>
+            <span class="title-responsive">{{plate.Serial}}</span>
+        </div>
+        <qrcode [qrdata]="plate.QrCode" [width]="50" [errorCorrectionLevel]="'M'"></qrcode>
+    </div>
+</div>
+}
+@case (types.DYNAPAC) {
+<div class="d-flex flex-column p-2 bg-secondary-subtle border border-black">
+    <div class="d-flex justify-content-between  ">
+        <div class="d-flex flex-column">
+            <div class="d-flex gap-1 align-items-center justify-content-between">
+                <span class="font-responsive">
+                    ROPS Part No.
+                </span>
+                <span class="border border-black p-1 border-1 rounded rounded font-responsive">
+                    4812129860
+                </span>
+            </div>
+            <div class="d-flex gap-1 align-items-center justify-content-between">
+                <span class="font-responsive">
+                    S/N
+                </span>
+                <span class="border border-black p-1 border-1 rounded rounded font-responsive">
+                    {{plate.Serial}}
+                </span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+                <span class="font-responsive">
+                    Type
+                </span>
+                <span class="border border-black p-1 border-1 rounded rounded font-responsive">
+                    CA25-CA30-CA35
+                </span>
+            </div>
+            <span class="title-responsive"></span>
+        </div>
+    </div>
+</div>
+}
+}

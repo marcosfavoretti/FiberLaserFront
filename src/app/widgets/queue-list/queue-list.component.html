@@ -1,0 +1,50 @@
+<div class="p-2">
+    @for (item of data; track $index) {
+        <div class="rounded bg-white mb-2">
+            <div class="d-flex gap-4 cursor-pointer p-2 rounded  align-items-center">
+                <i [class]="item.icon+' text-primary'"></i>
+                @if (!item.child) {
+                    <div class="ml-2 d-flex flex-column">
+                        <span>Pedido: {{ item.label }}</span>
+                        <span>Codigo Ethos: {{item.label_cod_ethos}}</span>
+                        <span>Data entrega: {{item.label_data_entrega | date :'dd/MM/yyyy'}}</span>
+                        <span>Qtd peças faltantes: {{item.label_qtd_pecas}}</span>
+                        <span>Tipo: {{item.tipo}}</span>
+
+                    </div>
+                }
+                @else {
+                    <div class="d-flex flex-column">
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    <!-- <p-panelmenu [model]="data" styleClass="w-full md:w-20rem" /> -->
+    <!-- <p-panelmenu [multiple]="true" styleClass="" [model]="data">
+        <ng-template #item pTemplate="item" let-item>
+            <div class="rounded">
+                <div class="d-flex gap-4 cursor-pointer p-2 rounded  align-items-center">
+                    <i [class]="item.icon+' text-primary'"></i>
+                    @if (!item.child) {
+                        <div class="ml-2 d-flex flex-column">
+                            <span>Pedido: {{ item.label }}</span>
+                            <span>Codigo Ethos: {{item.label_cod_ethos}}</span>
+                            <span>Data entrega: {{item.label_data_entrega | date :'dd/MM/yyyy'}}</span>
+                            <span>Qtd peças faltantes: {{item.label_qtd_pecas}}</span>
+                            <span>Tipo: {{item.tipo}}</span>
+
+                        </div>
+                    }
+                    @else {
+                        <div class="d-flex flex-column">
+                        </div>
+                    }
+                </div>
+            </div>
+        </ng-template>
+        <ng-template #submenuicon pTemplate="submenuicon" let-submenuicon>
+            <i class="pi pi-times"></i>
+        </ng-template>
+    </p-panelmenu> -->
+</div>

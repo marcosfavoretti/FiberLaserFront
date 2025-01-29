@@ -1,0 +1,13 @@
+<div class="nest-template p-2">
+    @if (nests && nests.length>0) {
+    <app-nest-header [nest]="nests[0]"></app-nest-header>
+    <div class="nest-preview-wrapper">
+        <app-nest-preview [plates]="nestPlates(nests![0])"></app-nest-preview>
+    </div>
+    }
+    @else {
+    <div class="flex-grow-1 d-flex justify-content-center align-items-center flex-column">
+        <no-data message="sem planos no momento! Para gerar um plano clique no botão de play!"></no-data>
+    </div>
+    }
+</div>

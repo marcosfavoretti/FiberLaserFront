@@ -1,0 +1,7 @@
+
+.nest-header {
+    display: flex;
+    justify-content: space-between;
+    height: 20%;
+    width: 100%;
+}

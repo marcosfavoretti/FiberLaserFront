@@ -1,0 +1,13 @@
+.production-table-default {
+    display: grid;
+    flex: 1;
+    aspect-ratio: 1/1;
+    grid-template-columns: repeat(3, 1fr);
+    background: linear-gradient(to top left, lightgray, gray 80%);
+
+}
+
+.gray-mask{
+    position: absolute;
+    background-color: rgba(128, 128, 128, 0.664);
+}

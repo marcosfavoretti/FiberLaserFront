@@ -1,0 +1,62 @@
+import { Injectable } from "@angular/core";
+import { ApiService } from "./Api.service";
+import { catchError, tap } from "rxjs";
+import { FiberLaserNest } from "../models/FiberLaserNest";
+import { PopUpService } from "./pop-up.service";
+import { LoadContentComponent } from "../../widgets/load-content/load-content.component";
+import { ErrorPopupComponent } from "../../widgets/error-popup/error-popup.component";
+
+@Injectable({
+    providedIn: 'root'
+})
+export class NestManagerService {
+    private readonly nest: FiberLaserNest[] = [];
+
+    constructor(private api: ApiService, private popUp: PopUpService) {
+        this.refreshNest();
+    }
+
+    getNests(): FiberLaserNest[] {
+        return this.nest;
+    }
+
+    findAndDeleteNest(nest: FiberLaserNest): void {
+        const index = this.nest.findIndex(n => n.UserNestID === nest.UserNestID);
+        if (index !== -1) {
+            this.nest.splice(index, 1);
+        }
+        console.error('nao foi achado')
+    }
+
+    refreshNest(): void {
+        this.popUp.open('nest', LoadContentComponent, {}, false);
+        this.api.requestCurrentNests()
+            .pipe(
+                tap((data) => {
+                    console.log('quer mais nest', data);
+                    this.popUp.close('nest');
+                    this.setNest(data);
+                }),
+                catchError((err) => {
+                    this.popUp.close('nest');
+                    console.log(err)
+                    this.popUp.open('error.nest', ErrorPopupComponent, err.response.data.message, true);
+                    throw new Error(err);
+                })
+            )
+            .subscribe();
+    }
+
+    removeNest(nest: FiberLaserNest): void {
+        this.nest.splice(this.nest.indexOf(nest), 1);
+    }
+
+    addNest(nest: FiberLaserNest): void {
+        this.nest.push(nest);
+    }
+
+    setNest(nest: FiberLaserNest[]): void {
+        this.nest.splice(0, this.nest.length)
+        this.nest.push(...nest);
+    }
+}
