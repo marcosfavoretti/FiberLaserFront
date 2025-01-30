@@ -16,6 +16,6 @@ import { DatePipe } from '@angular/common';
   styleUrl: './queue-list.component.css'
 })
 export class QueueListComponent {
-  @Input('data') data: MenuItemModify[] = []
+  @Input('data') data: MenuItemModify[] = [];
   auxFun = retrieveNestObjectValues;
 }

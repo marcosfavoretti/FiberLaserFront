@@ -14,9 +14,10 @@ export class PopUpService {
       closeFn: () => this.close(key),
       data: data
     };
+    console.log('>>>',component)
+    if(!component) throw new Error('componente vazio')
     const ref = this.dialogService.open(component, {
       data,
-      style: [],
       width: 'auto',
       height: 'auto',
       closable: closable ?? false,

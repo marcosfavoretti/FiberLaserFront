@@ -1,6 +1,6 @@
 export const environment = {
-    // API_IP: '192.168.99.129',
-    API_IP: 'localhost',
+    API_IP: '192.168.99.129',
     API_PORT: '9192',
     WS_PORT: '9194',
 }
+// API_IP: '192.168.99.129',

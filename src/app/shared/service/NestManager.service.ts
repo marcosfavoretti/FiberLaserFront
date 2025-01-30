@@ -5,6 +5,7 @@ import { FiberLaserNest } from "../models/FiberLaserNest";
 import { PopUpService } from "./pop-up.service";
 import { LoadContentComponent } from "../../widgets/load-content/load-content.component";
 import { ErrorPopupComponent } from "../../widgets/error-popup/error-popup.component";
+import { IdentifiersPlate } from "../models/IdentifiersPlate";
 
 @Injectable({
     providedIn: 'root'
@@ -26,6 +27,12 @@ export class NestManagerService {
             this.nest.splice(index, 1);
         }
         console.error('nao foi achado')
+    }
+
+    findAndProcessPlate(plate: IdentifiersPlate): void {
+        this.nest.flatMap(n => n.ManagerFiberLaserNest)
+            .filter(m => m.IdentifiersPlates.IdentifiersPlatesID === plate.IdentifiersPlatesID)
+            .forEach(m => m.IdentifiersPlates.Done = true);
     }
 
     refreshNest(): void {

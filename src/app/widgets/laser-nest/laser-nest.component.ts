@@ -23,9 +23,6 @@ export class LaserNestComponent implements OnInit {
     this.nests = this.nestManager.getNests();
   }
 
-  nestPlates(FiberLaserNest: FiberLaserNest): IdentifiersPlate[] {
-    return FiberLaserNest.ManagerFiberLaserNest.map(a => a.IdentifiersPlates);
-  }
 
 
 }

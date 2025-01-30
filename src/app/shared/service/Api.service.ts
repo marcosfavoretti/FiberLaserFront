@@ -45,6 +45,17 @@ export class ApiService {
         )
     }
 
+    requestNotAvaiablePlates(): Observable<Production[]> {
+        return from(
+            Client.get<Production[]>(`/plates?mode=notavaiable`)
+                .then(
+                    result => {
+                        return result.data;
+                    }
+                )
+        )
+    }
+
     requestAutoRun(): Observable<FiberLaserNest> {
 
         return from(

@@ -1,0 +1,104 @@
+@if (tableModel.ghostControll?.length) {
+<div>
+  <ul class="list list-unstyled">
+    @for (topic of tableModel.ghostControll; track $index) {
+    <li class="d-flex text-responsive align-items-center gap-2">{{topic.desc}}: <div
+        [ngStyle]="{'background-color': topic.color}" style="width: 10px; height: 10px;" class="rounded-circle border">
+      </div>
+    </li>
+    }
+  </ul>
+</div>
+}
+<div class="d-flex gap-2 p-3">
+  <h2 class="text-success">{{tableModel.title}}</h2>
+  <span class="text-responsive">nº registros {{ data.length ||0}}</span>
+</div>
+<p-table  #dt2 [globalFilterFields]="getAllColumns()" [value]="data" [responsive]="true" groupRowsBy="atr_group"
+  dataKey="atr_group" [paginator]="tableModel.paginator? true: false" [rows]="10"
+  [rowsPerPageOptions]="30 < data.length? [10, 20, 30, data.length]: [10,20,30]" responsiveLayout="stack"
+  [rowGroupMode]="tableModel.totalize ? 'subheader' : undefined">
+  <ng-template pTemplate="header">
+    <tr class="">
+      @for (key of tableModel.columns ; track $index) {
+      <th class="text-responsive text-center">{{ key.alias || key.path }}</th>
+      }
+    </tr>
+  </ng-template>
+  @if (tableModel.totalize) {
+  <ng-template pTemplate="groupheader" let-item let-rowIndex="rowIndex" let-expanded="expanded">
+    <tr>
+      @for (col of tableModel.columns; track $index) {
+      @if ($index ===0) {
+      <td class="d-flex align-items-center ">
+        <button type="button" pButton pRipple [pRowToggler]="item"
+          class="p-button-text p-button-rounded p-button-plain mr-2"
+          [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
+        </button>
+        <span class="font-bold text-responsive text-center">{{tableModel.title}}</span>
+      </td>
+      }
+      @else {
+      <td>
+        <span class="text-responsive">{{getTotalOfColumn(col)}}</span>
+      </td>
+      }
+
+      }
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="rowexpansion" let-item>
+    <tr>
+      @for (key of tableModel.columns; track $index) {
+      <td class="text-responsive text-center">
+        @if (key.isImg) {
+        <div class="d-flex justify-content-center align-items-center">
+          @if (!getNestedValue(item, key.path)) {
+          <div class="bg-secondary-subtle rounded d-flex justify-content-center align-items-center"
+            style="width: 100px; height: 75px;">
+            <i class="pi pi-eye-slash"></i>
+          </div>
+          }
+          @else {
+          <p-image [preview]="true" [src]="getNestedValue(item, key.path)" width="100px" alt="" />
+          }
+        </div> }
+        @else {
+        {{getNestedValue(item, key.path)}}
+        }
+      </td>
+      }
+    </tr>
+  </ng-template>
+  }
+  @else {
+  <ng-template pTemplate="body" let-item>
+    <tr [ngStyle]="checkHighLight(item)">
+      @for (key of tableModel.columns; track $index) {
+      <td class="text-responsive text-center border-bottom border-secondary-subtle py-2">
+        @if (key?.isImg) {
+        <div class="d-flex justify-content-center align-items-center">
+          @if (!getNestedValue(item, key.path)) {
+          <div class="bg-secondary-subtle rounded d-flex justify-content-center align-items-center"
+            style="width: 100px; height: 75px;">
+            <i class="pi pi-eye-slash"></i>
+          </div>
+          }
+
+          @else {
+          <p-image [preview]="true" [src]="getNestedValue(item, key.path)" width="100px" alt="" />
+          }
+        </div>
+        }
+        @else if (key?.isCheckBox) {
+        <input type="checkbox" [checked]="getNestedValue(item, key.path)" (change)="onNewCheckEvent(item, key, $event)">
+        }
+        @else {
+        {{getNestedValue(item, key.path)}}
+        }
+      </td>
+      }
+    </tr>
+  </ng-template>
+  }
+</p-table>

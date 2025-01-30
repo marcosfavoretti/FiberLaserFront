@@ -3,15 +3,12 @@ import { QueueListComponent } from '../queue-list/queue-list.component';
 import { MenuItem } from 'primeng/api';
 import { ProductionManagerService } from '../../shared/service/ProductionManager.service';
 import { Production } from '../../shared/models/Production';
-import { PopUpService } from '../../shared/service/pop-up.service';
-import { LoadContentComponent } from '../load-content/load-content.component';
-import { DialogService } from 'primeng/dynamicdialog';
 
 export interface MenuItemModify extends MenuItem {
   label_cod_ethos: string;
   label_data_entrega: string;
   label_qtd_pecas: string;
-  child: boolean;
+  child?: boolean;
   tipo: string;
 }
 
@@ -49,12 +46,7 @@ export class PlatesQueueComponent implements OnInit {
           icon: 'pi pi-info-circle',
           child: false,
           label: `${pedido}`,
-          tipo: d.Identifiersplates![0].platesType ?? "None",
-          items: [
-            {
-              child: true
-            }
-          ]
+          tipo: Array.from(new Set(d.Identifiersplates!.map(a => a.platesType))).join('/ ') ?? "None",
         }
       });
   }

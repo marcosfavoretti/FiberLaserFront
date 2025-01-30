@@ -2,7 +2,7 @@
     @if (nests && nests.length>0) {
     <app-nest-header [nest]="nests[0]"></app-nest-header>
     <div class="nest-preview-wrapper">
-        <app-nest-preview [plates]="nestPlates(nests![0])"></app-nest-preview>
+        <app-nest-preview [nest]="nests![0]"></app-nest-preview>
     </div>
     }
     @else {

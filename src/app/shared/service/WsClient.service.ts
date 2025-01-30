@@ -33,15 +33,18 @@ export class WsClientService {
 
 
     private setTriggers(socket: Socket): void {
+        
         socket.on(Events.NESTDONE, (data: string) => {
             console.log('nest foi feito');
-            this.nestManager.refreshNest();
+            // this.nestManager.refreshNest();
+            //nao tirar o nest automatico.. pois ele serve para conferencia.
         });
 
 
         socket.on(Events.NEWPLATE, (data: string) => {
             console.log('nova placa processada');
             this.porductionManager.findPlateAndRemove(JSON.parse(data));
+            this.nestManager.findAndProcessPlate(JSON.parse(data));
         })
 
         socket.on('connect', () => {
