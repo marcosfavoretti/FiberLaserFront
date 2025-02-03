@@ -27,6 +27,7 @@ export class PlatesQueueComponent implements OnInit {
   displayInfo !: MenuItemModify[];
 
   async ngOnInit(): Promise<void> {
+    this.productionManager.refreshNest();
     this.production = this.productionManager.getProduction();
     this.productionManager.getEventEmitter().subscribe(() => {
       this.displayInfo = this.parseProductionToMenuItemModify(this.productionManager.getProduction())

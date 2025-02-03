@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { EventEmitter, Injectable } from "@angular/core";
 import { ApiService } from "./Api.service";
 import { catchError, tap } from "rxjs";
 import { FiberLaserNest } from "../models/FiberLaserNest";
@@ -12,13 +12,27 @@ import { IdentifiersPlate } from "../models/IdentifiersPlate";
 })
 export class NestManagerService {
     private readonly nest: FiberLaserNest[] = [];
-
+    private nestComplete: EventEmitter<FiberLaserNest> = new EventEmitter();
+    private newNest: EventEmitter<FiberLaserNest[]> = new EventEmitter();
     constructor(private api: ApiService, private popUp: PopUpService) {
-        this.refreshNest();
+        // this.refreshNest();
     }
+
+    getNestCompleteEvent(): EventEmitter<FiberLaserNest>{
+        return this.nestComplete;
+    }
+
+    nestCompleteEmit(fiberlaserNest: FiberLaserNest):void{
+        this.nestComplete.emit(fiberlaserNest);
+    }
+
 
     getNests(): FiberLaserNest[] {
         return this.nest;
+    }
+
+    getEvent(): EventEmitter<FiberLaserNest[]> {
+        return this.newNest;
     }
 
     findAndDeleteNest(nest: FiberLaserNest): void {
@@ -27,6 +41,7 @@ export class NestManagerService {
             this.nest.splice(index, 1);
         }
         console.error('nao foi achado')
+        this.newNest.emit(this.nest);
     }
 
     findAndProcessPlate(plate: IdentifiersPlate): void {
@@ -65,5 +80,6 @@ export class NestManagerService {
     setNest(nest: FiberLaserNest[]): void {
         this.nest.splice(0, this.nest.length)
         this.nest.push(...nest);
+        this.newNest.emit(this.nest);
     }
 }

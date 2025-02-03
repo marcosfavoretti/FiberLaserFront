@@ -11,10 +11,11 @@ import { NestManagerService } from './NestManager.service';
 export class WsClientService {
     private socket: Socket;
     public online: boolean = false;
-    
+
     constructor(
         private porductionManager: ProductionManagerService,
-        private nestManager: NestManagerService
+        private nestManager: NestManagerService,
+
     ) {
         const wsUrl = `ws://${environment.API_IP}:${environment.WS_PORT}/fiberlaser`
         console.log(wsUrl);
@@ -33,13 +34,12 @@ export class WsClientService {
 
 
     private setTriggers(socket: Socket): void {
-        
+
         socket.on(Events.NESTDONE, (data: string) => {
             console.log('nest foi feito');
-            // this.nestManager.refreshNest();
+            this.nestManager.nestCompleteEmit(JSON.parse(data));
             //nao tirar o nest automatico.. pois ele serve para conferencia.
         });
-
 
         socket.on(Events.NEWPLATE, (data: string) => {
             console.log('nova placa processada');
@@ -48,12 +48,12 @@ export class WsClientService {
         })
 
         socket.on('connect', () => {
-            console.log('ws connect')
+            console.log('ws connect');
             this.online = true;
         });
 
         socket.on('disconnect', () => {
-            console.log('client disconnect')
+            console.log('client disconnect'); ''
             this.online = false;
         });
 

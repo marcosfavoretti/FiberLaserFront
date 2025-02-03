@@ -1,4 +1,5 @@
-<app-table-dynamic
-    [tableModel]="tableSchema"
-    [data]="displayData"
-></app-table-dynamic>
+<p-confirmpopup />
+<p-toast />
+
+<app-table-dynamic [tableModel]="tableSchema" [data]="displayData"
+    (OnChecked)="confirmation($event)"></app-table-dynamic>

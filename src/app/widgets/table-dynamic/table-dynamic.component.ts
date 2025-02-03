@@ -1,11 +1,12 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { Table, TableModule } from 'primeng/table';
-import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
 import { ImageModule } from 'primeng/image';
 import { FormsModule } from '@angular/forms';
 import { tableColumns, TableModel } from '../../@core/Models/table.model';
-
+import { ButtonModule } from 'primeng/button';
+import { IconFieldModule } from 'primeng/iconfield';
+import { InputIconModule } from 'primeng/inputicon';
 
 @Component({
   standalone: true,
@@ -13,6 +14,8 @@ import { tableColumns, TableModel } from '../../@core/Models/table.model';
   templateUrl: './table-dynamic.component.html',
   styleUrls: ['./table-dynamic.component.css'],
   imports: [
+    IconFieldModule,
+    InputIconModule,
     TableModule,
     ButtonModule,
     CommonModule,
@@ -23,21 +26,19 @@ import { tableColumns, TableModel } from '../../@core/Models/table.model';
 export class TableDynamicComponent implements OnChanges {
   @Input() data: any[] = []; // O array de objetos a ser exibido na tabela
   @Input() tableModel!: TableModel
-  @Output('OnChecked') onChecked: EventEmitter<{ row: any, column: any, checked: boolean }> = new EventEmitter();
+  @Output('OnChecked') onChecked: EventEmitter<{ event: Event, data: any }> = new EventEmitter();
   @Input() Externalfilter?: { value: string, filed: string, method: 'contains' }
   // Função auxiliar
   @ViewChild('dt2') dt2!: Table
   Array = Array;
   Object = Object;
 
-  onNewCheckEvent(row: any, column: any, event: any): void {
-    const oldValue = this.getNestedValue(row, column.path);
-    this.setNestedValue(row, column.path, !oldValue)
-    this.onChecked.emit({
-      row: row,
-      column: column,
-      checked: !oldValue
-    })
+  onNewCheckEvent(payload: { event: Event, data: any }): void {
+    this.onChecked.emit(payload);
+  }
+
+  search(table: Table, event: any):void{
+    table.filterGlobal((event.target as HTMLInputElement).value.trim(), 'contains');
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -66,7 +67,7 @@ export class TableDynamicComponent implements OnChanges {
     }
     return visibleColumns!;
   }
-  
+
 
   getNestedValue(object: any, key: any): any {
     const result = key.split('.').reduce((acc: any, curr: any) => {

@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { QueueListComponent } from '../../widgets/queue-list/queue-list.component';
 import { LogQueueComponent } from '../../widgets/log-queue/log-queue.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-store',
   imports: [
+    RouterModule,
     LogQueueComponent
   ],
   templateUrl: './store.component.html',

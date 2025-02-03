@@ -1,12 +1,14 @@
-<div class="p-2">
+<div class="px-2 h-75">
     <div class="d-flex align-items-center gap-2 text-white">
         <i class="pi pi-arrow-circle-right"></i>
         <h2 class="fst-italic">Para Fazer</h2>
     </div>
     @if (production && production.length > 0) {
-    <queue-list [data]="displayInfo"></queue-list>
+    <div>
+        <queue-list class="h-100" [data]="displayInfo"></queue-list>
+    </div>
     }
     @else {
-        sem dados!
+    sem dados!
     }
 </div>

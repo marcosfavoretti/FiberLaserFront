@@ -5,12 +5,21 @@ export const tableSchema: TableModel = {
     totalize: false,
     columns: [
         {
-            alias: 'Ordem',
-            path: 'orderNum',
+            alias: 'refazer',
+            isCheckBox: true,
+            path: ''
+        },
+        {
+            alias: 'ID',
+            path: 'id'
         },
         {
             alias: 'type',
             path: 'type',
+        },
+        {
+            alias: 'Ordem',
+            path: 'orderNum',
         },
         {
             alias: 'serial',

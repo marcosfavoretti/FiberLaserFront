@@ -15,12 +15,31 @@ import { NestHeaderComponent } from '../nest-header/nest-header.component';
   styleUrl: './laser-nest.component.css'
 })
 export class LaserNestComponent implements OnInit {
+
   constructor(private nestManager: NestManagerService) { }
   nests !: FiberLaserNest[];
+  currentNestDone: boolean = false;
+
+  refreshNest(): void {
+    this.nestManager.refreshNest();
+    this.nestManager.getEvent()
+      .subscribe(
+        nest => this.nests = nest
+      );
+  }
+
+  handleComplete(nest: FiberLaserNest): void {
+    this.currentNestDone = true;
+  }
 
   ngOnInit(): void {
-    console.log(this.nestManager.getNests())
-    this.nests = this.nestManager.getNests();
+    this.refreshNest();
+    this.nestManager.getNestCompleteEvent()
+      .subscribe(
+        (nest) => {
+          this.currentNestDone = true;
+        }
+      );
   }
 
 

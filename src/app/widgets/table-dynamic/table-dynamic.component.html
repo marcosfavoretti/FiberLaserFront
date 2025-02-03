@@ -14,10 +14,19 @@
   <h2 class="text-success">{{tableModel.title}}</h2>
   <span class="text-responsive">nº registros {{ data.length ||0}}</span>
 </div>
-<p-table  #dt2 [globalFilterFields]="getAllColumns()" [value]="data" [responsive]="true" groupRowsBy="atr_group"
+<p-table #dt2 classList="bg-white" [globalFilterFields]="getAllColumns()" [value]="data" groupRowsBy="atr_group"
   dataKey="atr_group" [paginator]="tableModel.paginator? true: false" [rows]="10"
-  [rowsPerPageOptions]="30 < data.length? [10, 20, 30, data.length]: [10,20,30]" responsiveLayout="stack"
+  [rowsPerPageOptions]="30 < data.length? [10, 20, 30, data.length]: [10,20,30]" responsiveLayout="scroll"
   [rowGroupMode]="tableModel.totalize ? 'subheader' : undefined">
+  <!-- filtro para buscar registro -->
+  <ng-template #caption>
+    <div class="flex">
+      <i class="pi pi-search px-2"></i>
+      <input pInputText type="text" (input)="search(dt2, $event)" />
+    </div>
+  </ng-template>
+  <!-- filtro para buscar registro -->
+
   <ng-template pTemplate="header">
     <tr class="">
       @for (key of tableModel.columns ; track $index) {
@@ -91,7 +100,13 @@
         </div>
         }
         @else if (key?.isCheckBox) {
-        <input type="checkbox" [checked]="getNestedValue(item, key.path)" (change)="onNewCheckEvent(item, key, $event)">
+        <!-- <button class="btn btn-group btn-secondary" (click)="onNewCheckEvent(item, key, $event)">
+          <i class="pi pi-undo"></i>
+        </button> -->
+        <p-button (onClick)="onNewCheckEvent({
+          event: $event,
+          data: item
+        })" icon="pi pi-hammer"></p-button>
         }
         @else {
         {{getNestedValue(item, key.path)}}

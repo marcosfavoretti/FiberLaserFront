@@ -11,10 +11,10 @@ import { ErrorPopupComponent } from "../../widgets/error-popup/error-popup.compo
 })
 export class ProductionManagerService {
     private production: Production[] = [];
-    private event: EventEmitter<void> = new EventEmitter<void>();
+    private event: EventEmitter<Production[]> = new EventEmitter<Production[]>();
 
     constructor(private api: ApiService, private popUp: PopUpService) {
-        this.refreshNest();
+        // this.refreshNest();
     }
 
     findPlateAndRemove(plate: IdentifiersPlate): void {
@@ -29,10 +29,10 @@ export class ProductionManagerService {
             }
         });
         console.log(this.production.length)
-        this.event.emit();
+        this.event.emit(this.production);
     }
 
-    getEventEmitter(): EventEmitter<void> {
+    getEventEmitter(): EventEmitter<Production[]> {
         return this.event;
     }
 
@@ -41,6 +41,7 @@ export class ProductionManagerService {
     }
 
     refreshNest(): void {
+        this.production = [];
         this.popUp.open('production', LoadContentComponent, {}, false);
         this.api.requestAvaiablePlates()
             .pipe(
@@ -60,8 +61,8 @@ export class ProductionManagerService {
 
     setProduction(production: Production[]): void {
         console.log(production)
-        this.production.push(...production);
-        this.event.emit();
+        this.production.push(...production); // Substituir, em vez de adicionar
+        this.event.emit(this.production);
     }
 
 }

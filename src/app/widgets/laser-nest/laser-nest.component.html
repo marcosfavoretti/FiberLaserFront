@@ -1,5 +1,13 @@
 <div class="nest-template p-2">
     @if (nests && nests.length>0) {
+    @if (currentNestDone) {
+    <div>
+        <button (click)="refreshNest(); currentNestDone=false" class="btn btn-group btn-success text-center">
+            <i class="pi pi-check px-1"></i>
+            conferido
+        </button>
+    </div>
+    }
     <app-nest-header [nest]="nests[0]"></app-nest-header>
     <div class="nest-preview-wrapper">
         <app-nest-preview [nest]="nests![0]"></app-nest-preview>

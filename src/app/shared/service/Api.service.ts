@@ -21,6 +21,18 @@ export class ApiService {
         );
     }
 
+    requestPlateRework(plateId: number): Observable<void> {
+        return from(
+            Client.post<void>(`/plates/${plateId}/rework`)
+                .then(
+                    () => {},
+                    error => {
+                        throw error;
+                    }
+                )
+        );
+    }
+
     requestCurrentNests(): Observable<FiberLaserNest[]> {
 
         return from(

@@ -5,13 +5,17 @@ import { provideRouter } from '@angular/router';
 import Aura from '@primeng/themes/aura';
 import { routes } from './app.routes';
 import { DialogService } from 'primeng/dynamicdialog';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
-    DialogService, provideAnimationsAsync(),
+    ConfirmationService,
+    MessageService,
+    DialogService, 
+    provideAnimationsAsync(),
     providePrimeNG(
       {
         theme: {

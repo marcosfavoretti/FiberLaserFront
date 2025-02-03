@@ -1,7 +1,7 @@
 @switch (plate.platesType){
 @case (types.DEFAULT) {
 <div class="d-flex flex-column p-2 bg-secondary-subtle border border-black">
-    <div [ngClass]="!plate.Done? '': 'gray-mask'"></div>
+    <!-- <div [ngClass]="!plate.Done? '': 'gray-mask'"></div> -->
     <div class="d-flex justify-content-between  ">
         <div class="d-flex flex-column">
             <span class="title-responsive">{{plate.CodCliente}}</span>
@@ -13,7 +13,7 @@
 }
 @case (types.DYNAPACFOPS) {
 <div class="d-flex flex-column p-2 bg-secondary-subtle border border-black">
-    <div [ngClass]="!plate.Done? '': 'gray-mask'"></div>
+    <!-- <div [ngClass]="!plate.Done? '': 'gray-mask'"></div> -->
     <div class="d-flex justify-content-between  ">
         <div class="d-flex flex-column">
             <div class="d-flex gap-1 align-items-center justify-content-between">
@@ -45,9 +45,34 @@
     </div>
 </div>
 }
+@case (types.ROMI) {
+<div class="d-flex flex-column p-2 bg-secondary-subtle border border-black">
+    <!-- <div [ngClass]="!plate.Done? '': 'gray-mask'"></div> -->
+    <div class="d-flex justify-content-between  ">
+        <span class="font-responsive">Ordem Comp.</span>
+        <span class="font-responsive">{{plate.Ordem}}</span>
+    </div>
+    <div class="d-flex justify-content-between  ">
+        <span class="font-responsive">Cod. do Item</span>
+        <span class="font-responsive">{{plate.CodItem}}</span>
+    </div>
+    <div class="d-flex justify-content-between  ">
+        <span class="font-responsive">Peso</span>
+        <span class="font-responsive">{{plate.Peso}}</span>
+    </div>
+    <div class="d-flex justify-content-between  ">
+        <span class="font-responsive">Data</span>
+        <span class="font-responsive">{{plate.Data}}</span>
+    </div>
+    <div class="d-flex justify-content-between  ">
+        <span class="font-responsive">Nº de série</span>
+        <span class="font-responsive">{{plate.Serial}}</span>
+    </div>
+</div>
+}
 @case (types.DYNAPACROPS) {
 <div class="d-flex flex-column p-2 bg-warning border border-black position-relative">
-    <div [ngClass]="!plate.Done? '': 'gray-mask'"></div>
+    <!-- <div [ngClass]="!plate.Done? '': 'gray-mask'"></div> -->
     <div class="d-flex justify-content-between  ">
         <div class="d-flex flex-column">
             <div class="d-flex gap-1 align-items-center justify-content-between">
