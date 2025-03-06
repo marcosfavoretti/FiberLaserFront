@@ -17,7 +17,7 @@ export class WsClientService {
         private nestManager: NestManagerService,
 
     ) {
-        const wsUrl = `ws://${environment.API_IP}:${environment.WS_PORT}/fiberlaser`
+        const wsUrl = `ws://${environment.WS_IP}:${environment.WS_PORT}/fiberlaser`
         console.log(wsUrl);
         const socket = io(wsUrl, {
             forceNew: true,
