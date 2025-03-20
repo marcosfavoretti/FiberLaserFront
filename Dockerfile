@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image for building the Angular app
-FROM node:16 AS build
+FROM node:22 AS build
 
 # Set the working directory
 WORKDIR /app
