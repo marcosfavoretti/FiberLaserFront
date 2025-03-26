@@ -4,7 +4,6 @@ import { ApiService } from "./Api.service";
 import { catchError, tap } from "rxjs";
 import { IdentifiersPlate } from "../models/IdentifiersPlate";
 import { PopUpService } from "./pop-up.service";
-import { LoadContentComponent } from "../../widgets/load-content/load-content.component";
 import { ErrorPopupComponent } from "../../widgets/error-popup/error-popup.component";
 @Injectable({
     providedIn: 'root'
@@ -42,16 +41,13 @@ export class ProductionManagerService {
 
     refreshNest(): void {
         this.production = [];
-        this.popUp.open('production', LoadContentComponent, {}, false);
         this.api.requestAvaiablePlates()
             .pipe(
                 tap((data) => {
                     this.setProduction(data);
-                    this.popUp.close('production');
                 }),
                 catchError((err) => {
-                    this.popUp.close('production');
-                    this.popUp.open('error.nest', ErrorPopupComponent, err.response.data.message, true);
+                    this.popUp.open('error.nest', ErrorPopupComponent, err, true);
                     console.log(err)
                     throw new Error(err);
                 })

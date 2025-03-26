@@ -62,7 +62,7 @@ export class NestManagerService {
                 catchError((err) => {
                     this.popUp.close('nest');
                     console.log(err)
-                    this.popUp.open('error.nest', ErrorPopupComponent, err.response.data.message, true);
+                    this.popUp.open('error.nest', ErrorPopupComponent, err, true);
                     throw new Error(err);
                 })
             )
