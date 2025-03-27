@@ -5,9 +5,10 @@
             @if (!item?.items) {
             <i [class]="item.icon+' text-primary'"></i>
             <div class="ml-2 d-flex flex-column">
+                <span>ProductionId: {{ item.productionId }}</span>
                 <span>Pedido: {{ item.label }}</span>
                 <span>Codigo Ethos: {{item.label_cod_ethos}}</span>
-                <span>Data entrega: {{item.label_data_entrega | date :'dd/MM/yyyy'}}</span>
+                <span>Data entrega: {{ item.label_data_entrega | date :'dd/MM/yyyy':'UTC' }}</span>
                 <span>Qtd peças faltantes: {{item.label_qtd_pecas}}</span>
                 <span>Tipo: {{item.tipo}}</span>
             </div>
@@ -25,9 +26,10 @@
                         <div class="text-black d-flex gap-4 cursor-pointer p-2 rounded  align-items-center">
                             <i [class]="item.icon+' text-primary'"></i>
                             <div class="ml-2 d-flex flex-column">
+                                <span>ProductionId: {{ item.productionId }}</span>
                                 <span>Pedido: {{ item.label }}</span>
                                 <span>Codigo Ethos: {{item.label_cod_ethos}}</span>
-                                <span>Data entrega: {{item.label_data_entrega | date :'dd/MM/yyyy'}}</span>
+                                <span>Data entrega: {{ item.label_data_entrega | date :'dd/MM/yyyy':'UTC' }}</span>
                                 <span>Qtd peças faltantes: {{item.label_qtd_pecas}}</span>
                                 <span>Tipo: {{item.tipo}}</span>
                             </div>
