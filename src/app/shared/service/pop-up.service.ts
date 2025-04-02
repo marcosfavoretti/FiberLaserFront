@@ -10,23 +10,37 @@ export class PopUpService {
   constructor(private dialogService: DialogService) { }
 
   open(key: string, component: any, data: any, closable?: boolean): DynamicDialogRef {
+    if (!component) {
+      throw new Error('Componente vazio');
+    }
+
     data = {
       closeFn: () => this.close(key),
       data: data
     };
-    console.log('>>>',component)
-    if(!component) throw new Error('componente vazio')
+
+    console.log('Abrindo diálogo com componente:', component);
+    
     const ref = this.dialogService.open(component, {
       data,
-      style: ['bg-black'],
+      style: { 'background-color': 'black' }, 
       width: 'auto',
       height: 'auto',
       closable: closable ?? false,
       modal: true,
     });
-    //segunda request nunca vai ser esperada ate o final;
-    if(!ref) console.log(':::::::::::::::::::::::::sem ref')
-    ref?.onClose.subscribe(() => this.refs.delete(key));
+
+    console.log('Dialog aberto:', ref);
+
+    if (!ref) {
+      console.error('Falha ao abrir o diálogo.');
+      return null!; // Retorna um valor inválido intencionalmente, para evitar erro em chamadas futuras
+    }
+
+    ref.onClose.subscribe(() => {
+      setTimeout(() => this.refs.delete(key), 0); // ✅ Evita conflitos ao acessar ref já removida
+    });
+    
     this.refs.set(key, ref);
     return ref;
   }
