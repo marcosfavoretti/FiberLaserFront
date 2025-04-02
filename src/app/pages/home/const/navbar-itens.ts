@@ -5,7 +5,14 @@ export const navbar_itens_mid : Array<NavbarItem> = [
         routerLink: 'store',
         type: 'button',
         styleClass: '',
-        label: 'logs',
-        icon: 'pi pi-file'
+        label: 'refazer',
+        icon: 'pi pi-hammer'
+    },
+    {
+        routerLink: 'store',
+        type: 'button',
+        styleClass: '',
+        label: 'restart',
+        icon: 'pi pi-replay'
     }
 ]

@@ -1,11 +1,11 @@
 <div [ngSwitch]="plate.platesType">
     <div *ngSwitchCase="types.DEFAULT" class="d-flex flex-column p-2 bg-secondary-subtle border border-black">
         <div class="d-flex justify-content-between">
+            <qrcode [qrdata]="plate.QrCode" [width]="50" [errorCorrectionLevel]="'M'"></qrcode>
             <div class="d-flex flex-column">
                 <span class="title-responsive">{{ plate.CodCliente }}</span>
                 <span class="title-responsive">{{ plate.Serial }}</span>
             </div>
-            <qrcode [qrdata]="plate.QrCode" [width]="50" [errorCorrectionLevel]="'M'"></qrcode>
         </div>
     </div>
 

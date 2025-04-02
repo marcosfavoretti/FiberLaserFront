@@ -1,11 +1,11 @@
-<div class="p-2" style="max-height: 20vh;">
+<div class="py-1" style="max-height: 20vh;">
     <p-mega-menu [model]="mid_itens" [style]="{ 'border-radius': '3rem', display: 'flex' }"
         styleClass="p-4 bg-surface-0 dark:bg-surface-900 border">
         <ng-template #start>
             <img pBadge value="1" src="logo_clear.svg" alt="">
         </ng-template>
         <ng-template #item let-item>
-            <button class="btn btn-group btn-outline-success border-0" routerLink="/{{item.routerLink}}">
+            <button class="btn btn-group d-flex flex-column btn-outline-success border-0" routerLink="/{{item.routerLink}}">
                 <i class="{{item.icon}} + p-1"></i>
                 <span>{{item.label}}</span>
             </button>

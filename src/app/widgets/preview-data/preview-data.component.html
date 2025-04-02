@@ -1,0 +1,10 @@
+
+<span class="text-primary">Roteiro de informações</span>
+<div class="d-flex flex-column">
+    @for (data of data$ | async; track $index) {
+        @for (item of data.flat(); track $index) {
+            <span [ngClass]="{'text-danger': item.current}">{{item.data}}{{item.current}}</span>
+
+        }
+    }
+</div>

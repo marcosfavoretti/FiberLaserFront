@@ -41,7 +41,6 @@ export class PlatesQueueComponent implements OnInit {
         const pedido = d.productionData?.find(a => a.TypeDataID === 410)?.Value;
         const PartCode = d.PartCode;
         const dataEntrega = d.PlannedEndTimestamp;
-        console.log(dataEntrega)
         return {
           productionId: d.ProductionID,
           label_qtd_pecas: `${d.Identifiersplates?.length || 0}`,

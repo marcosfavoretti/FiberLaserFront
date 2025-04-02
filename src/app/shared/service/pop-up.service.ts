@@ -18,6 +18,7 @@ export class PopUpService {
     if(!component) throw new Error('componente vazio')
     const ref = this.dialogService.open(component, {
       data,
+      style: ['bg-black'],
       width: 'auto',
       height: 'auto',
       closable: closable ?? false,

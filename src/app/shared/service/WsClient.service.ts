@@ -4,6 +4,7 @@ import { environment } from '../../@core/const/environment';
 import { Events } from '../../@core/enum/Events.enum';
 import { ProductionManagerService } from './ProductionManager.service';
 import { NestManagerService } from './NestManager.service';
+import { DataScriptService } from './DataScript.service';
 
 @Injectable({
     providedIn: 'root'
@@ -15,6 +16,7 @@ export class WsClientService {
     constructor(
         private porductionManager: ProductionManagerService,
         private nestManager: NestManagerService,
+        private dataService: DataScriptService
 
     ) {
         const wsUrl = `ws://${environment.WS_IP}:${environment.WS_PORT}/fiberlaser`
@@ -40,6 +42,11 @@ export class WsClientService {
             this.nestManager.nestCompleteEmit(JSON.parse(data));
             //nao tirar o nest automatico.. pois ele serve para conferencia.
         });
+
+        socket.on(Events.NEWDATA, (data:string) => {
+            console.log(`novo dado: ${data}`)
+            this.dataService.setNewData(JSON.parse(data))
+        })
 
         socket.on(Events.NEWPLATE, (data: string) => {
             console.log('nova placa processada');

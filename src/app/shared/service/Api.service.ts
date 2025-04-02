@@ -21,6 +21,24 @@ export class ApiService {
         );
     }
 
+    requestReset():Observable<void>{
+        return from(
+            Client.post<void>('nest/script/restart').then(data=>data.data)
+        )
+    }
+
+    requestScripts(): Observable<Array<{ current: boolean, data: string }[]>> {
+        return from(
+            Client.get<Array<{ current: boolean, data: string }[]>>(`/nest/script`)
+                .then(
+                    result => result.data,
+                    error => {
+                        throw error;
+                    }
+                )
+        );
+    }
+
     requestPlateRework(plateId: number): Observable<void> {
         return from(
             Client.post<void>(`/plates/${plateId}/rework`)

@@ -6,6 +6,9 @@ import { LaserNestComponent } from "../../widgets/laser-nest/laser-nest.componen
 import { WsClientService } from '../../shared/service/WsClient.service';
 import { BadgeModule } from 'primeng/badge';
 import { StatusCanvaComponent } from '../../widgets/status-canva/status-canva.component';
+import { ApiService } from '../../shared/service/Api.service';
+import { NavbarItem } from '../../shared/models/NavBarItem';
+import { RequestRestartService } from '../../shared/service/RequestRestart.service';
 
 @Component({
   selector: 'app-home',
@@ -21,6 +24,21 @@ import { StatusCanvaComponent } from '../../widgets/status-canva/status-canva.co
 })
 export class HomeComponent {
 
-  constructor(private ws: WsClientService) { }
-  navbar_itens_mid = navbar_itens_mid;
+  constructor(private ws: WsClientService, private resService: RequestRestartService) { }
+  navbar_itens_mid: Array<NavbarItem> = [
+    {
+      routerLink: 'store',
+      type: 'button',
+      styleClass: '',
+      label: 'refazer',
+      icon: 'pi pi-hammer'
+    },
+    {
+      command: () => this.resService.request(),
+      type: 'button',
+      styleClass: '',
+      label: 'restart',
+      icon: 'pi pi-replay'
+    }
+  ];
 }
