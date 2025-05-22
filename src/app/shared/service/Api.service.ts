@@ -21,6 +21,14 @@ export class ApiService {
         );
     }
 
+    requestAction(type: 'UP' | 'DOWN'):Observable<void>{
+        return from(
+            Client.post<void>('nest/script', {
+                "action": type
+              }).then(data=>data.data)
+        )
+    }
+
     requestReset():Observable<void>{
         return from(
             Client.post<void>('nest/script/restart').then(data=>data.data)

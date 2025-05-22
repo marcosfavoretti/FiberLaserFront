@@ -17,7 +17,6 @@ import { PopUpStreamPlayerComponent } from "../../widgets/pop-up-stream-player/p
     NavbarComponent,
     PlatesQueueComponent,
     LaserNestComponent,
-    
     PopUpStreamPlayerComponent
 ],
   templateUrl: './home.component.html',
@@ -34,12 +33,12 @@ export class HomeComponent {
       label: 'refazer',
       icon: 'pi pi-hammer'
     },
-    {
-      command: () => this.resService.request(),
-      type: 'button',
-      styleClass: '',
-      label: 'restart',
-      icon: 'pi pi-replay'
-    }
+    // {
+    //   command: () => this.resService.request(),
+    //   type: 'button',
+    //   styleClass: '',
+    //   label: 'restart',
+    //   icon: 'pi pi-replay'
+    // }
   ];
 }

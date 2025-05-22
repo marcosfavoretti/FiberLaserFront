@@ -51,7 +51,7 @@ export class NestManagerService {
     }
 
     refreshNest(): void {
-        this.popUp.open('nest', LoadContentComponent, {}, false);
+        this.popUp.open('nest', LoadContentComponent, [], false);
         this.api.requestCurrentNests()
             .pipe(
                 tap((data) => {

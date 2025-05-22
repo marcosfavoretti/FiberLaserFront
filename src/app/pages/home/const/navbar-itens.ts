@@ -16,3 +16,4 @@ export const navbar_itens_mid : Array<NavbarItem> = [
         icon: 'pi pi-replay'
     }
 ]
+

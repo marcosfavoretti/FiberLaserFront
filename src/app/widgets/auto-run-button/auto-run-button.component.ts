@@ -18,7 +18,7 @@ export class AutoRunButtonComponent {
   ) { }
 
   requestAutoRun(): void {
-    this.popUp.open('autorun', LoadContentComponent, {}, false);
+    this.popUp.open('reset', LoadContentComponent, [], false);
     this.api.requestAutoRun()
       .pipe(
         tap((data) => {

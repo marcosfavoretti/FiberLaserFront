@@ -37,7 +37,7 @@ export class LogQueueComponent implements OnInit {
   tableSchema = tableSchema;
 
   ngOnInit(): void {
-    this.popUp.open('loadtable', LoadContentComponent, { }, false);
+    this.popUp.open('loadtable', LoadContentComponent, [], false);
     this.api.requestNotAvaiablePlates()
       .pipe(
         tap(data => {
@@ -56,7 +56,7 @@ export class LogQueueComponent implements OnInit {
 
   private requestReWork(plateId: number): void {
     console.log('confimation request');
-    this.popUp.open('rework', LoadContentComponent, {}, false);
+    this.popUp.open('rework', LoadContentComponent, [], false);
     this.api.requestPlateRework(plateId)
       .pipe(
         tap(() => {

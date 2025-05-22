@@ -1,48 +1,58 @@
-import { Injectable } from '@angular/core';
-import { DialogService, DynamicDialogRef } from "primeng/dynamicdialog";
+import { Injectable, Type } from '@angular/core';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { Observable, forkJoin, of } from 'rxjs';
+import { catchError, finalize } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class PopUpService {
-  private refs: Map<string, DynamicDialogRef> = new Map();
+  private refs: Map<string, NgbModalRef> = new Map();
 
-  constructor(private dialogService: DialogService) { }
+  constructor(private modalService: NgbModal) {}
 
-  open(key: string, component: any, data: any, closable?: boolean): DynamicDialogRef {
-    if (!component) {
-      throw new Error('Componente vazio');
+  /**
+   * Abre um modal com componente customizado e fecha após a conclusão dos observables.
+   * @param key - Chave única do modal.
+   * @param component - Componente a ser renderizado.
+   * @param observables - Lista de observables que o popup irá aguardar.
+   * @param closable - Define se o modal pode ser fechado manualmente.
+   */
+  open(key: string, component: Type<any>, observables: Observable<any>[], closable: boolean = false): NgbModalRef | null {
+    if (this.refs.has(key)) {
+      console.warn(`Modal com chave "${key}" já está aberto.`);
+      return null;
     }
 
-    data = {
-      closeFn: () => this.close(key),
-      data: data
-    };
-
-    console.log('Abrindo diálogo com componente:', component);
-    
-    const ref = this.dialogService.open(component, {
-      data,
-      style: { 'background-color': 'black' }, 
-      width: 'auto',
-      height: 'auto',
-      closable: closable ?? false,
-      modal: true,
+    const modalRef = this.modalService.open(component, {
+      backdrop: closable ? true : 'static',
+      centered: true,
+      keyboard: closable
     });
 
-    console.log('Dialog aberto:', ref);
-
-    if (!ref) {
-      console.error('Falha ao abrir o diálogo.');
-      return null!; // Retorna um valor inválido intencionalmente, para evitar erro em chamadas futuras
+    const instance = modalRef.componentInstance as any;
+    if (instance) {
+      instance.closeFn = () => this.close(key);
     }
 
-    ref.onClose.subscribe(() => {
-      setTimeout(() => this.refs.delete(key), 0); // ✅ Evita conflitos ao acessar ref já removida
-    });
-    
-    this.refs.set(key, ref);
-    return ref;
+    this.refs.set(key, modalRef);
+
+    const safeObservables = observables.map(obs =>
+      obs.pipe(
+        catchError(err => {
+          console.error('Erro durante execução:', err);
+          return of(null);
+        })
+      )
+    );
+
+    forkJoin(safeObservables)
+      .pipe(
+        finalize(() => this.close(key))
+      )
+      .subscribe(results => {
+        console.log('Todas as requisições terminaram:', results);
+      });
+
+    return modalRef;
   }
 
   close(key: string): void {
