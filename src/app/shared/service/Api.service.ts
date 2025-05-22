@@ -35,7 +35,7 @@ export class ApiService {
         )
     }
 
-    requestScripts(): Observable<Array<{ current: boolean, data: string }[]>> {
+    requestScripts(): Observable<{ current: boolean, data: string }[][]> {
         return from(
             Client.get<Array<{ current: boolean, data: string }[]>>(`/nest/script`)
                 .then(

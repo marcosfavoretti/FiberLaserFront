@@ -4,22 +4,25 @@ import { PopUpService } from "./pop-up.service";
 import { catchError, tap } from "rxjs";
 import { LoadContentComponent } from "../../widgets/load-content/load-content.component";
 import { ErrorPopupComponent } from "../../widgets/error-popup/error-popup.component";
+import { of, delay, switchMap } from "rxjs";
+import { DataScriptService } from "./DataScript.service";
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class RequestRestartService {
   constructor(
     private api: ApiService,
-    private popup: PopUpService
-  ) {}
+    private popup: PopUpService,
+    private dataScriptService: DataScriptService
+  ) { }
 
   request(): void {
-    this.popup.open('reset', LoadContentComponent, [], false);
 
-    this.api.requestReset()
+    const reset$ = this.api.requestReset()
       .pipe(
-        tap(() => this.popup.close('reset')),
+        tap(() => this.api.requestScripts().subscribe(d=> this.dataScriptService.setNewData(d))),
         catchError((err) => {
           this.popup.close('reset');
           console.error(err.response);
@@ -27,15 +30,14 @@ export class RequestRestartService {
           throw err;
         })
       )
-      .subscribe();
+    this.popup.open('reset', LoadContentComponent, [reset$], false);
   }
 
   requestDOWN(): void {
-    this.popup.open('reset', LoadContentComponent, [], false);
 
-    this.api.requestAction('DOWN')
+    const down$ = this.api.requestAction('DOWN')
       .pipe(
-        tap(() => this.popup.close('reset')),
+        tap(() => this.api.requestScripts().subscribe(d=> this.dataScriptService.setNewData(d))),
         catchError((err) => {
           this.popup.close('reset');
           console.error(err.response);
@@ -43,15 +45,15 @@ export class RequestRestartService {
           throw err;
         })
       )
-      .subscribe();
+
+    this.popup.open('reset', LoadContentComponent, [down$], false);
+
   }
 
   requestUP(): void {
-    this.popup.open('reset', LoadContentComponent, [], false);
-
-    this.api.requestAction('UP')
+    const up$ = this.api.requestAction('UP')
       .pipe(
-        tap(() => this.popup.close('reset')),
+        tap(() => this.api.requestScripts().subscribe(d=> this.dataScriptService.setNewData(d))),
         catchError((err) => {
           this.popup.close('reset');
           console.error(err.response);
@@ -59,6 +61,6 @@ export class RequestRestartService {
           throw err;
         })
       )
-      .subscribe();
+    this.popup.open('reset', LoadContentComponent, [up$], false);
   }
 }

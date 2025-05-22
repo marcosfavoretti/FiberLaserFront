@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PreviewDataComponent } from './preview-data.component';
+import { PreviewDataComponent } from './preview-delivery.component';
 
 describe('PreviewDataComponent', () => {
   let component: PreviewDataComponent;

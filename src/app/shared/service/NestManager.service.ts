@@ -14,18 +14,15 @@ export class NestManagerService {
     private readonly nest: FiberLaserNest[] = [];
     private nestComplete: EventEmitter<FiberLaserNest> = new EventEmitter();
     private newNest: EventEmitter<FiberLaserNest[]> = new EventEmitter();
-    constructor(private api: ApiService, private popUp: PopUpService) {
-        // this.refreshNest();
-    }
+    constructor(private api: ApiService, private popUp: PopUpService) { }
 
-    getNestCompleteEvent(): EventEmitter<FiberLaserNest>{
+    getNestCompleteEvent(): EventEmitter<FiberLaserNest> {
         return this.nestComplete;
     }
 
-    nestCompleteEmit(fiberlaserNest: FiberLaserNest):void{
+    nestCompleteEmit(fiberlaserNest: FiberLaserNest): void {
         this.nestComplete.emit(fiberlaserNest);
     }
-
 
     getNests(): FiberLaserNest[] {
         return this.nest;
@@ -51,11 +48,9 @@ export class NestManagerService {
     }
 
     refreshNest(): void {
-        this.popUp.open('nest', LoadContentComponent, [], false);
-        this.api.requestCurrentNests()
+        const refresh$ = this.api.requestCurrentNests()
             .pipe(
                 tap((data) => {
-                    console.log('quer mais nest', data);
                     this.popUp.close('nest');
                     this.setNest(data);
                 }),
@@ -66,7 +61,7 @@ export class NestManagerService {
                     throw new Error(err);
                 })
             )
-            .subscribe();
+        this.popUp.open('nest', LoadContentComponent, [refresh$], false);
     }
 
     removeNest(nest: FiberLaserNest): void {

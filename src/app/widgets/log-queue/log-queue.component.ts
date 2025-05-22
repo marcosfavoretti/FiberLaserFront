@@ -37,8 +37,7 @@ export class LogQueueComponent implements OnInit {
   tableSchema = tableSchema;
 
   ngOnInit(): void {
-    this.popUp.open('loadtable', LoadContentComponent, [], false);
-    this.api.requestNotAvaiablePlates()
+    const notAvaiable$ = this.api.requestNotAvaiablePlates()
       .pipe(
         tap(data => {
           console.log(data)
@@ -51,7 +50,7 @@ export class LogQueueComponent implements OnInit {
           return of();
         })
       )
-      .subscribe();
+    this.popUp.open('loadtable', LoadContentComponent, [notAvaiable$], false);
   }
 
   private requestReWork(plateId: number): void {

@@ -18,8 +18,7 @@ export class AutoRunButtonComponent {
   ) { }
 
   requestAutoRun(): void {
-    this.popUp.open('reset', LoadContentComponent, [], false);
-    this.api.requestAutoRun()
+    const run$ = this.api.requestAutoRun()
       .pipe(
         tap((data) => {
           this.popUp.close('autorun');
@@ -31,7 +30,8 @@ export class AutoRunButtonComponent {
           this.popUp.open('autorun.error', ErrorPopupComponent, err.response.data.message, true);
           throw new Error(err);
         })
-      ).subscribe()
-      ;
+      );
+    this.popUp.open('reset', LoadContentComponent, [run$], false);
+
   }
 }

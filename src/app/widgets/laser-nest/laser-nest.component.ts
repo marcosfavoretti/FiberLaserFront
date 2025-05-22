@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { NoDataComponent } from '../no-data/no-data.component';
 import { NestManagerService } from '../../shared/service/NestManager.service';
 import { NestHeaderComponent } from '../nest-header/nest-header.component';
-import { PreviewDataComponent } from "../preview-data/preview-data.component";
+import { PreviewDataComponent } from "../preview-data/preview-delivery.component";
 import { StreamPlayerComponent } from "../stream-player/stream-player.component";
 
 @Component({
