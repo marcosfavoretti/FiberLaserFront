@@ -15,10 +15,10 @@ import { FiberLaserNest } from '../../shared/models/FiberLaserNest';
 export class NestPreviewComponent implements OnInit {
 
   public readonly nestCss: Map<string, string> = new Map([
-    [ModelNestType.MODELDEFAULTNEST, ''],
-    [ModelNestType.MODELDYNAPACNEST, ''],
-    [ModelNestType.MODELJCBNEST, ''],
-    [ModelNestType.MODELROMINEST, '']
+    [ModelNestType.MODELDEFAULTNEST, 'position-relative shadow-lg p-3 overflow-hidden'],
+    [ModelNestType.MODELDYNAPACNEST, 'position-relative shadow-lg p-3 overflow-hidden'],
+    [ModelNestType.MODELJCBNEST, 'layout-single-col'],
+    [ModelNestType.MODELROMINEST, 'position-relative shadow-lg p-3 overflow-hidden']
   ]);
 
   constructor(private productionService: ProductionManagerService) { }

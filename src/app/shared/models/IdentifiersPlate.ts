@@ -10,5 +10,6 @@ export interface IdentifiersPlate {
     CodItem: string;
     Peso: string;
     Data: string;
+    Ano: number;
     [key: string]: any;//so para conseguir usar os atributos com os indices como string
 }

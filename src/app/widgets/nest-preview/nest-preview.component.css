@@ -7,6 +7,24 @@
 
 }
 
+/* Sua classe padrão (mantém como está) */
+.production-table-default {
+    display: grid;
+    flex: 1;
+    aspect-ratio: 1/1;
+    grid-template-columns: repeat(3, 1fr); /* Padrão: 3 colunas */
+    background: linear-gradient(to top left, lightgray, gray 80%);
+}
+/* --- NOVO: Classe de override --- */
+.layout-single-col {
+    /* Sobrescreve para usar apenas 1 coluna (uma placa por linha) */
+    grid-template-columns: 1fr !important; 
+    
+    /* Opcional: Se quiser remover a altura fixa (aspect-ratio) para a lista crescer */
+    aspect-ratio: auto !important; 
+    height: auto !important; 
+}
+
 .gray-mask{
     position: absolute;
     width: 100%;

@@ -1,12 +1,12 @@
 <div [ngSwitch]="plate.platesType">
     <div *ngSwitchCase="types.DEFAULT" class="d-flex flex-column p-2 bg-secondary-subtle border border-black">
         <div class="d-flex justify-content-between">
-            <div style="height: 50px; width: 50px;"> 
-            <qrcode [qrdata]="plate.QrCode" [errorCorrectionLevel]="'L'" [width]="50" ></qrcode>
+            <div style="height: 50px; width: 50px;">
+                <qrcode [qrdata]="plate.QrCode" [errorCorrectionLevel]="'L'" [width]="50"></qrcode>
             </div>
             <div class="d-flex flex-column">
-            <span class="title-responsive">{{ plate.CodCliente }}</span>
-            <span class="title-responsive">{{ plate.Serial }}</span>
+                <span class="title-responsive">{{ plate.CodCliente }}</span>
+                <span class="title-responsive">{{ plate.Serial }}</span>
             </div>
         </div>
     </div>
@@ -26,6 +26,34 @@
                     <span class="font-responsive">Type</span>
                     <span class="border border-black p-1 border-1 rounded font-responsive">CA25-CA30-CA35</span>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="types._3CXJCBPlate"
+        class="d-flex flex-column p-2 bg-white border border-black position-relative w-100">
+        <div class="d-flex flex-column">
+            <div class="d-flex gap-1 align-items-center justify-content-between">
+                <span class="font-responsive">ANO</span>
+                <span class="border border-black p-1 border-1 rounded font-responsive">{{plate.Ano}}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+                <span class="font-responsive">SERIAL</span>
+                <span class="border border-black p-1 border-1 rounded font-responsive">{{plate.Serial}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div *ngSwitchCase="types._426JCBPLATE"
+        class="d-flex flex-column p-2 bg-primary border border-black position-relative w-100">
+        <div class="d-flex flex-column">
+            <div class="d-flex gap-1 align-items-center justify-content-between">
+                <span class="font-responsive">ANO</span>
+                <span class="border border-black p-1 border-1 rounded font-responsive">{{plate.Ano}}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between">
+                <span class="font-responsive">SERIAL</span>
+                <span class="border border-black p-1 border-1 rounded font-responsive">{{plate.Serial}}</span>
             </div>
         </div>
     </div>

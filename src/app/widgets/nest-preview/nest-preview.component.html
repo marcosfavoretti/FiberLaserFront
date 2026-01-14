@@ -1,6 +1,7 @@
-<!-- <div class="p-3 shadow-lg production-table" [ngStyle]="{'display': 'grid', 'grid-template-columns': 'repeat(3, 1fr)', 'gap': '10px'}"  > -->
-<div [ngClass]="nestCss.get(nest.ModelNest.type)" class="position-relative production-table-default shadow-lg p-3 overflow-hidden">
+<div [ngClass]="nestCss.get(nest.ModelNest.type)" 
+     class="position-relative production-table-default shadow-lg p-3 overflow-hidden">
+     
     @for (plate of nestPlates(nest); track $index) {
-    <plate class="position-relative" [plate]="plate" />
+        <plate class="position-relative" [plate]="plate" />
     }
 </div>
