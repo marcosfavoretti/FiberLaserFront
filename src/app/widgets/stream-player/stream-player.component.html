@@ -1,3 +1,30 @@
-<div class="p-0 m-0">
-    <video #videoPlayer muted width="100%" height="100%" controls></video>
+<div class="video-container">
+  <video
+    #videoPlayer
+    muted
+    width="100%"
+    height="100%"
+    controls
+    playsinline
+    (click)="togglePlayPause()">
+  </video>
+
+  <div *ngIf="error" class="error-overlay">
+    <div class="error-message">
+      <i class="pi pi-exclamation-triangle"></i>
+      <p>{{ error }}</p>
+      <button class="retry-btn" (click)="initializePlayer()">
+        <i class="pi pi-refresh"></i> Tentar Novamente
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading && !error" class="loading-overlay">
+    <i class="pi pi-spin pi-spinner"></i>
+    <p>Carregando vídeo...</p>
+  </div>
+
+  <div *ngIf="!isLoading && !isPlaying && !error" class="play-overlay" (click)="togglePlayPause()">
+    <i class="pi pi-play-circle"></i>
+  </div>
 </div>

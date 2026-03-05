@@ -1,10 +1,11 @@
 import { EventEmitter, Injectable } from "@angular/core";
 import { Production } from "../models/Production";
 import { ApiService } from "./Api.service";
-import { catchError, tap } from "rxjs";
+import { catchError, Observable, tap } from "rxjs";
 import { IdentifiersPlate } from "../models/IdentifiersPlate";
 import { PopUpService } from "./pop-up.service";
 import { ErrorPopupComponent } from "../../widgets/error-popup/error-popup.component";
+import { PaginatedListPlatesResponseDtoDto } from "@/api/fiberlaser";
 @Injectable({
     providedIn: 'root'
 })
@@ -27,7 +28,6 @@ export class ProductionManagerService {
                 console.log('nothing')
             }
         });
-        console.log(this.production.length)
         this.event.emit(this.production);
     }
 
@@ -39,25 +39,28 @@ export class ProductionManagerService {
         return this.production;
     }
 
-    refreshNest(): void {
+    refreshNest(): Observable<PaginatedListPlatesResponseDtoDto> {
         this.production = [];
-        this.api.requestAvaiablePlates()
+        return this.api.requestAvaiablePlates()
             .pipe(
                 tap((data) => {
-                    this.setProduction(data);
+                    console.log('Dados recebidos da API:', data);
+                    this.setProduction(data.data);
                 }),
                 catchError((err) => {
                     this.popUp.open('error.nest', ErrorPopupComponent, err, true);
-                    console.log(err)
-                    throw new Error(err);
+                    console.log('Erro ao carregar produções:', err)
+                    throw err;
                 })
             )
-            .subscribe();
+
     }
 
     setProduction(production: Production[]): void {
-        console.log(production)
+        console.log('Produções recebidas no setProduction:', production);
+        console.log('Quantidade de produções:', production.length);
         this.production.push(...production); // Substituir, em vez de adicionar
+        console.log('Produções armazenadas:', this.production);
         this.event.emit(this.production);
     }
 

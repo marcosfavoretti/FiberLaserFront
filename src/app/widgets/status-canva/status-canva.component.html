@@ -1,14 +1,22 @@
-<div class="d-flex flex-column p-2">
-    <div class="p-2 d-flex justify-content-start">
-            <p-overlaybadge [severity]="ws.online? 'info': 'danger'">
-                <i class="pi pi-compass text-white p-1"></i>
-            </p-overlaybadge>
-    </div>
-    @if (!ws.online) {
-        <div class="disconnect-mask">
-            <i class="pi pi-exclamation-triangle text-danger"></i>
-            <h1 class="text-center text-danger">Serviço fora do ar</h1>
-            <i class="pi pi-exclamation-triangle text-danger"></i>
+<div class="sidebar-header">
+    <div class="status-indicator">
+        <p-overlaybadge [severity]="ws.online ? 'success' : 'danger'" value="">
+            <div class="status-icon-wrapper">
+                <i class="pi pi-bolt text-white" style="font-size: 1.5rem;"></i>
+            </div>
+        </p-overlaybadge>
+        <div class="status-info">
+            <span class="status-label">Status do Serviço</span>
+            <span class="status-text" [class]="ws.online ? 'status-online-text' : 'status-offline-text'">
+                {{ ws.online ? 'Conectado' : 'Desconectado' }}
+            </span>
         </div>
-    }
+    </div>
 </div>
+@if (!ws.online) {
+    <div class="disconnect-overlay">
+        <i class="pi pi-exclamation-triangle disconnect-icon"></i>
+        <h2 class="disconnect-title">Serviço fora do ar</h2>
+        <p class="text-light mt-2">Aguardando conexão...</p>
+    </div>
+}

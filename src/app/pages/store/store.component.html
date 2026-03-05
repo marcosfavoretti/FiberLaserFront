@@ -1,10 +1,21 @@
-<div class="p-2">
-    <button class="btn btn-group btn-outline-success rounded-circle p-2" routerLink="/">
-        <i class="pi pi-arrow-left"></i>
-    </button>
-    <div class="container">
-        <h1 class="text-success fst-italic">Logs</h1>
-        <log-queue></log-queue>
-    </div>
+<div class="store-container bg-light min-vh-100 py-4">
+    <div class="container-fluid px-4 px-md-5">
+        <!-- Header -->
+        <div class="d-flex align-items-center mb-4 gap-3">
+            <button class="btn btn-outline-success rounded-circle d-flex justify-content-center align-items-center shadow-sm" style="width: 48px; height: 48px;" routerLink="/" title="Voltar">
+                <i class="pi pi-arrow-left fs-5"></i>
+            </button>
+            <div class="d-flex flex-column">
+                <h1 class="text-success fw-bold m-0" style="letter-spacing: -0.5px;">Estoque de Placas</h1>
+                <span class="text-muted">Gerencie e acompanhe as placas em produção</span>
+            </div>
+        </div>
 
+        <!-- Content -->
+        <div class="card shadow-sm border-0 rounded-4 overflow-hidden">
+            <div class="card-body p-0 p-md-3 bg-white">
+                <app-plates-table></app-plates-table>
+            </div>
+        </div>
+    </div>
 </div>

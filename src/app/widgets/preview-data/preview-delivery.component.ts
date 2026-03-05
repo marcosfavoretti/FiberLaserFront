@@ -23,13 +23,15 @@ export class PreviewDataComponent {
   ) { }
 
   ngOnInit(): void {
+    // Inicializa data$ a partir do datastore para reagir a mudanças globais
+    this.data$ = this.datastore.dataScript$;
+
     const script$ = this.api.requestScripts().pipe(
       tap(scripts => {
         this.datastore.setNewData(scripts);
-        this.data$ = this.datastore.dataScript$;
-      }
-      )
-    )
+      })
+    );
+    
     this.popupservice.open('script', LoadContentComponent, [script$], false);
   }
 }

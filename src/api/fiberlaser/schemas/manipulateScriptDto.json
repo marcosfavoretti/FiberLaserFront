@@ -1,0 +1,1 @@
+{"type":"object","properties":{"action":{"type":"string"}},"required":["action"],"x-readme-ref-name":"ManipulateScriptDto"}

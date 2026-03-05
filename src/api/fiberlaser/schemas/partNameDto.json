@@ -1,0 +1,1 @@
+{"type":"object","properties":{"data":{"type":"string","example":"5387010 #01DS ACAB_E-COAT..."},"description":{"type":"string","example":"ACAB_E-COAT 1E1952H PRETO..."},"itemCliente":{"type":"string","example":"5387010"},"revision":{"type":"string","example":"R01DS"}},"required":["data","description","itemCliente","revision"],"x-readme-ref-name":"PartNameDto"}

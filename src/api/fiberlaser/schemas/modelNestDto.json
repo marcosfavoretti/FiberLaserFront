@@ -1,0 +1,1 @@
+{"type":"object","properties":{"type":{"type":"string"},"ModelNestId":{"type":"number"},"SeverTime":{"format":"date-time","type":"string"},"Name":{"type":"string"},"Lote":{"type":"number"},"FilePath":{"type":"string"},"Gabarito":{"type":"string"}},"required":["type","ModelNestId","SeverTime","Name","Lote","FilePath","Gabarito"],"x-readme-ref-name":"ModelNestDto"}

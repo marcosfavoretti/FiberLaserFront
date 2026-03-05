@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { LogQueueComponent } from '../../widgets/log-queue/log-queue.component';
 import { RouterModule } from '@angular/router';
+import { PlatesTableComponent } from '../../widgets/plates-table/plates-table.component';
 
 @Component({
   selector: 'app-store',
   imports: [
     RouterModule,
-    LogQueueComponent
+    PlatesTableComponent
   ],
   templateUrl: './store.component.html',
   styleUrl: './store.component.css'

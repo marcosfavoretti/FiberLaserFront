@@ -1,17 +1,46 @@
-<div class="py-1" style="max-height: 20vh;">
-    <p-mega-menu [model]="mid_itens" [style]="{ 'border-radius': '3rem', display: 'flex' }"
-        styleClass="p-4 bg-surface-0 dark:bg-surface-900 border">
-        <ng-template #start>
-            <img pBadge value="1" src="logo_clear.svg" alt="">
-        </ng-template>
-        <ng-template #item let-item>
-            <button class="btn btn-group d-flex flex-column btn-outline-success border-0" routerLink="/{{item.routerLink}}">
-                <i class="{{item.icon}} + p-1"></i>
-                <span>{{item.label}}</span>
+<div class="navbar-custom">
+    <div class="navbar-content">
+        <div class="navbar-brand">
+            <img pBadge value="1" src="logo_clear.svg" alt="Logo" class="navbar-logo">
+        </div>
+
+        <!-- Ícone do martelo movido para próximo ao logo -->
+        @if (mid_itens && mid_itens.length > 0) {
+        @for (item of mid_itens; track $index) {
+        @if (item.icon && item.icon.includes('pi-hammer')) {
+        <button class="navbar-item hammer-near-logo" [routerLink]="'/' + (item.routerLink || '')"
+            [ngClass]="'hammer-item'">
+            <i [class]="item.icon || ''" [ngClass]="'hammer-icon'"></i>
+            <span>{{item.label || ''}}</span>
+        </button>
+        }
+        <!-- Botão Reabrir Câmera (só aparece quando fechado) -->
+        @if (!cameraToggleService.cameraVisible()) {
+        <button class="navbar-item" (click)="reopenCamera()" title="Reabrir Câmera">
+            <i class="pi pi-camera"></i>
+            <span>Câmera</span>
+        </button>
+        }
+        }
+        }
+
+        <div class="navbar-items">
+            @if (mid_itens && mid_itens.length > 0) {
+            @for (item of mid_itens; track $index) {
+            @if (!(item.icon && item.icon.includes('pi-hammer'))) {
+            <button class="navbar-item" [routerLink]="'/' + (item.routerLink || '')">
+                <i [class]="item.icon || ''"></i>
+                <span>{{item.label || ''}}</span>
             </button>
-        </ng-template>
-        <ng-template #end>
+            }
+            }
+            }
+        </div>
+
+        <div class="navbar-actions">
+
+            <!-- Câmera Wi-Fi -->
             <app-auto-run-button></app-auto-run-button>
-        </ng-template>
-    </p-mega-menu>
+        </div>
+    </div>
 </div>

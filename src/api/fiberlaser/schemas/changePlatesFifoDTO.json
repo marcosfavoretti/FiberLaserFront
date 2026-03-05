@@ -1,0 +1,1 @@
+{"type":"object","properties":{"productionid":{"type":"number"}},"required":["productionid"],"x-readme-ref-name":"ChangePlatesFifoDTO"}

@@ -1,9 +1,2 @@
-export interface ModelNest {
-    type: string;
-    ModelNestId: number;
-    SeverTime: string;
-    Name: string;
-    Lote: number;
-    FilePath: string;
-    Gabarito: string;
-}
+// Reexportando o DTO gerado pelo Kubb como ModelNest
+export type { ModelNestDto as ModelNest } from '../../../api/fiberlaser/models/ModelNestDto';

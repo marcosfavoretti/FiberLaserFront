@@ -1,45 +1,119 @@
-<div class="p-2">
+<p-toast position="bottom-right" styleClass="priority-toast"></p-toast>
+
+<div class="queue-container">
     @for (item of data; track $index) {
-    <div class="rounded bg-white mb-2">
-        <div class="d-flex gap-4 cursor-pointer p-2 rounded  align-items-center">
-            @if (!item?.items) {
-            <i [class]="item.icon+' text-primary'"></i>
-            <div class="ml-2 d-flex flex-column">
-                <span>ProductionId: {{ item.productionId }}</span>
-                <span>Pedido: {{ item.label }}</span>
-                <span>Codigo Ethos: {{item.label_cod_ethos}}</span>
-                <span>Data entrega: {{ item.label_data_entrega | date :'dd/MM/yyyy':'UTC' }}</span>
-                <span>Qtd peças faltantes: {{item.label_qtd_pecas}}</span>
-                <span>Tipo: {{item.tipo}}</span>
+    <div class="queue-item animate-slide-in" [class.queue-item-priority]="item.items">
+        @if (!item?.items) {
+        <div class="queue-item-header">
+            <div class="queue-item-icon">
+                <i [class]="item.icon"></i>
             </div>
-            }
-            @else {
-            <p-panelmenu [multiple]="true" styleClass="" [model]="data">
-                <ng-template #item pTemplate="item" let-item>
-                    @if (item.child) {
-                        <div (click)="item.clickFn()" class="text-black p-2">
-                            <span>codigo: {{item.label}}</span>
+            <div class="queue-item-content">
+                <div class="queue-item-row">
+                    <span class="queue-item-label">Prioridade</span>
+                    <span class="queue-item-value">{{ item.label_priority }}</span>
+                </div>
+                <div class="queue-item-row">
+                    <span class="queue-item-label">Production ID</span>
+                    <span class="queue-item-value queue-item-id">#{{ item.productionId }}</span>
+                </div>
+                <div class="queue-item-row">
+                    <span class="queue-item-label">Pedido</span>
+                    <span class="queue-item-value">{{ item.label }}</span>
+                </div>
+                <div class="queue-item-row">
+                    <span class="queue-item-label">Código Ethos</span>
+                    <span class="queue-item-value queue-item-code">{{ item.label_cod_ethos }}</span>
+                </div>
+                <div class="queue-item-row">
+                    <span class="queue-item-label">Data Entrega</span>
+                    <span class="queue-item-value">{{ item.label_data_entrega | date:'dd/MM/yyyy':'UTC' }}</span>
+                </div>
+                <div class="queue-item-row">
+                    <span class="queue-item-label">Qtd Peças</span>
+                    <span class="queue-item-value queue-item-badge">{{ item.label_qtd_pecas }}</span>
+                </div>
+
+                <div class="queue-item-row">
+                    <span class="queue-item-label">Tipo</span>
+                    <span class="queue-item-value queue-item-type">{{ item.tipo }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="queue-item-actions">
+            <button class="btn-priority" [class.btn-priority-loading]="isPrioritizing(item.productionId)"
+                [disabled]="isPrioritizing(item.productionId)" (click)="requestPriority(item.productionId, $event)"
+                title="Solicitar aumento de prioridade">
+                @if (isPrioritizing(item.productionId)) {
+                <i class="pi pi-spinner pi-spin"></i>
+                <span>Processando...</span>
+                } @else {
+                <i class="pi pi-arrow-up"></i>
+                <span>Subir Prioridade</span>
+                }
+            </button>
+        </div>
+        }
+        @else {
+        <p-panelmenu [multiple]="true" styleClass="queue-panel-menu" [model]="data">
+            <ng-template #item pTemplate="item" let-item>
+                @if (item.child) {
+                <div (click)="item.clickFn()" class="queue-nested-item">
+                    <span>Código: {{ item.label }}</span>
+                </div>
+                } @else {
+                <div class="queue-item animate-slide-in">
+                    <div class="queue-item-header">
+                        <div class="queue-item-icon">
+                            <i [class]="item.icon"></i>
                         </div>
-                    }
-                    @else {
-                    <div class="rounded border">
-                        <div class="text-black d-flex gap-4 cursor-pointer p-2 rounded  align-items-center">
-                            <i [class]="item.icon+' text-primary'"></i>
-                            <div class="ml-2 d-flex flex-column">
-                                <span>ProductionId: {{ item.productionId }}</span>
-                                <span>Pedido: {{ item.label }}</span>
-                                <span>Codigo Ethos: {{item.label_cod_ethos}}</span>
-                                <span>Data entrega: {{ item.label_data_entrega | date :'dd/MM/yyyy':'UTC' }}</span>
-                                <span>Qtd peças faltantes: {{item.label_qtd_pecas}}</span>
-                                <span>Tipo: {{item.tipo}}</span>
+                        <div class="queue-item-content">
+                            <div class="queue-item-row">
+                                <span class="queue-item-label">Production ID</span>
+                                <span class="queue-item-value queue-item-id">#{{ item.productionId }}</span>
+                            </div>
+                            <div class="queue-item-row">
+                                <span class="queue-item-label">Pedido</span>
+                                <span class="queue-item-value">{{ item.label }}</span>
+                            </div>
+                            <div class="queue-item-row">
+                                <span class="queue-item-label">Código Ethos</span>
+                                <span class="queue-item-value queue-item-code">{{ item.label_cod_ethos }}</span>
+                            </div>
+                            <div class="queue-item-row">
+                                <span class="queue-item-label">Data Entrega</span>
+                                <span class="queue-item-value">{{ item.label_data_entrega | date:'dd/MM/yyyy':'UTC'
+                                    }}</span>
+                            </div>
+                            <div class="queue-item-row">
+                                <span class="queue-item-label">Qtd Peças</span>
+                                <span class="queue-item-value queue-item-badge">{{ item.label_qtd_pecas }}</span>
+                            </div>
+                            <div class="queue-item-row">
+                                <span class="queue-item-label">Tipo</span>
+                                <span class="queue-item-value queue-item-type">{{ item.tipo }}</span>
                             </div>
                         </div>
                     </div>
-                    }
-                </ng-template>
-            </p-panelmenu>
-            }
-        </div>
+                    <div class="queue-item-actions">
+                        <button class="btn-priority" [class.btn-priority-loading]="isPrioritizing(item.productionId)"
+                            [disabled]="isPrioritizing(item.productionId)"
+                            (click)="requestPriority(item.productionId, $event)"
+                            title="Solicitar aumento de prioridade">
+                            @if (isPrioritizing(item.productionId)) {
+                            <i class="pi pi-spinner pi-spin"></i>
+                            <span>Processando...</span>
+                            } @else {
+                            <i class="pi pi-arrow-up"></i>
+                            <span>Subir Prioridade</span>
+                            }
+                        </button>
+                    </div>
+                </div>
+                }
+            </ng-template>
+        </p-panelmenu>
+        }
     </div>
     }
 </div>

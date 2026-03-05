@@ -1,16 +1,30 @@
-<div class="px-2 h-75">
-    <div class="d-flex align-items-center gap-2 text-white">
-        <i class="pi pi-arrow-circle-right"></i>
-        <h2 class="fst-italic">Para Fazer</h2>
+<div class="queue-wrapper">
+    <div class="queue-header">
+        <div class="queue-title">
+            <i class="pi pi-list-check"></i>
+            <h2>Para Fazer {{getTotalPlates()}} plaquinhas</h2>
+        </div>
+        <span class="queue-subtitle">Fila de Produção</span>
     </div>
-    @if (production && production.length > 0) {
-    <div>
-        <queue-list class="h-100" [data]="displayInfo"></queue-list>
+    <div class="queue-content">
+
+        <!-- Mostrar loading enquanto carrega -->
+        @if (displayInfo === undefined) {
+            <div class="loading-container">
+                <i class="pi pi-spin pi-spinner" style="font-size: 2rem"></i>
+                <p>Carregando produções...</p>
+            </div>
+        }
+        <!-- Mostrar lista quando houver dados -->
+        @else if (displayInfo && displayInfo.length > 0) {
+            <queue-list [data]="displayInfo"></queue-list>
+        }
+        <!-- Mostrar mensagem vazia quando não houver dados -->
+        @else {
+            <div class="queue-empty">
+                <i class="pi pi-inbox queue-empty-icon"></i>
+                <p class="queue-empty-text">Nenhuma produção planejada no momento</p>
+            </div>
+        }
     </div>
-    }
-    @else {
-    <div class="bg-white p-2 border-3 d-flex gap-2">
-        <span class="text-secondary">|> nada planejado por hora!</span>
-    </div>
-    }
 </div>

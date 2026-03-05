@@ -27,14 +27,14 @@ export class NestPreviewComponent implements OnInit {
 
   ngOnInit(): void {
     this.productionService.getEventEmitter().subscribe(
-      (production) => this.nest.ManagerFiberLaserNest.find(m =>
-        m.IdentifiersPlates.IdentifiersPlatesID
+      (production) => this.nest.IdentifierPlates.find(m =>
+        m.IdentifiersPlatesID
       )
     )
   }
 
   nestPlates(FiberLaserNest: FiberLaserNest): IdentifiersPlate[] {
-    return FiberLaserNest.ManagerFiberLaserNest.map(a => a.IdentifiersPlates);
+    return FiberLaserNest.IdentifierPlates;
   }
 
 }

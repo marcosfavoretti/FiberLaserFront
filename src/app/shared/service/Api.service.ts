@@ -1,8 +1,20 @@
 import { Injectable } from "@angular/core";
 import { from, Observable } from "rxjs";
-import { Production } from "../models/Production";
-import { Client } from "../client/Client";
-import { FiberLaserNest } from "../models/FiberLaserNest";
+// Importando os DTOs gerados pelo Kubb
+import type { ListPlatesResponseDto } from '../../../api/fiberlaser/models/ListPlatesResponseDto';
+import type { UserNestResponseDto } from '../../../api/fiberlaser/models/UserNestResponseDto';
+import type { NestScriptresponseDTO } from '../../../api/fiberlaser/models/NestScriptresponseDTO';
+import type { PlatesControllerListPlatesQueryParams } from '../../../api/fiberlaser/models/PlatesControllerListPlates';
+import type { PaginatedListPlatesResponseDtoDto } from '../../../api/fiberlaser/models/PaginatedListPlatesResponseDtoDto';
+// Importando os clients gerados pelo Kubb
+import { productionControllerRequestOrders } from '../../../api/fiberlaser/client/productionControllerRequestOrders';
+import { nestControllerGetCurrentNestsMethod } from '../../../api/fiberlaser/client/nestControllerGetCurrentNestsMethod';
+import { platesControllerListPlates } from '../../../api/fiberlaser/client/platesControllerListPlates';
+import { platesControllerReworkPlate } from '../../../api/fiberlaser/client/platesControllerReworkPlate';
+import { nestControllerAutoRunMethod } from '../../../api/fiberlaser/client/nestControllerAutoRunMethod';
+import { nestControllerManipulateScript } from '../../../api/fiberlaser/client/nestControllerManipulateScript';
+import { platesControllerChangePlatesFifo } from '../../../api/fiberlaser/client/platesControllerChangePlatesFifo';
+import { nestControllerGetScript, PlatesControllerListPlatesQueryParamsModeEnum } from "@/api/fiberlaser";
 
 @Injectable({
     providedIn: 'root',
@@ -10,36 +22,41 @@ import { FiberLaserNest } from "../models/FiberLaserNest";
 export class ApiService {
     constructor() { }
 
-    requestPedidos(): Observable<Production[]> {
+    requestPedidos(): Observable<ListPlatesResponseDto[]> {
         return from(
-            Client.get<Production[]>(`/production`)
+            productionControllerRequestOrders()
                 .then(
                     result => {
-                        return result.data;
+                        return Array.isArray(result) ? result : [];
                     }
                 )
         );
     }
 
-    requestAction(type: 'UP' | 'DOWN'):Observable<void>{
+    requestAction(type: 'UP' | 'DOWN'): Observable<void> {
         return from(
-            Client.post<void>('nest/script', {
+            nestControllerManipulateScript({
                 "action": type
-              }).then(data=>data.data)
+            }).then(data => data)
         )
     }
 
-    requestReset():Observable<void>{
+    requestReset(): Observable<void> {
         return from(
-            Client.post<void>('nest/script/restart').then(data=>data.data)
+            nestControllerManipulateScript({
+                "action": "restart"
+            }).then(data => data)
         )
     }
 
-    requestScripts(): Observable<{ current: boolean, data: string }[][]> {
+    requestScripts(): Observable<NestScriptresponseDTO[][]> {
         return from(
-            Client.get<Array<{ current: boolean, data: string }[]>>(`/nest/script`)
+            nestControllerGetScript()
                 .then(
-                    result => result.data,
+                    result => {
+                        // Verifica se o resultado é um array e retorna diretamente
+                        return Array.isArray(result) ? [result] : [[]];
+                    },
                     error => {
                         throw error;
                     }
@@ -49,9 +66,9 @@ export class ApiService {
 
     requestPlateRework(plateId: number): Observable<void> {
         return from(
-            Client.post<void>(`/plates/${plateId}/rework`)
+            platesControllerReworkPlate(plateId)
                 .then(
-                    () => {},
+                    () => { },
                     error => {
                         throw error;
                     }
@@ -59,50 +76,90 @@ export class ApiService {
         );
     }
 
-    requestCurrentNests(): Observable<FiberLaserNest[]> {
-
+    requestCurrentNests(): Observable<UserNestResponseDto | null> {
         return from(
-            Client.get<FiberLaserNest[]>(`/nest/current`)
+            nestControllerGetCurrentNestsMethod()
                 .then(
                     result => {
-                        return result.data;
+                        // O endpoint pode retornar um único objeto ou um array
+                        return result;
                     }
                 )
         )
     }
 
-    requestAvaiablePlates(): Observable<Production[]> {
+    requestAvaiablePlates(): Observable<PaginatedListPlatesResponseDtoDto> {
+        return from(
+            platesControllerListPlates({
+                mode: PlatesControllerListPlatesQueryParamsModeEnum.avaiable
+            })
+                .then(
+                    (result: PaginatedListPlatesResponseDtoDto) => {
+                        console.log('Resultado bruto da API (available plates):', result);
+                        return result;
+                    }
+                )
+                .catch(error => {
+                    console.error('Erro na chamada da API (available plates):', error);
+                    throw error;
+                })
+        )
+    }
+
+    requestNotAvaiablePlates(page: number = 1, limit: number = 10, filters?: {
+        serialNumber?: string;
+        orderNum?: string;
+        identifiersPlatesID?: number;
+        partCode?: string
+    }): Observable<{ data: ListPlatesResponseDto[], totalCount: number, totalPages: number, currentPage: number }> {
+        const params: PlatesControllerListPlatesQueryParams = {
+            mode: PlatesControllerListPlatesQueryParamsModeEnum.notavaiable,
+            page,
+            limit,
+            ...filters
+        };
 
         return from(
-            Client.get<Production[]>(`/plates?mode=avaiable`)
+            platesControllerListPlates(params)
+                .then(
+                    (result: PaginatedListPlatesResponseDtoDto) => {
+                        // Return the proper paginated structure
+                        return {
+                            data: result.data,
+                            totalCount: result.total,
+                            totalPages: result.totalPages,
+                            currentPage: result.page
+                        };
+                    }
+                )
+                .catch(error => {
+                    console.error('Erro na chamada da API (not available plates):', error);
+                    throw error;
+                })
+        )
+    }
+
+    requestAutoRun(): Observable<UserNestResponseDto> {
+        return from(
+            nestControllerAutoRunMethod()
                 .then(
                     result => {
-                        return result.data;
+                        return result;
                     }
                 )
         )
     }
 
-    requestNotAvaiablePlates(): Observable<Production[]> {
+    /**
+     * Solicita aumento de prioridade de uma produção.
+     * @param productionId ID da produção a ter prioridade aumentada
+     */
+    requestPriorityIncrease(productionId: number): Observable<void> {
         return from(
-            Client.get<Production[]>(`/plates?mode=notavaiable`)
-                .then(
-                    result => {
-                        return result.data;
-                    }
-                )
-        )
-    }
-
-    requestAutoRun(): Observable<FiberLaserNest> {
-
-        return from(
-            Client.post<FiberLaserNest>('/nest/run')
-                .then(
-                    result => {
-                        return result.data;
-                    }
-                )
+            platesControllerChangePlatesFifo({
+                productionid: productionId
+            })
+                .then(data => data)
         )
     }
 

@@ -1,12 +1,2 @@
-import { ManagerFiberLaserNest } from "./ManagerFiberLaserNest";
-import { ModelNest } from "./ModelNest";
-
-export interface FiberLaserNest {
-    proccessCounter: number;
-    UserNestID: number;
-    SeverTime: string;
-    done: boolean;
-    Name: string;
-    ManagerFiberLaserNest: ManagerFiberLaserNest[];
-    ModelNest: ModelNest;
-}
+// Reexportando o DTO gerado pelo Kubb como FiberLaserNest
+export type { UserNestResponseDto as FiberLaserNest } from '../../../api/fiberlaser/models/UserNestResponseDto';

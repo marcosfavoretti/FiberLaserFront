@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../shared/service/Api.service';
 import { catchError, of, tap } from 'rxjs';
 import { TableDynamicComponent } from '../table-dynamic/table-dynamic.component';
 import { tableSchema } from './const/table-schema';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { PaginatorModule } from 'primeng/paginator';
+import { InputTextModule } from 'primeng/inputtext';
+import { ButtonModule } from 'primeng/button';
 import { Production } from '../../shared/models/Production';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { ToastModule } from 'primeng/toast';
@@ -11,6 +15,7 @@ import { PopUpService } from '../../shared/service/pop-up.service';
 import { LoadContentComponent } from '../load-content/load-content.component';
 import { ErrorPopupComponent } from '../error-popup/error-popup.component';
 export type displayProductionData = {
+  id: number;
   orderNum: string;
   serialNumber: string;
   //nao tem mas ia ser legal a hora que foi feito
@@ -20,9 +25,13 @@ export type displayProductionData = {
 @Component({
   selector: 'log-queue',
   imports: [
+    FormsModule,
     ToastModule,
     ConfirmPopupModule,
-    TableDynamicComponent
+    TableDynamicComponent,
+    PaginatorModule,
+    InputTextModule,
+    ButtonModule
   ],
   templateUrl: './log-queue.component.html',
   styleUrl: './log-queue.component.css'
@@ -35,18 +44,34 @@ export class LogQueueComponent implements OnInit {
     private confirmationService: ConfirmationService) { }
   displayData: displayProductionData[] = [];
   tableSchema = tableSchema;
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalCount: number = 0;
+  filters: {
+    serialNumber?: string;
+    orderNum?: string;
+  } = {};
 
   ngOnInit(): void {
-    const notAvaiable$ = this.api.requestNotAvaiablePlates()
+    this.loadData();
+  }
+
+  loadData(): void {
+    const notAvaiable$ = this.api.requestNotAvaiablePlates(
+      this.currentPage,
+      this.itemsPerPage,
+      this.filters
+    )
       .pipe(
-        tap(data => {
-          console.log(data)
-          this.displayData = this.parseDisplayProductionData(data);
+        tap(response => {
+          console.log(response)
+          this.displayData = this.parseDisplayProductionData(response.data);
+          this.totalCount = response.totalCount;
           this.popUp.close('loadtable')
         }),
         catchError(err => {
           this.popUp.close('loadtable')
-          this.popUp.open('table.error', ErrorPopupComponent, err.response.data.message, true);
+          this.popUp.open('table.error', ErrorPopupComponent, err, true);
           return of();
         })
       )
@@ -64,8 +89,7 @@ export class LogQueueComponent implements OnInit {
         }),
         catchError((err) => {
           this.popUp.close('rework');
-          const errorMessage = err.response?.data?.message || 'Erro desconhecido';
-          this.popUp.open('autorun.error', ErrorPopupComponent, errorMessage, true);
+          this.popUp.open('autorun.error', ErrorPopupComponent, err, true);
           return of();  // Retorna um observable vazio
         })
       )
@@ -109,4 +133,21 @@ export class LogQueueComponent implements OnInit {
     });
   }
 
+
+  onPageChange(event: any): void {
+    this.currentPage = event.page + 1; // PrimeNG pages are 0-indexed
+    this.itemsPerPage = event.rows;
+    this.loadData();
+  }
+
+  onFilterChange(): void {
+    this.currentPage = 1; // Reset to first page when filtering
+    this.loadData();
+  }
+
+  clearFilters(): void {
+    this.filters = {};
+    this.currentPage = 1;
+    this.loadData();
+  }
 }

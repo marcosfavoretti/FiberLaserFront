@@ -1,0 +1,1 @@
+{"type":"object","properties":{"data":{"type":"string"},"current":{"type":"boolean"}},"required":["data","current"],"x-readme-ref-name":"NestScriptresponseDTO"}

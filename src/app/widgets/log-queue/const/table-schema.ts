@@ -11,7 +11,7 @@ export const tableSchema: TableModel = {
         },
         {
             alias: 'ID',
-            path: 'id'
+            path: 'IdentifiersPlatesID'
         },
         {
             alias: 'type',
@@ -19,10 +19,10 @@ export const tableSchema: TableModel = {
         },
         {
             alias: 'Ordem',
-            path: 'orderNum',
+            path: '24960308',
         },
         {
-            alias: 'serial',
+            alias: 'Serial',
             path: 'serialNumber',
         }
     ],

@@ -1,0 +1,71 @@
+<div class="plates-table-container">
+  <!-- Filters Section -->
+  <div class="filters-section card mb-4 p-3">
+    <div class="row g-3">
+      <div class="col-md-3">
+        <label for="orderNum" class="form-label">Número da Ordem</label>
+        <input
+          id="orderNum"
+          pInputText
+          type="text"
+          class="form-control"
+          [(ngModel)]="filters.orderNum"
+          (input)="onFilterChange()"
+          placeholder="Buscar por ordem..."
+        />
+      </div>
+
+      <div class="col-md-3">
+        <label for="serialNumber" class="form-label">Número Serial</label>
+        <input
+          id="serialNumber"
+          pInputText
+          type="text"
+          class="form-control"
+          [(ngModel)]="filters.serialNumber"
+          (input)="onFilterChange()"
+          placeholder="Buscar por serial..."
+        />
+      </div>
+
+      <div class="col-md-3">
+        <label for="partCode" class="form-label">Código da Peça</label>
+        <input
+          id="partCode"
+          pInputText
+          type="text"
+          class="form-control"
+          [(ngModel)]="filters.partCode"
+          (input)="onFilterChange()"
+          placeholder="Buscar por código..."
+        />
+      </div>
+
+      <div class="col-md-3 d-flex align-items-end">
+        <button
+          pButton
+          type="button"
+          label="Limpar Filtros"
+          class="btn btn-outline-secondary w-100"
+          (click)="clearFilters()"
+        ></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="card">
+    <div class="card-body">
+      <app-table-dynamic
+        [data]="displayData"
+        [tableModel]="tableSchema"
+        (OnChecked)="confirmation($event)"
+      ></app-table-dynamic>
+
+      
+    </div>
+  </div>
+
+  <p-toast></p-toast>
+  <p-confirmPopup></p-confirmPopup>
+</div>

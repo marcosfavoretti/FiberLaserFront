@@ -1,5 +1,46 @@
 <p-confirmpopup />
 <p-toast />
 
-<app-table-dynamic [tableModel]="tableSchema" [data]="displayData"
-    (OnChecked)="confirmation($event)"></app-table-dynamic>
+<div class="filter-section d-flex justify-content-between align-items-center mb-3">
+  <div class="d-flex gap-2 flex-wrap">
+    <input
+      type="text"
+      pInputText
+      placeholder="Filtrar por Ordem"
+      [(ngModel)]="filters.orderNum"
+      (input)="onFilterChange()"
+      class="form-control">
+    <input
+      type="text"
+      pInputText
+      placeholder="Filtrar por Serial"
+      [(ngModel)]="filters.serialNumber"
+      (input)="onFilterChange()"
+      class="form-control">
+    <button
+      pButton
+      type="button"
+      label="Limpar Filtros"
+      (click)="clearFilters()"
+      class="btn btn-secondary"></button>
+  </div>
+  <div class="d-flex align-items-center gap-2">
+    <span>Total: {{totalCount}}</span>
+  </div>
+</div>
+
+<app-table-dynamic
+  [tableModel]="tableSchema"
+  [data]="displayData"
+  (OnChecked)="confirmation($event)">
+</app-table-dynamic>
+
+<div class="pagination-container d-flex justify-content-between align-items-center mt-3">
+  <p-paginator
+    [rows]="itemsPerPage"
+    [totalRecords]="totalCount"
+    [rowsPerPageOptions]="[5, 10, 20, 50]"
+    (onPageChange)="onPageChange($event)"
+    [first]="(currentPage - 1) * itemsPerPage">
+  </p-paginator>
+</div>

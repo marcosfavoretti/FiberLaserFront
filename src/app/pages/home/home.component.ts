@@ -8,6 +8,7 @@ import { StatusCanvaComponent } from '../../widgets/status-canva/status-canva.co
 import { NavbarItem } from '../../shared/models/NavBarItem';
 import { RequestRestartService } from '../../shared/service/RequestRestart.service';
 import { PopUpStreamPlayerComponent } from "../../widgets/pop-up-stream-player/pop-up-stream-player.component";
+import { SplitterModule } from 'primeng/splitter';
 
 @Component({
   selector: 'app-home',
@@ -17,7 +18,8 @@ import { PopUpStreamPlayerComponent } from "../../widgets/pop-up-stream-player/p
     NavbarComponent,
     PlatesQueueComponent,
     LaserNestComponent,
-    PopUpStreamPlayerComponent
+    PopUpStreamPlayerComponent,
+    SplitterModule
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'

@@ -14,10 +14,12 @@
   <h2 class="text-success">{{tableModel.title}}</h2>
   <span class="text-responsive">nº registros {{ data.length ||0}}</span>
 </div>
-<p-table #dt2 classList="bg-white" [globalFilterFields]="getAllColumns()" [value]="data" groupRowsBy="atr_group"
-  dataKey="atr_group" [paginator]="tableModel.paginator? true: false" [rows]="10"
-  [rowsPerPageOptions]="30 < data.length? [10, 20, 30, data.length]: [10,20,30]" responsiveLayout="scroll"
-  [rowGroupMode]="tableModel.totalize ? 'subheader' : undefined">
+<p-table #dt2 classList="bg-white" [globalFilterFields]="getAllColumns()" [value]="data" [groupRowsBy]="tableModel.totalize ? 'atr_group' : ''"
+  [dataKey]="tableModel.totalize ? 'atr_group' : 'id'" [paginator]="tableModel.paginator ? true : false" [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 20, 50, 100]" [showCurrentPageReport]="tableModel.paginator ? true : false"
+  currentPageReportTemplate="Mostrando {first} a {last} de {totalRecords} registros"
+  responsiveLayout="scroll" [rowGroupMode]="tableModel.totalize ? 'subheader' : undefined"
+  styleClass="p-datatable-sm p-datatable-striped p-datatable-gridlines">
   <!-- filtro para buscar registro -->
   <ng-template #caption>
     <div class="flex">

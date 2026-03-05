@@ -3,11 +3,13 @@ import { QueueListComponent } from '../queue-list/queue-list.component';
 import { MenuItem } from 'primeng/api';
 import { ProductionManagerService } from '../../shared/service/ProductionManager.service';
 import { Production } from '../../shared/models/Production';
+import { tap } from 'rxjs';
 
 export interface MenuItemModify extends MenuItem {
   label_cod_ethos: string;
   label_data_entrega: string;
   label_qtd_pecas: string;
+  label_priority:number;
   productionId: number;
   child?: boolean;
   tipo: string;
@@ -23,35 +25,98 @@ export interface MenuItemModify extends MenuItem {
   styleUrl: './plates-queue.component.css'
 })
 export class PlatesQueueComponent implements OnInit {
-  constructor(private productionManager: ProductionManagerService) { }
+  constructor(private productionManager: ProductionManagerService) {
+    console.log('PlatesQueueComponent construído');
+  }
   production: Production[] = [];
-  displayInfo !: MenuItemModify[];
+  displayInfo: MenuItemModify[] | undefined = undefined;
+
+  getTotalPlates(){
+    return this.displayInfo?.reduce(
+      (total, item) => total + parseInt(item.label_qtd_pecas, 10),
+      0
+    )
+  }
 
   async ngOnInit(): Promise<void> {
-    this.productionManager.refreshNest();
-    this.production = this.productionManager.getProduction();
-    this.productionManager.getEventEmitter().subscribe(() => {
-      this.displayInfo = this.parseProductionToMenuItemModify(this.productionManager.getProduction())
-    })
+    console.log('Inicializando PlatesQueueComponent');
+    // Inicializar com array vazio
+    this.displayInfo = [];
+
+    // Dar um pequeno atraso para garantir que o serviço esteja pronto
+    this.productionManager
+      .refreshNest()
+      .pipe(
+        tap(
+          production => {
+            console.log(`productions -<<<< ${production}`, production);
+            if (production && production.data.length > 0) {
+              this.displayInfo = this.parseProductionToMenuItemModify(production.data);
+              console.log('displayInfo atualizado:', this.displayInfo);
+            } else {
+              console.log('Nenhuma produção recebida no evento');
+              this.displayInfo = [];
+            }
+          }
+        )
+      )
+      .subscribe();
+
+    this.productionManager
+      .getEventEmitter()
+      .subscribe(() => {
+        const productions = this.productionManager.getProduction();
+        // console.log('Evento de produção recebido:', productions);
+        if (productions && productions.length > 0) {
+          this.displayInfo = this.parseProductionToMenuItemModify(productions);
+          console.log('displayInfo atualizado:', this.displayInfo);
+        } else {
+          console.log('Nenhuma produção recebida no evento');
+          this.displayInfo = [];
+        }
+      })
   }
 
   parseProductionToMenuItemModify(production: Production[]): Array<MenuItemModify> {
-    return production
+    console.log('Parsing production data:', production);
+    const result = production
       .map(d => {
-        const pedido = d.productionData?.find(a => a.TypeDataID === 410)?.Value;
+        // Nota: productionData não está presente no novo DTO, então removemos essa parte
         const PartCode = d.PartCode;
         const dataEntrega = d.PlannedEndTimestamp;
-        return {
+        console.log('Processando item:', d);
+
+        // Verificar se Identifiersplates existe e não é null/undefined
+        const identifiersPlates = d.Identifiersplates || [];
+        console.log('Identifiersplates:', identifiersPlates);
+
+        // Verificar se há placas para determinar o tipo
+        let tipo = "None";
+        if (identifiersPlates.length > 0) {
+          try {
+            tipo = Array.from(new Set(identifiersPlates.map(a => a.platesType))).join('/ ') || "None";
+          } catch (error) {
+            console.error('Erro ao processar tipo:', error);
+            tipo = "Erro";
+          }
+        }
+
+        const menuItem: MenuItemModify = {
+          label_priority: d.priority,
           productionId: d.ProductionID,
-          label_qtd_pecas: `${d.Identifiersplates?.length || 0}`,
+          label_qtd_pecas: `${identifiersPlates.length}`,
           label_cod_ethos: `${PartCode}`,
           label_data_entrega: `${dataEntrega}`,
           icon: 'pi pi-info-circle',
           child: false,
-          label: `${pedido}`,
-          tipo: Array.from(new Set(d.Identifiersplates!.map(a => a.platesType))).join('/ ') ?? "None",
-        }
+          label: `${d.OrderNum}`, // Usando OrderNum como fallback para o label
+          tipo: tipo,
+        };
+        console.log('MenuItem criado:', menuItem);
+        return menuItem;
       });
+    console.log('Resultado do parsing:', result);
+    return result;
   }
 
 }

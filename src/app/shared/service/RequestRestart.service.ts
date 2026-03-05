@@ -26,7 +26,7 @@ export class RequestRestartService {
         catchError((err) => {
           this.popup.close('reset');
           console.error(err.response);
-          this.popup.open('error.nest', ErrorPopupComponent, [err.response?.data?.message ?? 'Erro desconhecido'], true);
+          this.popup.open('error.nest', ErrorPopupComponent, err, true);
           throw err;
         })
       )
@@ -41,7 +41,7 @@ export class RequestRestartService {
         catchError((err) => {
           this.popup.close('reset');
           console.error(err.response);
-          this.popup.open('error.nest', ErrorPopupComponent, [err.response?.data?.message ?? 'Erro desconhecido'], true);
+          this.popup.open('error.nest', ErrorPopupComponent, err, true);
           throw err;
         })
       )
@@ -57,7 +57,7 @@ export class RequestRestartService {
         catchError((err) => {
           this.popup.close('reset');
           console.error(err.response);
-          this.popup.open('error.nest', ErrorPopupComponent, [err.response?.data?.message ?? 'Erro desconhecido'], true);
+          this.popup.open('error.nest', ErrorPopupComponent, err, true);
           throw err;
         })
       )

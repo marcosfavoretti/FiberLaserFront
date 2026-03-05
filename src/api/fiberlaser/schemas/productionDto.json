@@ -1,0 +1,1 @@
+{"type":"object","properties":{"ProductionID":{"type":"number"}},"required":["ProductionID"],"x-readme-ref-name":"ProductionDto"}

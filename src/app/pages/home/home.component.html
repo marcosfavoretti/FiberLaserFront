@@ -1,19 +1,30 @@
-<div class="container-fluid" style="max-height: 100vh;">
-    <div class="row h-100" >
-        <div class="col-md-4 col-sm-12 col-lg-4 m-0 p-0 h-auto" style="min-height: 100vh; background-color: rgb(4, 63, 4);">
-            <status-canva class="h-25"></status-canva>
-            <plates-queue></plates-queue>
-        </div>
-        <div class="col-md-8 col-sm-12 col-lg-8 h-100" >
-            <div class="d-flex flex-column h-100">
-                <div>
+<div class="container-fluid p-0" style="max-height: 100vh; overflow: hidden;">
+    <p-splitter [panelSizes]="[33, 67]" [style]="{ height: '100vh', border: 'none' }" class="h-100">
+        <!-- Sidebar / Painel Esquerdo -->
+        <ng-template pTemplate="content">
+            <p-splitter-panel class="sidebar" style="display: flex; flex-direction: column;">
+                <status-canva style="flex-shrink: 0;"></status-canva>
+                <plates-queue style="flex: 1; overflow: hidden;"></plates-queue>
+            </p-splitter-panel>
+        </ng-template>
+
+        <!-- Main Content / Painel Direito -->
+        <ng-template pTemplate="content">
+            <p-splitter-panel style="background: #f3f4f6;">
+                <div class="d-flex flex-column h-100">
                     <navbar [itens_mid]="navbar_itens_mid"></navbar>
+                    <div class="flex-grow-1 p-3">
+                        <div class="card h-100" style="border-radius: var(--border-radius-lg);">
+                            <app-laser-nest></app-laser-nest>
+                        </div>
+                    </div>
                 </div>
-                <div class="border rounded h-100">
-                  <app-laser-nest></app-laser-nest>  
-                </div>
-            </div>
-        </div>
+            </p-splitter-panel>
+        </ng-template>
+    </p-splitter>
+
+    <!-- Componente da câmera integrado ao layout -->
+    <div class="camera-container position-fixed bottom-0 end-0 m-3" style="z-index: 1000;">
+        <app-pop-up-stream-player></app-pop-up-stream-player>
     </div>
-    <app-pop-up-stream-player></app-pop-up-stream-player>
 </div>

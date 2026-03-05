@@ -1,32 +1,69 @@
-# Use the official Node.js image as the base image for building the Angular app
-FROM node:22 AS build
+# =============================================================================
+# Stage 1: Dependencies - Cache node_modules separately
+# =============================================================================
+FROM node:22-alpine AS deps
 
-# Set the working directory
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the working directory
+# Copy package files first for better caching
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install
+# Use npm ci for clean, reproducible installs
+RUN npm ci --only=production && \
+    npm cache clean --force
 
-# Copy the rest of the application code
+# =============================================================================
+# Stage 2: Build - Install dev deps and build the app
+# =============================================================================
+FROM node:22-alpine AS build
+
+WORKDIR /app
+
+# Copy node_modules from deps stage
+COPY --from=deps /app/node_modules ./node_modules
+
+# Copy package files
+COPY package*.json ./
+
+# Install dev dependencies (needed for build)
+RUN npm ci
+
+# Copy source code
 COPY . .
 
-# Build the Angular app
-RUN npm run build --prod
+# Set production environment variables for Kubb generation
+ARG API_FIBERLASER
+ARG API_FIBERLASER_SWAGGER
+ENV API_FIBERLASER=http://192.168.99.129:9192
+ENV API_FIBERLASER_SWAGGER=http://192.168.99.129:9192/api/doc-json
+ENV TLS_REJECT_UNAUTHORIZED=0
 
-# Use the official Nginx image to serve the Angular app
-FROM nginx:alpine
+# Generate Kubb clients with production configuration
+RUN npm run generate
 
-# Copy the built Angular app from the build stage to the Nginx HTML directory
+# Build the Angular app in production mode (production is default config)
+RUN npm run build
+
+# =============================================================================
+# Stage 3: Production - Minimal nginx image
+# =============================================================================
+FROM nginx:alpine AS production
+
+# Install dumb-init for proper signal handling
+RUN apk add --no-cache dumb-init
+
+# Copy built app from build stage
 COPY --from=build /app/dist /usr/share/nginx/html
 
-# Copy the custom nginx.conf to the container
+# Copy nginx config
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80
 EXPOSE 80
 
-# Start Nginx
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+    CMD wget --no-verbose --tries=1 --spider http://localhost/ || exit 1
+
+# Use dumb-init for proper signal handling
+ENTRYPOINT ["dumb-init", "--"]
 CMD ["nginx", "-g", "daemon off;"]

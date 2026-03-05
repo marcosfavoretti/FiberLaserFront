@@ -1,9 +1,24 @@
-<p-dialog [header]="this.loadVideo?  'Câmera Arrastável': 'Clique para carregar a câmera'" [(visible)]="display" [modal]="false" [draggable]="true" [resizable]="false"
-    [style]="{width: '400px', height: '400px', position: 'fixed', bottom: '0', left: '0'}" [baseZIndex]="10000">
-    @defer (when loadVideo) {
-        <app-stream-player [videoSrc]="'http://192.168.99.198:8080/mystream.m3u8'" />
-    }
-    @placeholder {
-        <button class="btn btn-group btn-secondary" (click)="runVideo()"><i class="pi pi-camera"></i></button>
-    }
+<p-dialog
+  [header]="loadVideo() ? 'Câmera Arrastável' : 'Clique para carregar a câmera'"
+  [(visible)]="display"
+  (onHide)="onHide()"
+  [modal]="false"
+  [draggable]="true"
+  [resizable]="true"
+  [style]="{width: '500px', height: '400px', position: 'fixed', bottom: '20px', right: '20px', backgroundColor: 'lightgray'}"
+  [baseZIndex]="10000">
+
+  @if (loadVideo()) {
+    <div class="video-wrapper">
+      <app-stream-player [videoSrc]="videoUrl" />
+    </div>
+  } @else {
+    <div class="placeholder-content">
+      <button class="load-video-btn" (click)="runVideo()">
+        <i class="pi pi-camera"></i>
+        <span>Carregar Câmera</span>
+      </button>
+      <p>Clique no botão acima para iniciar o streaming de vídeo</p>
+    </div>
+}
 </p-dialog>

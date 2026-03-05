@@ -1,28 +1,30 @@
 <div class="nest-template p-2 h-100" style="max-height: 50%;">
-    @if (nests && nests.length>0) {
-    @if (currentNestDone) {
-    <div>
-        <button (click)="refreshNest(); currentNestDone=false" class="btn btn-group btn-success text-center">
-            <i class="pi pi-check px-1"></i>
-            conferido
-        </button>
-    </div>
-    }
-    <div name="wrapper-content" class="row m-0 p-0" style="display: flex; height: auto;">
-        <div class="col-8 m-0">
-            <div class="d-flex flex-column">
-                <app-nest-header [nest]="nests[0]"></app-nest-header>
-                <app-nest-preview [nest]="nests![0]"></app-nest-preview>
+    @if (nests().length > 0) {
+        
+        @if (currentNestDone()) {
+            <div>
+                <button (click)="refreshNest(); currentNestDone.set(false)" class="btn btn-group btn-success text-center">
+                    <i class="pi pi-check px-1"></i>
+                    conferido
+                </button>
+            </div>
+        }
+
+        <div name="wrapper-content" class="row m-0 p-0" style="display: flex; height: auto;">
+            <div class="col-8 m-0">
+                <div class="d-flex flex-column">
+                    <app-nest-header [nest]="nests()[0]"></app-nest-header>
+                    <app-nest-preview [nest]="nests()[0]"></app-nest-preview>
+                </div>
+            </div>
+            <div class="col-4 m-0 p-0 p-2 border rounded bg-dark-subtle" style="max-height: 100%;">
+                <preview-delivery></preview-delivery>
             </div>
         </div>
-        <div class="col-4 m-0 p-0 p-2 border rounded bg-dark-subtle" style="max-height: 100%;">
-            <preview-delivery ></preview-delivery>
-        </div>
-    </div>
     }
     @else {
-    <div class="flex-grow-1 d-flex justify-content-center align-items-center flex-column">
-        <no-data message="sem planos no momento! Para gerar um plano clique no botão de play!"></no-data>
-    </div>
+        <div class="flex-grow-1 d-flex justify-content-center align-items-center flex-column">
+            <no-data message="sem planos no momento! Para gerar um plano clique no botão de play!"></no-data>
+        </div>
     }
 </div>

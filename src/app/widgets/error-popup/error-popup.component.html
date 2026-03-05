@@ -1,5 +1,20 @@
-<div class="d-flex gap-2 justify-content-center align-items-center">
-    <i class="pi pi-times-circle text-danger"></i>
-    <span class="text-danger">{{message}}</span>
-    <button style="opacity: 0; height: 0; width: 0;" aria-hidden="true"></button>
+<div class="error-container">
+  <div class="error-header mb-3">
+    <div class="icon-circle shadow-sm">
+      <i class="pi pi-exclamation-circle text-danger"></i>
+    </div>
+    <h5 class="error-title m-0 fw-bold">Ocorreu um Erro</h5>
+  </div>
+  
+  <div class="error-content p-3 border rounded bg-light">
+    <p class="error-message m-0 text-secondary">
+      {{ message }}
+    </p>
+  </div>
+
+  <!-- <div class="error-footer mt-4 d-flex justify-content-end">
+    <button class="btn btn-outline-danger px-4" (click)="close()">
+      <i class="pi pi-times me-2"></i>Fechar
+    </button>
+  </div> -->
 </div>
