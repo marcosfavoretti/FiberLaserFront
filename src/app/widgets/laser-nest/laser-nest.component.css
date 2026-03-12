@@ -1,9 +1,67 @@
+:host {
+    display: block;
+    height: 100%;
+    width: 100%;
+    overflow: hidden;
+}
+
 .nest-template {
-    min-height: 80vh;
+    height: 100%;
     width: 100%;
     display: flex;
     flex-direction: column;
     position: relative;
+}
+
+/* Ensure proper box-sizing */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Wrapper content - controle de overflow */
+.wrapper-content {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-wrap: nowrap;
+    max-width: 100%;
+}
+
+/* Ajuste para o container de preview */
+.wrapper-content .col-md-8 {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.wrapper-content .col-md-8 .flex-grow-1 {
+    height: 100%;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+/* Ajuste para o container de delivery */
+.wrapper-content .col-md-4 {
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.wrapper-content .col-md-4 > div {
+    min-height: 0;
+    height: 100%;
+}
+
+@media (max-width: 768px) {
+    .wrapper-content {
+        flex-direction: column;
+    }
+
+    .wrapper-content .col-md-8,
+    .wrapper-content .col-md-4 {
+        height: auto;
+    }
 }
 
 /* .nest-template::before{

@@ -1,10 +1,11 @@
 import { Component, Input } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
 import { NavbarItem } from '../../shared/models/NavBarItem';
 import { RequestRestartService } from '../../shared/service/RequestRestart.service';
 
 @Component({
   selector: 'script-action-button',
-  imports: [],
+  imports: [TitleCasePipe],
   templateUrl: './script-action-button.component.html',
   styleUrl: './script-action-button.component.css'
 })
@@ -15,19 +16,19 @@ export class ScriptActionButtonComponent {
     DOWN: {
       type: 'button',
       command: (e) => this.scriptService.requestDOWN(),
-      label: 'down',
-      icon: 'pi pi-angle-up',
+      label: 'Próximo',
+      icon: 'pi pi-chevron-down',
     },
     UP: {
       type: 'button',
       command: (e) => this.scriptService.requestUP(),
-      label: 'up',
-      icon: 'pi pi-angle-down',
+      label: 'Anterior',
+      icon: 'pi pi-chevron-up',
     },
     RESTART: {
       type: 'button',
       command: (e) => this.scriptService.request(),
-      label: 'restart',
+      label: 'Reiniciar',
       icon: 'pi pi-refresh',
     }
   }

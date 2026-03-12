@@ -1,0 +1,58 @@
+.script-action-btn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem 0.75rem;
+    gap: 0.5rem;
+    border-radius: var(--border-radius-md);
+    transition: all var(--transition-fast);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    color: #000000; /* Texto e ícones em preto por padrão */
+    font-weight: 500;
+    flex: 1;
+    cursor: pointer;
+}
+
+.script-action-btn i {
+    font-size: 1rem;
+    color: inherit;
+}
+
+.btn-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.script-action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.script-action-btn:active {
+    transform: translateY(0);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Interaction feedback colors using global variables */
+.script-action-btn.down:hover {
+    color: var(--info-color);
+    border-color: var(--info-color);
+    background: rgba(59, 130, 246, 0.1);
+}
+
+.script-action-btn.up:hover {
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    background: var(--primary-bg);
+}
+
+.script-action-btn.restart:hover {
+    color: var(--warning-color);
+    border-color: var(--warning-color);
+    background: rgba(245, 158, 11, 0.1);
+}

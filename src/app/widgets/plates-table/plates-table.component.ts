@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core'; // Adicionado OnDestroy
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../shared/service/Api.service';
-import { catchError, of, tap } from 'rxjs';
+// Adicionado Subject e debounceTime
+import { catchError, of, tap, Subject, debounceTime } from 'rxjs'; 
 import { TableDynamicComponent } from '../table-dynamic/table-dynamic.component';
 import { tableSchema } from './const/table-schema';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -41,7 +42,7 @@ export type DisplayPlateData = {
   templateUrl: './plates-table.component.html',
   styleUrl: './plates-table.component.css'
 })
-export class PlatesTableComponent implements OnInit {
+export class PlatesTableComponent implements OnInit, OnDestroy { // Implementado OnDestroy
   constructor(
     private popUp: PopUpService,
     private api: ApiService,
@@ -61,8 +62,25 @@ export class PlatesTableComponent implements OnInit {
     partCode?: string;
   } = {};
 
+  // Criado o Subject para controlar o fluxo de digitação
+  private filterSubject = new Subject<void>();
+
   ngOnInit(): void {
+    // Configura o debounce para os filtros
+    this.filterSubject.pipe(
+      debounceTime(600) // Aguarda 600ms após o usuário parar de digitar
+    ).subscribe(() => {
+      this.currentPage = 1; // Reseta para a primeira página
+      this.loadData();      // Dispara a requisição
+    });
+
+    // Carregamento inicial da tabela
     this.loadData();
+  }
+
+  // Previne vazamento de memória destruindo o Subject
+  ngOnDestroy(): void {
+    this.filterSubject.complete();
   }
 
   loadData(): void {
@@ -86,7 +104,6 @@ export class PlatesTableComponent implements OnInit {
           return of();
         })
       );
-
     this.popUp.open('loadtable', LoadContentComponent, [notAvaiable$], false);
   }
 
@@ -99,7 +116,6 @@ export class PlatesTableComponent implements OnInit {
         tap(() => {
           this.popUp.close('rework');
           this.message.add({ severity: 'success', detail: 'Placa enviada para retrabalho com sucesso', life: 3000 });
-          // Reload data after successful rework - small delay to let popup clean up
           setTimeout(() => this.loadData(), 100);
         }),
         catchError((err) => {
@@ -146,22 +162,24 @@ export class PlatesTableComponent implements OnInit {
         severity: 'secondary',
         outlined: true
       },
-                  acceptButtonProps: {
-                    label: 'Confirmar'
-                  },
-                  accept: () => {
-                    setTimeout(() => this.requestReWork(payload.data.id), 0);
-                  },
-                });
-              }  onPageChange(event: any): void {
+      acceptButtonProps: {
+        label: 'Confirmar'
+      },
+      accept: () => {
+        setTimeout(() => this.requestReWork(payload.data.id), 0);
+      },
+    });
+  }  
+  
+  onPageChange(event: any): void {
     this.currentPage = event.page + 1; // PrimeNG pages are 0-indexed
     this.itemsPerPage = event.rows;
     this.loadData();
   }
 
+  // Atualizado: agora apenas avisa o Subject que algo foi digitado
   onFilterChange(): void {
-    this.currentPage = 1; // Reset to first page when filtering
-    this.loadData();
+    this.filterSubject.next();
   }
 
   clearFilters(): void {

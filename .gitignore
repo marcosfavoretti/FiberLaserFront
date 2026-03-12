@@ -21,7 +21,9 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
-
+.gemini
+.claude
+.playwright-mcp
 # Visual Studio Code
 .vscode/*
 !.vscode/settings.json

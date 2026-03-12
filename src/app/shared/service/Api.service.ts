@@ -54,8 +54,8 @@ export class ApiService {
             nestControllerGetScript()
                 .then(
                     result => {
-                        // Verifica se o resultado é um array e retorna diretamente
-                        return Array.isArray(result) ? [result] : [[]];
+                        // O resultado já é um array de arrays (NestScriptresponseDTO[][])
+                        return Array.isArray(result) ? result as unknown as NestScriptresponseDTO[][] : [];
                     },
                     error => {
                         throw error;

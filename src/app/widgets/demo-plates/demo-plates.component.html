@@ -1,0 +1,18 @@
+<div class="demo-plates-container">
+    <h3 class="demo-plates-title">Referência de Placas para Operador</h3>
+    <p class="demo-plates-description">Exemplos de todas as placas disponíveis no sistema para referência durante a operação.</p>
+
+    <div class="demo-plates-grid">
+        @for (plate of demoPlates; track plate.IdentifiersPlatesID) {
+            <div class="demo-plate-item">
+                <div class="demo-plate-header">
+                    <span class="demo-plate-type">{{ plate.platesType }}</span>
+                    <span class="demo-plate-id">ID: {{ plate.IdentifiersPlatesID }}</span>
+                </div>
+                <div class="demo-plate-content">
+                    <plate [plate]="plate" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavbarComponent } from '../../widgets/navbar/navbar.component';
 import { PlatesQueueComponent } from '../../widgets/plates-queue/plates-queue.component';
 import { LaserNestComponent } from "../../widgets/laser-nest/laser-nest.component";
+import { DemoPlatesComponent } from "../../widgets/demo-plates/demo-plates.component";
 import { WsClientService } from '../../shared/service/WsClient.service';
 import { BadgeModule } from 'primeng/badge';
 import { StatusCanvaComponent } from '../../widgets/status-canva/status-canva.component';
@@ -18,6 +19,7 @@ import { SplitterModule } from 'primeng/splitter';
     NavbarComponent,
     PlatesQueueComponent,
     LaserNestComponent,
+    DemoPlatesComponent,
     PopUpStreamPlayerComponent,
     SplitterModule
 ],

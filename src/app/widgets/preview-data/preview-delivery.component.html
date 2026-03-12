@@ -1,14 +1,43 @@
-<span class="text-primary">Roteiro de informações</span>
-<div class="d-flex border">
-    <script-action-button type="DOWN"></script-action-button>
-    <script-action-button type="UP"></script-action-button>
-    <script-action-button type="RESTART"></script-action-button>
-</div>
-<div class="d-flex flex-column text-secondary" style="max-height: 90vh; overflow-y: auto;">
-    <ng-container *ngFor="let data of data$ | async; let i = index">
-        <ng-container *ngFor="let item of data.flat(); let j = index">
-            <span [ngClass]="{'text-danger': item.current}"><strong>{{(i * data.flat().length) + j + 1}}.</strong>
-                {{item.data}}</span>
-        </ng-container>
-    </ng-container>
+<div class="preview-delivery">
+    <div class="preview-delivery-header">
+        <span class="text-primary">Roteiro de informações</span>
+        <div class="d-flex script-actions">
+            <script-action-button type="UP"></script-action-button>
+            <script-action-button type="DOWN"></script-action-button>
+            <script-action-button type="RESTART"></script-action-button>
+        </div>
+    </div>
+    
+    <div class="preview-delivery-content" #scriptContainer>
+        @if (data$ | async; as items) {
+            @for (item of items; track $index; let i = $index) {
+                <div [ngClass]="{'text-danger': item.current}" class="preview-delivery-item">
+                    <strong>{{ i + 1 }}.</strong>
+                    <span>{{ item.data }}</span>
+                </div>
+            }
+            @if (items.length === 0) {
+                <div class="no-data-msg">Aguardando informações do roteiro...</div>
+            }
+        } @else {
+            <div class="no-data-msg">Carregando roteiro...</div>
+        }
+    </div>
+
+    @if (data$ | async; as items) {
+        <div class="script-scroll-controls" *ngIf="items.length > 4">
+            <button class="btn btn-sm" (click)="scrollScripts('up')" title="Rolar para cima">
+                <i class="pi pi-chevron-up"></i>
+            </button>
+            <button class="btn btn-sm" (click)="scrollToCurrent()" title="Ver atual">
+                <i class="pi pi-bullseye"></i>
+            </button>
+            <button class="btn btn-sm" (click)="scrollScripts('down')" title="Rolar para baixo">
+                <i class="pi pi-chevron-down"></i>
+            </button>
+            <button class="btn btn-sm" (click)="scrollToBottom()" title="Rolar para o fim">
+                <i class="pi pi-angle-double-down"></i>
+            </button>
+        </div>
+    }
 </div>

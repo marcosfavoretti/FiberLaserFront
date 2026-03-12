@@ -1,6 +1,6 @@
-<div [ngClass]="nestCss.get(nest.ModelNest.type)" 
-     class="position-relative production-table-default shadow-lg p-3 overflow-hidden">
-     
+<div [ngClass]="nestCss.get(nest.ModelNest.type)"
+     class="position-relative production-table-default shadow-lg p-3">
+
     @for (plate of nestPlates(nest); track $index) {
         <plate class="position-relative" [plate]="plate" />
     }

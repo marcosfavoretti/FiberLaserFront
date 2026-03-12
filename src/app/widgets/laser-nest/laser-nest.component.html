@@ -1,8 +1,8 @@
-<div class="nest-template p-2 h-100" style="max-height: 50%;">
+<div class="nest-template p-2 h-100">
     @if (nests().length > 0) {
-        
+
         @if (currentNestDone()) {
-            <div>
+            <div class="mb-2">
                 <button (click)="refreshNest(); currentNestDone.set(false)" class="btn btn-group btn-success text-center">
                     <i class="pi pi-check px-1"></i>
                     conferido
@@ -10,15 +10,17 @@
             </div>
         }
 
-        <div name="wrapper-content" class="row m-0 p-0" style="display: flex; height: auto;">
-            <div class="col-8 m-0">
-                <div class="d-flex flex-column">
-                    <app-nest-header [nest]="nests()[0]"></app-nest-header>
+        <div name="wrapper-content" class="wrapper-content row m-0 p-0 g-0">
+            <div class="col-12 col-md-8 m-0 d-flex flex-column" style="min-height: 0;">
+                <app-nest-header [nest]="nests()[0]" class="mb-2"></app-nest-header>
+                <div class="flex-grow-1 overflow-hidden">
                     <app-nest-preview [nest]="nests()[0]"></app-nest-preview>
                 </div>
             </div>
-            <div class="col-4 m-0 p-0 p-2 border rounded bg-dark-subtle" style="max-height: 100%;">
-                <preview-delivery></preview-delivery>
+            <div class="col-12 col-md-4 m-0 p-0 ps-md-2 mt-2 mt-md-0 d-flex flex-column" style="min-height: 0;">
+                <div class="border rounded bg-dark-subtle h-100 overflow-hidden d-flex flex-column">
+                    <preview-delivery></preview-delivery>
+                </div>
             </div>
         </div>
     }

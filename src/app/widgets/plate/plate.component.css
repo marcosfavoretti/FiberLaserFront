@@ -1,8 +1,66 @@
-.gray-mask{
+/* Ensure the plate component doesn't cause overflow */
+:host {
+    display: block;
+    max-width: 100%;
+    overflow: hidden;
+    height: auto;
+    /* Ensure it works well with grid layouts */
+    min-width: 0;
+}
+
+.demo-plate {
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.gray-mask {
     position: absolute;
     width: 100%;
     top: 0;
     left: 0;
     height: 100%;
     background-color: rgba(128, 128, 128, 0.664);
+}
+
+/* Ensure all plate variants respect container boundaries */
+[class*="d-flex"] {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+/* Responsive text handling */
+.font-responsive,
+.title-responsive {
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-width: 100%;
+    font-size: 0.75rem;
+    line-height: 1.2;
+    margin: 0;
+}
+
+/* Extra small text for very narrow containers */
+@media (max-width: 400px) {
+    .font-responsive,
+    .title-responsive {
+        font-size: 0.65rem;
+    }
+}
+
+/* Demo plate specific styles for better visualization */
+.demo-plate .border.border-black {
+    border-width: 2px !important;
+}
+
+.demo-plate .font-responsive,
+.demo-plate .title-responsive {
+    font-weight: 500;
+}
+
+/* Ensure QR codes are always visible */
+.demo-plate qrcode {
+    display: block;
+    flex-shrink: 0;
 }

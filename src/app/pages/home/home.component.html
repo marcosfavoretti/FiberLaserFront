@@ -1,4 +1,4 @@
-<div class="container-fluid p-0" style="max-height: 100vh; overflow: hidden;">
+<div class="container-fluid p-0" style="height: 100vh;">
     <p-splitter [panelSizes]="[33, 67]" [style]="{ height: '100vh', border: 'none' }" class="h-100">
         <!-- Sidebar / Painel Esquerdo -->
         <ng-template pTemplate="content">
@@ -13,8 +13,8 @@
             <p-splitter-panel style="background: #f3f4f6;">
                 <div class="d-flex flex-column h-100">
                     <navbar [itens_mid]="navbar_itens_mid"></navbar>
-                    <div class="flex-grow-1 p-3">
-                        <div class="card h-100" style="border-radius: var(--border-radius-lg);">
+                    <div class="flex-grow-1 p-3 overflow-hidden">
+                        <div class="card h-100" style="border-radius: var(--border-radius-lg); overflow: hidden;">
                             <app-laser-nest></app-laser-nest>
                         </div>
                     </div>

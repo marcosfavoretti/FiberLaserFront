@@ -1,5 +1,7 @@
 <button
 (click)="configuration[type].command($event)"
-class="btn btn-group btn-outline-secondary border-0">
-    <i class="{{configuration[type].icon}}"></i>
+[class]="'btn script-action-btn ' + type.toLowerCase()"
+[attr.title]="configuration[type].label | titlecase">
+    <i [class]="configuration[type].icon"></i>
+    <span class="btn-label">{{ configuration[type].label }}</span>
 </button>
