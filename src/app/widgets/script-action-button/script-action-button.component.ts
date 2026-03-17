@@ -15,13 +15,13 @@ export class ScriptActionButtonComponent {
   readonly configuration: { [k: string]: Required<Pick<NavbarItem, 'command'>> & NavbarItem } = {
     DOWN: {
       type: 'button',
-      command: (e) => this.scriptService.requestDOWN(),
+      command: (e) => this.scriptService.requestUP(),
       label: 'Próximo',
       icon: 'pi pi-chevron-down',
     },
     UP: {
       type: 'button',
-      command: (e) => this.scriptService.requestUP(),
+      command: (e) => this.scriptService.requestDOWN(),
       label: 'Anterior',
       icon: 'pi pi-chevron-up',
     },

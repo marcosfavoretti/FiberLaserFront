@@ -1,8 +1,8 @@
 export { nestControllerAutoRunMethod } from "./nestControllerAutoRunMethod";
-export { nestControllerCreateBaseNest } from "./nestControllerCreateBaseNest";
 export { nestControllerGetCurrentNestsMethod } from "./nestControllerGetCurrentNestsMethod";
 export { nestControllerGetScript } from "./nestControllerGetScript";
 export { nestControllerManipulateScript } from "./nestControllerManipulateScript";
+export { nestControllerRestartScript } from "./nestControllerRestartScript";
 export { platesControllerChangePlatesFifo } from "./platesControllerChangePlatesFifo";
 export { platesControllerCreatePlate } from "./platesControllerCreatePlate";
 export { platesControllerDeletePlate } from "./platesControllerDeletePlate";

@@ -14,7 +14,7 @@ import { platesControllerReworkPlate } from '../../../api/fiberlaser/client/plat
 import { nestControllerAutoRunMethod } from '../../../api/fiberlaser/client/nestControllerAutoRunMethod';
 import { nestControllerManipulateScript } from '../../../api/fiberlaser/client/nestControllerManipulateScript';
 import { platesControllerChangePlatesFifo } from '../../../api/fiberlaser/client/platesControllerChangePlatesFifo';
-import { nestControllerGetScript, PlatesControllerListPlatesQueryParamsModeEnum } from "@/api/fiberlaser";
+import { nestControllerGetScript, nestControllerRestartScript, PlatesControllerListPlatesQueryParamsModeEnum } from "@/api/fiberlaser";
 
 @Injectable({
     providedIn: 'root',
@@ -43,10 +43,9 @@ export class ApiService {
 
     requestReset(): Observable<void> {
         return from(
-            nestControllerManipulateScript({
-                "action": "restart"
-            }).then(data => data)
-        )
+            nestControllerRestartScript()
+                .then(data => data)
+        );
     }
 
     requestScripts(): Observable<NestScriptresponseDTO[][]> {
