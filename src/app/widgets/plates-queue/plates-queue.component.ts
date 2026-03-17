@@ -9,6 +9,7 @@ export interface MenuItemModify extends MenuItem {
   label_cod_ethos: string;
   label_data_entrega: string;
   label_qtd_pecas: string;
+  label_desc: string,
   label_priority:number;
   productionId: number;
   child?: boolean;
@@ -103,6 +104,7 @@ export class PlatesQueueComponent implements OnInit {
 
         const menuItem: MenuItemModify = {
           label_priority: d.priority,
+          label_desc: d.productName,
           productionId: d.ProductionID,
           label_qtd_pecas: `${identifiersPlates.length}`,
           label_cod_ethos: `${PartCode}`,

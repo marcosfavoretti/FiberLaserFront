@@ -12,6 +12,10 @@ export type ListPlatesResponseDto = {
     */
     ProductionID: number;
     /**
+     * @type string
+    */
+    productName: string;
+    /**
      * @type number
     */
     priority: number;
