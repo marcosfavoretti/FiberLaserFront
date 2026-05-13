@@ -20,6 +20,8 @@ import { nestControllerGetScript, nestControllerRestartScript, PlatesControllerL
     providedIn: 'root',
 })
 export class ApiService {
+    private readonly availablePlatesPageSize = 20;
+
     constructor() { }
 
     requestPedidos(): Observable<ListPlatesResponseDto[]> {
@@ -87,22 +89,8 @@ export class ApiService {
         )
     }
 
-    requestAvaiablePlates(): Observable<PaginatedListPlatesResponseDtoDto> {
-        return from(
-            platesControllerListPlates({
-                mode: PlatesControllerListPlatesQueryParamsModeEnum.avaiable
-            })
-                .then(
-                    (result: PaginatedListPlatesResponseDtoDto) => {
-                        console.log('Resultado bruto da API (available plates):', result);
-                        return result;
-                    }
-                )
-                .catch(error => {
-                    console.error('Erro na chamada da API (available plates):', error);
-                    throw error;
-                })
-        )
+    requestAvaiablePlates(limit: number = this.availablePlatesPageSize): Observable<PaginatedListPlatesResponseDtoDto> {
+        return from(this.fetchAvailablePlates(limit));
     }
 
     requestNotAvaiablePlates(page: number = 1, limit: number = 10, filters?: {
@@ -162,4 +150,41 @@ export class ApiService {
         )
     }
 
-}   
+    private async fetchAvailablePlates(limit: number): Promise<PaginatedListPlatesResponseDtoDto> {
+        try {
+            const firstPage = await platesControllerListPlates({
+                mode: PlatesControllerListPlatesQueryParamsModeEnum.avaiable,
+                page: 1,
+                limit
+            });
+
+            console.log('Resultado bruto da API (available plates):', firstPage);
+
+            const normalizedData = [...firstPage.data];
+            const targetCount = Math.min(limit, firstPage.total);
+            const apiIgnoredRequestedLimit =
+                firstPage.total > normalizedData.length && normalizedData.length < targetCount;
+
+            if (apiIgnoredRequestedLimit && firstPage.totalPages > 1) {
+                for (let page = 2; page <= firstPage.totalPages && normalizedData.length < targetCount; page += 1) {
+                    const nextPage = await platesControllerListPlates({
+                        mode: PlatesControllerListPlatesQueryParamsModeEnum.avaiable,
+                        page,
+                        limit
+                    });
+
+                    normalizedData.push(...nextPage.data);
+                }
+            }
+
+            return {
+                ...firstPage,
+                limit,
+                data: normalizedData.slice(0, targetCount)
+            };
+        } catch (error) {
+            console.error('Erro na chamada da API (available plates):', error);
+            throw error;
+        }
+    }
+}

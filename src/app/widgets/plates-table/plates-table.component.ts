@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core'; // Adicionado OnDe
 import { FormsModule } from '@angular/forms';
 import { ApiService } from '../../shared/service/Api.service';
 // Adicionado Subject e debounceTime
-import { catchError, of, tap, Subject, debounceTime } from 'rxjs'; 
+import { catchError, of, tap, Subject, debounceTime } from 'rxjs';
 import { TableDynamicComponent } from '../table-dynamic/table-dynamic.component';
 import { tableSchema } from './const/table-schema';
 import { ConfirmPopupModule } from 'primeng/confirmpopup';
@@ -52,7 +52,7 @@ export class PlatesTableComponent implements OnInit, OnDestroy { // Implementado
   displayData: DisplayPlateData[] = [];
   tableSchema = tableSchema;
   currentPage: number = 1;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 100;
   totalCount: number = 0;
   totalPages: number = 0;
 
@@ -169,8 +169,8 @@ export class PlatesTableComponent implements OnInit, OnDestroy { // Implementado
         setTimeout(() => this.requestReWork(payload.data.id), 0);
       },
     });
-  }  
-  
+  }
+
   onPageChange(event: any): void {
     this.currentPage = event.page + 1; // PrimeNG pages are 0-indexed
     this.itemsPerPage = event.rows;

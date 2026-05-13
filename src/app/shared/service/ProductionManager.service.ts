@@ -10,6 +10,7 @@ import { PaginatedListPlatesResponseDtoDto } from "@/api/fiberlaser";
     providedIn: 'root'
 })
 export class ProductionManagerService {
+    private readonly availablePlatesLimit = 20;
     private production: Production[] = [];
     private event: EventEmitter<Production[]> = new EventEmitter<Production[]>();
 
@@ -41,7 +42,7 @@ export class ProductionManagerService {
 
     refreshNest(): Observable<PaginatedListPlatesResponseDtoDto> {
         this.production = [];
-        return this.api.requestAvaiablePlates()
+        return this.api.requestAvaiablePlates(this.availablePlatesLimit)
             .pipe(
                 tap((data) => {
                     console.log('Dados recebidos da API:', data);
@@ -59,7 +60,7 @@ export class ProductionManagerService {
     setProduction(production: Production[]): void {
         console.log('Produções recebidas no setProduction:', production);
         console.log('Quantidade de produções:', production.length);
-        this.production.push(...production); // Substituir, em vez de adicionar
+        this.production = [...production];
         console.log('Produções armazenadas:', this.production);
         this.event.emit(this.production);
     }
