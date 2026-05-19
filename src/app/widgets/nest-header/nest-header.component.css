@@ -13,3 +13,7 @@
         align-items: flex-start;
     }
 }
+
+.btn-outline-danger {
+    white-space: nowrap;
+}

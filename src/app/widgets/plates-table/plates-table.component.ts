@@ -16,6 +16,7 @@ import { LoadContentComponent } from '../load-content/load-content.component';
 import { ErrorPopupComponent } from '../error-popup/error-popup.component';
 import type { ListPlatesResponseDto } from '../../../api/fiberlaser/models/ListPlatesResponseDto';
 import type { IdentifierPlateDto } from '../../../api/fiberlaser/models/IdentifierPlateDto';
+import { ProductionManagerService } from '../../shared/service/ProductionManager.service';
 
 export type DisplayPlateData = {
   id: number;
@@ -24,6 +25,8 @@ export type DisplayPlateData = {
   type: string;
   partCode: string;
   done: boolean;
+  isRework: boolean;
+  canDelete: boolean;
   statusText: string;
   productionId: number;
 }
@@ -46,6 +49,7 @@ export class PlatesTableComponent implements OnInit, OnDestroy { // Implementado
   constructor(
     private popUp: PopUpService,
     private api: ApiService,
+    private productionManager: ProductionManagerService,
     private message: MessageService,
     private confirmationService: ConfirmationService) { }
 
@@ -116,7 +120,8 @@ export class PlatesTableComponent implements OnInit, OnDestroy { // Implementado
         tap(() => {
           this.popUp.close('rework');
           this.message.add({ severity: 'success', detail: 'Placa enviada para retrabalho com sucesso', life: 3000 });
-          setTimeout(() => this.loadData(), 100);
+          this.loadData();
+          this.productionManager.refreshAvailablePlates().subscribe();
         }),
         catchError((err) => {
           this.popUp.close('rework');
@@ -139,6 +144,8 @@ export class PlatesTableComponent implements OnInit, OnDestroy { // Implementado
           type: plate.platesType,
           partCode: production.PartCode,
           done: plate.Done,
+          isRework: plate.isRework,
+          canDelete: plate.canDelete,
           statusText: plate.Done ? 'Concluído' : 'Em Processo',
           productionId: production.ProductionID
         };
@@ -152,7 +159,7 @@ export class PlatesTableComponent implements OnInit, OnDestroy { // Implementado
     return plateArr;
   }
 
-  confirmation(payload: { event: Event, data: any }): void {
+  confirmation(payload: { event: Event, data: DisplayPlateData }): void {
     this.confirmationService.confirm({
       target: payload.event.target as EventTarget,
       message: `Você quer mesmo retrabalhar a placa ${payload.data.serialNumber}?`,

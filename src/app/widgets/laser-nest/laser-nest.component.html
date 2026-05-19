@@ -12,7 +12,12 @@
 
         <div name="wrapper-content" class="wrapper-content row m-0 p-0 g-0">
             <div class="col-12 col-md-8 m-0 d-flex flex-column" style="min-height: 0;">
-                <app-nest-header [nest]="nests()[0]" class="mb-2"></app-nest-header>
+                <app-nest-header
+                    [nest]="nests()[0]"
+                    [removeDisabled]="isRemovingNest()"
+                    (removeRequested)="confirmRemoveNest($event)"
+                    class="mb-2"
+                ></app-nest-header>
                 <div class="flex-grow-1 overflow-hidden">
                     <app-nest-preview [nest]="nests()[0]"></app-nest-preview>
                 </div>
@@ -29,4 +34,7 @@
             <no-data message="sem planos no momento! Para gerar um plano clique no botão de play!"></no-data>
         </div>
     }
+
+    <p-toast></p-toast>
+    <p-confirmPopup></p-confirmPopup>
 </div>

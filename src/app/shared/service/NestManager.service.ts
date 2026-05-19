@@ -68,6 +68,23 @@ export class NestManagerService {
             );
     }
 
+    removeCurrentNest(): Observable<FiberLaserNest> {
+        return this.api.requestRemoveCurrentNest()
+            .pipe(
+                tap((data) => {
+                    this.popUp.close('nest.remove');
+                    console.log('NestManagerService: Nest removido com sucesso:', data);
+                    this.setNest([]);
+                }),
+                catchError((err) => {
+                    this.popUp.close('nest.remove');
+                    console.error('NestManagerService: Erro ao remover nest atual:', err);
+                    this.popUp.open('error.nest', ErrorPopupComponent, err, true);
+                    throw err;
+                })
+            );
+    }
+
     removeNest(nest: FiberLaserNest): void {
         const index = this.nest.indexOf(nest);
         if (index !== -1) {

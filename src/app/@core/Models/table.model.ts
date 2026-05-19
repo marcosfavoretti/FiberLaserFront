@@ -1,8 +1,20 @@
+export interface TableRowAction {
+    key: string;
+    icon: string;
+    label?: string;
+    visible?: boolean;
+    disabled?: boolean;
+    severity?: "secondary" | "success" | "info" | "warn" | "help" | "danger" | "contrast";
+    outlined?: boolean;
+    rounded?: boolean;
+}
+
 export interface tableColumns{
     alias: string;
     path: string;
     isImg?: boolean;
     isCheckBox?: boolean;
+    isActionList?: boolean;
     toTotalize?: boolean;
 }
 export interface ghostControllColumn{

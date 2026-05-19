@@ -102,13 +102,26 @@
         </div>
         }
         @else if (key?.isCheckBox) {
-        <!-- <button class="btn btn-group btn-secondary" (click)="onNewCheckEvent(item, key, $event)">
-          <i class="pi pi-undo"></i>
-        </button> -->
         <p-button (onClick)="onNewCheckEvent({
           event: $event,
           data: item
         })" icon="pi pi-hammer"></p-button>
+        }
+        @else if (key?.isActionList) {
+        <div class="d-flex justify-content-center flex-wrap gap-2">
+          @for (action of getRowActions(item); track action.key) {
+          <p-button
+            [icon]="action.icon"
+            [severity]="action.severity || 'secondary'"
+            [rounded]="action.rounded ?? true"
+            [outlined]="action.outlined ?? true"
+            [disabled]="action.disabled === true"
+            [attr.aria-label]="action.label || action.key"
+            [attr.title]="action.label || action.key"
+            (onClick)="onRowAction({ event: $event, data: item, action: action })"
+          ></p-button>
+          }
+        </div>
         }
         @else {
         {{getNestedValue(item, key.path)}}

@@ -33,4 +33,12 @@ export type IdentifierPlateDto = {
      * @type string
     */
     CodCliente: string;
+    /**
+     * @type boolean
+    */
+    isRework: boolean;
+    /**
+     * @type boolean
+    */
+    canDelete: boolean;
 };

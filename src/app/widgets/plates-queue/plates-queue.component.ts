@@ -4,6 +4,15 @@ import { MenuItem } from 'primeng/api';
 import { ProductionManagerService } from '../../shared/service/ProductionManager.service';
 import { Production } from '../../shared/models/Production';
 import { tap } from 'rxjs';
+import { IdentifiersPlate } from '../../shared/models/IdentifiersPlate';
+
+export interface DeletablePlateView {
+  id: number;
+  serialNumber: string;
+  plateType: string;
+  isRework: boolean;
+  canDelete: boolean;
+}
 
 export interface MenuItemModify extends MenuItem {
   label_cod_ethos: string;
@@ -14,6 +23,7 @@ export interface MenuItemModify extends MenuItem {
   productionId: number;
   child?: boolean;
   tipo: string;
+  deletablePlates: DeletablePlateView[];
 }
 
 
@@ -90,6 +100,15 @@ export class PlatesQueueComponent implements OnInit {
         // Verificar se Identifiersplates existe e não é null/undefined
         const identifiersPlates = d.Identifiersplates || [];
         console.log('Identifiersplates:', identifiersPlates);
+        const deletablePlates = identifiersPlates
+          .filter((plate: IdentifiersPlate) => plate.canDelete)
+          .map((plate: IdentifiersPlate) => ({
+            id: plate.IdentifiersPlatesID,
+            serialNumber: plate.Serial,
+            plateType: plate.platesType,
+            isRework: plate.isRework,
+            canDelete: plate.canDelete
+          }));
 
         // Verificar se há placas para determinar o tipo
         let tipo = "None";
@@ -113,6 +132,7 @@ export class PlatesQueueComponent implements OnInit {
           child: false,
           label: `${d.OrderNum}`, // Usando OrderNum como fallback para o label
           tipo: tipo,
+          deletablePlates,
         };
         console.log('MenuItem criado:', menuItem);
         return menuItem;

@@ -8,6 +8,7 @@ export type { NestControllerAutoRunMethod200, NestControllerAutoRunMethod400, Ne
 export type { NestControllerGetCurrentNestsMethod200, NestControllerGetCurrentNestsMethod500, NestControllerGetCurrentNestsMethodQuery, NestControllerGetCurrentNestsMethodQueryResponse } from "./models/NestControllerGetCurrentNestsMethod";
 export type { NestControllerGetScript200, NestControllerGetScript500, NestControllerGetScriptQuery, NestControllerGetScriptQueryResponse } from "./models/NestControllerGetScript";
 export type { NestControllerManipulateScript200, NestControllerManipulateScript500, NestControllerManipulateScriptMutation, NestControllerManipulateScriptMutationRequest, NestControllerManipulateScriptMutationResponse } from "./models/NestControllerManipulateScript";
+export type { NestControllerRemoveCurrentNestMethod200, NestControllerRemoveCurrentNestMethod400, NestControllerRemoveCurrentNestMethod500, NestControllerRemoveCurrentNestMethodMutation, NestControllerRemoveCurrentNestMethodMutationResponse } from "./models/NestControllerRemoveCurrentNestMethod";
 export type { NestControllerRestartScript200, NestControllerRestartScript500, NestControllerRestartScriptMutation, NestControllerRestartScriptMutationResponse } from "./models/NestControllerRestartScript";
 export type { NestScriptresponseDTO } from "./models/NestScriptresponseDTO";
 export type { PaginatedListPlatesResponseDtoDto } from "./models/PaginatedListPlatesResponseDtoDto";
@@ -16,6 +17,7 @@ export type { PartNameDto } from "./models/PartNameDto";
 export type { PlatesControllerChangePlatesFifo200, PlatesControllerChangePlatesFifo400, PlatesControllerChangePlatesFifo500, PlatesControllerChangePlatesFifoMutation, PlatesControllerChangePlatesFifoMutationRequest, PlatesControllerChangePlatesFifoMutationResponse } from "./models/PlatesControllerChangePlatesFifo";
 export type { PlatesControllerCreatePlate200, PlatesControllerCreatePlate400, PlatesControllerCreatePlate404, PlatesControllerCreatePlate500, PlatesControllerCreatePlateMutation, PlatesControllerCreatePlateMutationRequest, PlatesControllerCreatePlateMutationResponse } from "./models/PlatesControllerCreatePlate";
 export type { PlatesControllerDeletePlate200, PlatesControllerDeletePlate400, PlatesControllerDeletePlate404, PlatesControllerDeletePlate500, PlatesControllerDeletePlateMutation, PlatesControllerDeletePlateMutationRequest, PlatesControllerDeletePlateMutationResponse } from "./models/PlatesControllerDeletePlate";
+export type { PlatesControllerDeleteSinglePlate200, PlatesControllerDeleteSinglePlate400, PlatesControllerDeleteSinglePlate404, PlatesControllerDeleteSinglePlate500, PlatesControllerDeleteSinglePlateMutation, PlatesControllerDeleteSinglePlateMutationResponse, PlatesControllerDeleteSinglePlatePathParams } from "./models/PlatesControllerDeleteSinglePlate";
 export type { PlatesControllerListPlates200, PlatesControllerListPlatesQuery, PlatesControllerListPlatesQueryParams, PlatesControllerListPlatesQueryResponse } from "./models/PlatesControllerListPlates";
 export type { PlatesControllerReworkPlate200, PlatesControllerReworkPlate400, PlatesControllerReworkPlate404, PlatesControllerReworkPlate500, PlatesControllerReworkPlateMutation, PlatesControllerReworkPlateMutationResponse, PlatesControllerReworkPlatePathParams } from "./models/PlatesControllerReworkPlate";
 export type { ProductionControllerRequestOrders200, ProductionControllerRequestOrdersQuery, ProductionControllerRequestOrdersQueryResponse } from "./models/ProductionControllerRequestOrders";
@@ -26,10 +28,12 @@ export { nestControllerAutoRunMethod } from "./client/nestControllerAutoRunMetho
 export { nestControllerGetCurrentNestsMethod } from "./client/nestControllerGetCurrentNestsMethod";
 export { nestControllerGetScript } from "./client/nestControllerGetScript";
 export { nestControllerManipulateScript } from "./client/nestControllerManipulateScript";
+export { nestControllerRemoveCurrentNestMethod } from "./client/nestControllerRemoveCurrentNestMethod";
 export { nestControllerRestartScript } from "./client/nestControllerRestartScript";
 export { platesControllerChangePlatesFifo } from "./client/platesControllerChangePlatesFifo";
 export { platesControllerCreatePlate } from "./client/platesControllerCreatePlate";
 export { platesControllerDeletePlate } from "./client/platesControllerDeletePlate";
+export { platesControllerDeleteSinglePlate } from "./client/platesControllerDeleteSinglePlate";
 export { platesControllerListPlates } from "./client/platesControllerListPlates";
 export { platesControllerReworkPlate } from "./client/platesControllerReworkPlate";
 export { productionControllerRequestOrders } from "./client/productionControllerRequestOrders";

@@ -14,7 +14,9 @@ export class DemoPlateService {
             platesType: "DEFAULT",
             Done: false,
             QrCode: "DEMO001_QR_CODE",
-            CodCliente: "CLIENTE_DEMO"
+            CodCliente: "CLIENTE_DEMO",
+            isRework: false,
+            canDelete: false
         },
         {
             type: "Demo Plate",
@@ -23,7 +25,9 @@ export class DemoPlateService {
             platesType: "DYNAPACFOPS",
             Done: false,
             QrCode: "DEMO002_QR_CODE",
-            CodCliente: "CLIENTE_DEMO"
+            CodCliente: "CLIENTE_DEMO",
+            isRework: false,
+            canDelete: false
         },
         {
             type: "Demo Plate",
@@ -32,7 +36,9 @@ export class DemoPlateService {
             platesType: "_3CXJCBPlate",
             Done: false,
             QrCode: "DEMO003_QR_CODE",
-            CodCliente: "CLIENTE_DEMO"
+            CodCliente: "CLIENTE_DEMO",
+            isRework: false,
+            canDelete: false
         },
         {
             type: "Demo Plate",
@@ -41,7 +47,9 @@ export class DemoPlateService {
             platesType: "_426JCBPLATE",
             Done: false,
             QrCode: "DEMO004_QR_CODE",
-            CodCliente: "CLIENTE_DEMO"
+            CodCliente: "CLIENTE_DEMO",
+            isRework: false,
+            canDelete: false
         },
         {
             type: "Demo Plate",
@@ -50,7 +58,9 @@ export class DemoPlateService {
             platesType: "DYNAPACROPS",
             Done: false,
             QrCode: "DEMO005_QR_CODE",
-            CodCliente: "CLIENTE_DEMO"
+            CodCliente: "CLIENTE_DEMO",
+            isRework: false,
+            canDelete: false
         },
         {
             type: "Demo Plate",
@@ -59,7 +69,9 @@ export class DemoPlateService {
             platesType: "D1000",
             Done: false,
             QrCode: "DEMO006_QR_CODE",
-            CodCliente: "CLIENTE_DEMO"
+            CodCliente: "CLIENTE_DEMO",
+            isRework: false,
+            canDelete: false
         },
         {
             type: "Demo Plate",
@@ -68,7 +80,9 @@ export class DemoPlateService {
             platesType: "D600",
             Done: false,
             QrCode: "DEMO007_QR_CODE",
-            CodCliente: "CLIENTE_DEMO"
+            CodCliente: "CLIENTE_DEMO",
+            isRework: false,
+            canDelete: false
         },
         {
             type: "Demo Plate",
@@ -77,7 +91,9 @@ export class DemoPlateService {
             platesType: "D800",
             Done: false,
             QrCode: "DEMO008_QR_CODE",
-            CodCliente: "CLIENTE_DEMO"
+            CodCliente: "CLIENTE_DEMO",
+            isRework: false,
+            canDelete: false
         },
         {
             type: "Demo Plate",
@@ -86,7 +102,9 @@ export class DemoPlateService {
             platesType: "D1250",
             Done: false,
             QrCode: "DEMO009_QR_CODE",
-            CodCliente: "CLIENTE_DEMO"
+            CodCliente: "CLIENTE_DEMO",
+            isRework: false,
+            canDelete: false
         }
     ];
 

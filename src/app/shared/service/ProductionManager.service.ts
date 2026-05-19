@@ -40,6 +40,10 @@ export class ProductionManagerService {
         return this.production;
     }
 
+    refreshAvailablePlates(): Observable<PaginatedListPlatesResponseDtoDto> {
+        return this.refreshNest();
+    }
+
     refreshNest(): Observable<PaginatedListPlatesResponseDtoDto> {
         this.production = [];
         return this.api.requestAvaiablePlates(this.availablePlatesLimit)

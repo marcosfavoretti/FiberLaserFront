@@ -6,6 +6,7 @@ import type { UserNestResponseDto } from '../../../api/fiberlaser/models/UserNes
 import type { NestScriptresponseDTO } from '../../../api/fiberlaser/models/NestScriptresponseDTO';
 import type { PlatesControllerListPlatesQueryParams } from '../../../api/fiberlaser/models/PlatesControllerListPlates';
 import type { PaginatedListPlatesResponseDtoDto } from '../../../api/fiberlaser/models/PaginatedListPlatesResponseDtoDto';
+import type { IdentifierPlateDto } from '../../../api/fiberlaser/models/IdentifierPlateDto';
 // Importando os clients gerados pelo Kubb
 import { productionControllerRequestOrders } from '../../../api/fiberlaser/client/productionControllerRequestOrders';
 import { nestControllerGetCurrentNestsMethod } from '../../../api/fiberlaser/client/nestControllerGetCurrentNestsMethod';
@@ -14,6 +15,8 @@ import { platesControllerReworkPlate } from '../../../api/fiberlaser/client/plat
 import { nestControllerAutoRunMethod } from '../../../api/fiberlaser/client/nestControllerAutoRunMethod';
 import { nestControllerManipulateScript } from '../../../api/fiberlaser/client/nestControllerManipulateScript';
 import { platesControllerChangePlatesFifo } from '../../../api/fiberlaser/client/platesControllerChangePlatesFifo';
+import { platesControllerDeleteSinglePlate } from '../../../api/fiberlaser/client/platesControllerDeleteSinglePlate';
+import { nestControllerRemoveCurrentNestMethod } from '../../../api/fiberlaser/client/nestControllerRemoveCurrentNestMethod';
 import { nestControllerGetScript, nestControllerRestartScript, PlatesControllerListPlatesQueryParamsModeEnum } from "@/api/fiberlaser";
 
 @Injectable({
@@ -65,11 +68,11 @@ export class ApiService {
         );
     }
 
-    requestPlateRework(plateId: number): Observable<void> {
+    requestPlateRework(plateId: number): Observable<IdentifierPlateDto> {
         return from(
             platesControllerReworkPlate(plateId)
                 .then(
-                    () => { },
+                    result => result,
                     error => {
                         throw error;
                     }
@@ -135,6 +138,27 @@ export class ApiService {
                     }
                 )
         )
+    }
+
+    requestRemoveCurrentNest(): Observable<UserNestResponseDto> {
+        return from(
+            nestControllerRemoveCurrentNestMethod()
+                .then(
+                    result => result
+                )
+        );
+    }
+
+    requestDeletePlate(plateId: number): Observable<void> {
+        return from(
+            platesControllerDeleteSinglePlate(plateId)
+                .then(
+                    () => undefined,
+                    error => {
+                        throw error;
+                    }
+                )
+        );
     }
 
     /**

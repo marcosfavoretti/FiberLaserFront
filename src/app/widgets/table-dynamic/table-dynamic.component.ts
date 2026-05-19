@@ -3,7 +3,7 @@ import { Table, TableModule } from 'primeng/table';
 import { CommonModule } from '@angular/common';
 import { ImageModule } from 'primeng/image';
 import { FormsModule } from '@angular/forms';
-import { tableColumns, TableModel } from '../../@core/Models/table.model';
+import { tableColumns, TableModel, TableRowAction } from '../../@core/Models/table.model';
 import { ButtonModule } from 'primeng/button';
 import { IconFieldModule } from 'primeng/iconfield';
 import { InputIconModule } from 'primeng/inputicon';
@@ -27,6 +27,7 @@ export class TableDynamicComponent implements OnChanges {
   @Input() data: any[] = []; // O array de objetos a ser exibido na tabela
   @Input() tableModel!: TableModel
   @Output('OnChecked') onChecked: EventEmitter<{ event: Event, data: any }> = new EventEmitter();
+  @Output('OnAction') onAction: EventEmitter<{ event: Event, data: any, action: TableRowAction }> = new EventEmitter();
   @Input() Externalfilter?: { value: string, filed: string, method: 'contains' }
   // Função auxiliar
   @ViewChild('dt2') dt2!: Table
@@ -35,6 +36,18 @@ export class TableDynamicComponent implements OnChanges {
 
   onNewCheckEvent(payload: { event: Event, data: any }): void {
     this.onChecked.emit(payload);
+  }
+
+  onRowAction(payload: { event: Event, data: any, action: TableRowAction }): void {
+    this.onAction.emit(payload);
+  }
+
+  getRowActions(item: any): TableRowAction[] {
+    if (!Array.isArray(item?.actions)) {
+      return [];
+    }
+
+    return item.actions.filter((action: TableRowAction) => action.visible !== false);
   }
 
   search(table: Table, event: any):void{

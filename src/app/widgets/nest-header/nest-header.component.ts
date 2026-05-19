@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FiberLaserNest } from '../../shared/models/FiberLaserNest';
 
 @Component({
@@ -9,4 +9,10 @@ import { FiberLaserNest } from '../../shared/models/FiberLaserNest';
 })
 export class NestHeaderComponent {
   @Input('nest') nest!: FiberLaserNest
+  @Input() removeDisabled: boolean = false;
+  @Output() removeRequested = new EventEmitter<Event>();
+
+  onRemoveRequested(event: Event): void {
+    this.removeRequested.emit(event);
+  }
 }

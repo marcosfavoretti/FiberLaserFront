@@ -3,7 +3,6 @@
 <div class="queue-container">
     @for (item of data; track $index) {
     <div class="queue-item animate-slide-in" [class.queue-item-priority]="item.items">
-        @if (!item?.items) {
         <div class="queue-item-header">
             <div class="queue-item-icon">
                 <i [class]="item.icon"></i>
@@ -45,6 +44,18 @@
             </div>
         </div>
         <div class="queue-item-actions">
+            @if (item.deletablePlates.length > 0) {
+            <button
+                class="btn-secondary-action"
+                [class.btn-secondary-action-open]="isExpanded(item.productionId)"
+                (click)="togglePlateList(item.productionId, $event)"
+                title="Mostrar plaquinhas excluíveis"
+            >
+                <i class="pi" [class.pi-chevron-down]="!isExpanded(item.productionId)" [class.pi-chevron-up]="isExpanded(item.productionId)"></i>
+                <span>Excluir Plaquinhas</span>
+                <span class="queue-item-badge">{{ item.deletablePlates.length }}</span>
+            </button>
+            }
             <button class="btn-priority" [class.btn-priority-loading]="isPrioritizing(item.productionId)"
                 [disabled]="isPrioritizing(item.productionId)" (click)="requestPriority(item.productionId, $event)"
                 title="Solicitar aumento de prioridade">
@@ -57,67 +68,40 @@
                 }
             </button>
         </div>
-        }
-        @else {
-        <p-panelmenu [multiple]="true" styleClass="queue-panel-menu" [model]="data">
-            <ng-template #item pTemplate="item" let-item>
-                @if (item.child) {
-                <div (click)="item.clickFn()" class="queue-nested-item">
-                    <span>Código: {{ item.label }}</span>
+
+        @if (isExpanded(item.productionId)) {
+        <div class="deletable-plates-panel">
+            <div class="deletable-plates-header">
+                <span class="deletable-plates-title">Plaquinhas excluíveis</span>
+                <span class="deletable-plates-subtitle">Somente retrabalhos ainda permitidos pelo backend</span>
+            </div>
+
+            @for (plate of item.deletablePlates; track plate.id) {
+            <div class="deletable-plate-row">
+                <div class="deletable-plate-content">
+                    <span class="deletable-plate-serial">{{ plate.serialNumber }}</span>
+                    <span class="deletable-plate-type">{{ plate.plateType }}</span>
                 </div>
-                } @else {
-                <div class="queue-item animate-slide-in">
-                    <div class="queue-item-header">
-                        <div class="queue-item-icon">
-                            <i [class]="item.icon"></i>
-                        </div>
-                        <div class="queue-item-content">
-                            <div class="queue-item-row">
-                                <span class="queue-item-label">Production ID</span>
-                                <span class="queue-item-value queue-item-id">#{{ item.productionId }}</span>
-                            </div>
-                            <div class="queue-item-row">
-                                <span class="queue-item-label">Pedido</span>
-                                <span class="queue-item-value">{{ item.label }}</span>
-                            </div>
-                            <div class="queue-item-row">
-                                <span class="queue-item-label">Código Ethos</span>
-                                <span class="queue-item-value queue-item-code">{{ item.label_cod_ethos }}</span>
-                            </div>
-                            <div class="queue-item-row">
-                                <span class="queue-item-label">Data Entrega</span>
-                                <span class="queue-item-value">{{ item.label_data_entrega | date:'dd/MM/yyyy':'UTC'
-                                    }}</span>
-                            </div>
-                            <div class="queue-item-row">
-                                <span class="queue-item-label">Qtd Peças</span>
-                                <span class="queue-item-value queue-item-badge">{{ item.label_qtd_pecas }}</span>
-                            </div>
-                            <div class="queue-item-row">
-                                <span class="queue-item-label">Tipo</span>
-                                <span class="queue-item-value queue-item-type">{{ item.tipo }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="queue-item-actions">
-                        <button class="btn-priority" [class.btn-priority-loading]="isPrioritizing(item.productionId)"
-                            [disabled]="isPrioritizing(item.productionId)"
-                            (click)="requestPriority(item.productionId, $event)"
-                            title="Solicitar aumento de prioridade">
-                            @if (isPrioritizing(item.productionId)) {
-                            <i class="pi pi-spinner pi-spin"></i>
-                            <span>Processando...</span>
-                            } @else {
-                            <i class="pi pi-arrow-up"></i>
-                            <span>Subir Prioridade</span>
-                            }
-                        </button>
-                    </div>
-                </div>
-                }
-            </ng-template>
-        </p-panelmenu>
+                <button
+                    class="btn-delete-plate"
+                    [disabled]="isDeletingPlate(plate.id)"
+                    (click)="confirmDeletePlate(item, plate.id, plate.serialNumber, $event)"
+                    title="Excluir plaquinha"
+                >
+                    @if (isDeletingPlate(plate.id)) {
+                    <i class="pi pi-spinner pi-spin"></i>
+                    <span>Excluindo...</span>
+                    } @else {
+                    <i class="pi pi-trash"></i>
+                    <span>Excluir</span>
+                    }
+                </button>
+            </div>
+            }
+        </div>
         }
     </div>
     }
 </div>
+
+<p-confirmPopup></p-confirmPopup>

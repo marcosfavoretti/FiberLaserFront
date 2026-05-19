@@ -9,17 +9,17 @@ import type { ProductionDto } from "./ProductionDto";
 export type PlatesControllerCreatePlate200 = IdentifierPlateDto[];
 
 /**
- * @description As placas para essa ordem já foram geradas
+ * @description O plano não pode ser gerado porque já foi gerado antes ou porque faltam conversão, serialização ou dados obrigatórios do item
 */
 export type PlatesControllerCreatePlate400 = any;
 
 /**
- * @description A producao nao foi encontrada
+ * @description Não foi possível localizar o plano informado para gerar as plaquinhas
 */
 export type PlatesControllerCreatePlate404 = any;
 
 /**
- * @description Problemas ao gerar as plaquinhas
+ * @description Não foi possível gerar as plaquinhas deste plano agora
 */
 export type PlatesControllerCreatePlate500 = any;
 

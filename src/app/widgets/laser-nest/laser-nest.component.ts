@@ -8,6 +8,12 @@ import { DataScriptService } from '../../shared/service/DataScript.service';
 import { NestHeaderComponent } from '../nest-header/nest-header.component';
 import { PreviewDataComponent } from "../preview-data/preview-delivery.component";
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
+import { catchError, of, tap } from 'rxjs';
+import { LoadContentComponent } from '../load-content/load-content.component';
+import { PopUpService } from '../../shared/service/pop-up.service';
 
 @Component({
   selector: 'app-laser-nest',
@@ -18,6 +24,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     NoDataComponent,
     NestHeaderComponent,
     PreviewDataComponent,
+    ToastModule,
+    ConfirmPopupModule,
   ],
   templateUrl: './laser-nest.component.html',
   styleUrl: './laser-nest.component.css'
@@ -26,9 +34,13 @@ export class LaserNestComponent implements OnInit {
   private nestManager = inject(NestManagerService);
   private dataScriptService = inject(DataScriptService);
   private destroyRef = inject(DestroyRef);
+  private confirmationService = inject(ConfirmationService);
+  private messageService = inject(MessageService);
+  private popUp = inject(PopUpService);
   private deliveryStarted = false;
   nests = signal<FiberLaserNest[]>([]);
   currentNestDone = signal<boolean>(false);
+  isRemovingNest = signal<boolean>(false);
 
   refreshNest(): void {
     console.log('LaserNestComponent: Chamando refreshNest...');
@@ -51,6 +63,59 @@ export class LaserNestComponent implements OnInit {
           this.nests.set([]);
         }
       });
+  }
+
+  confirmRemoveNest(event: Event): void {
+    const currentNest = this.nests()[0];
+
+    if (!currentNest || this.isRemovingNest()) {
+      return;
+    }
+
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: `Você quer mesmo remover o nest ${currentNest.Name}?`,
+      icon: 'pi pi-exclamation-triangle',
+      rejectButtonProps: {
+        label: 'Cancelar',
+        severity: 'secondary',
+        outlined: true
+      },
+      acceptButtonProps: {
+        label: 'Remover',
+        severity: 'danger'
+      },
+      accept: () => {
+        this.requestRemoveNest();
+      },
+    });
+  }
+
+  private requestRemoveNest(): void {
+    this.isRemovingNest.set(true);
+    this.popUp.open('nest.remove', LoadContentComponent, [], false);
+
+    this.nestManager.removeCurrentNest()
+      .pipe(
+        tap(() => {
+          this.messageService.add({
+            severity: 'success',
+            detail: 'Nest atual removido com sucesso',
+            life: 3000
+          });
+          this.dataScriptService.setNewData([]);
+          this.nests.set([]);
+          this.currentNestDone.set(false);
+          this.deliveryStarted = false;
+          this.isRemovingNest.set(false);
+        }),
+        catchError(() => {
+          this.isRemovingNest.set(false);
+          return of(null);
+        }),
+        takeUntilDestroyed(this.destroyRef)
+      )
+      .subscribe();
   }
 
   ngOnInit(): void {
