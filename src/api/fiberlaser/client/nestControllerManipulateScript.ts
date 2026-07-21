@@ -8,12 +8,12 @@ import type { NestControllerManipulateScriptMutationRequest, NestControllerManip
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getNestControllerManipulateScriptUrl() {
-  const res = { method: 'POST', url: `http://192.168.99.129:9192/nest/script` as const }
+  const res = { method: 'POST', url: `https://fiberlaser.ethos.ind.br/api/nest/script` as const }
   return res
 }
 
 /**
- * {@link /nest/script}
+ * {@link /api/nest/script}
  */
 export async function nestControllerManipulateScript(data: NestControllerManipulateScriptMutationRequest, config: Partial<RequestConfig<NestControllerManipulateScriptMutationRequest>> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config

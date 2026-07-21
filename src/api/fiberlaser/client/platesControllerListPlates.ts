@@ -8,12 +8,12 @@ import type { PlatesControllerListPlatesQueryResponse, PlatesControllerListPlate
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getPlatesControllerListPlatesUrl() {
-  const res = { method: 'GET', url: `http://192.168.99.129:9192/plates` as const }
+  const res = { method: 'GET', url: `https://fiberlaser.ethos.ind.br/api/plates` as const }
   return res
 }
 
 /**
- * {@link /plates}
+ * {@link /api/plates}
  */
 export async function platesControllerListPlates(params?: PlatesControllerListPlatesQueryParams, config: Partial<RequestConfig> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config

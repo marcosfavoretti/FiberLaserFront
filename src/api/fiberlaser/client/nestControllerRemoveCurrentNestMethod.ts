@@ -8,12 +8,12 @@ import type { NestControllerRemoveCurrentNestMethodMutationResponse, NestControl
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getNestControllerRemoveCurrentNestMethodUrl() {
-  const res = { method: 'POST', url: `http://192.168.99.129:9192/nest/remove` as const }
+  const res = { method: 'POST', url: `https://fiberlaser.ethos.ind.br/api/nest/remove` as const }
   return res
 }
 
 /**
- * {@link /nest/remove}
+ * {@link /api/nest/remove}
  */
 export async function nestControllerRemoveCurrentNestMethod(config: Partial<RequestConfig> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config

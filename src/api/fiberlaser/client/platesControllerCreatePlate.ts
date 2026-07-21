@@ -8,12 +8,12 @@ import type { PlatesControllerCreatePlateMutationRequest, PlatesControllerCreate
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getPlatesControllerCreatePlateUrl() {
-  const res = { method: 'POST', url: `http://192.168.99.129:9192/plates` as const }
+  const res = { method: 'POST', url: `https://fiberlaser.ethos.ind.br/api/plates` as const }
   return res
 }
 
 /**
- * {@link /plates}
+ * {@link /api/plates}
  */
 export async function platesControllerCreatePlate(data: PlatesControllerCreatePlateMutationRequest, config: Partial<RequestConfig<PlatesControllerCreatePlateMutationRequest>> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config

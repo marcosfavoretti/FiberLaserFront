@@ -8,12 +8,12 @@ import type { NestControllerRestartScriptMutationResponse, NestControllerRestart
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getNestControllerRestartScriptUrl() {
-  const res = { method: 'POST', url: `http://192.168.99.129:9192/nest/script/restart` as const }
+  const res = { method: 'POST', url: `https://fiberlaser.ethos.ind.br/api/nest/script/restart` as const }
   return res
 }
 
 /**
- * {@link /nest/script/restart}
+ * {@link /api/nest/script/restart}
  */
 export async function nestControllerRestartScript(config: Partial<RequestConfig> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config

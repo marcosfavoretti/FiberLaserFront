@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
-import { environment } from '../../@core/const/environment';
 import { Events } from '../../@core/enum/Events.enum';
 import { ProductionManagerService } from './ProductionManager.service';
 import { NestManagerService } from './NestManager.service';
@@ -19,7 +18,8 @@ export class WsClientService {
         private dataService: DataScriptService
 
     ) {
-        const wsUrl = `ws://${environment.WS_IP}:${environment.WS_PORT}/fiberlaser`
+        const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const wsUrl = `${wsProtocol}//${window.location.host}/fiberlaser`;
         console.log(wsUrl);
         const socket = io(wsUrl, {
             forceNew: true,

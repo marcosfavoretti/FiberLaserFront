@@ -8,12 +8,12 @@ import type { NestControllerGetCurrentNestsMethodQueryResponse, NestControllerGe
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getNestControllerGetCurrentNestsMethodUrl() {
-  const res = { method: 'GET', url: `http://192.168.99.129:9192/nest/current` as const }
+  const res = { method: 'GET', url: `https://fiberlaser.ethos.ind.br/api/nest/current` as const }
   return res
 }
 
 /**
- * {@link /nest/current}
+ * {@link /api/nest/current}
  */
 export async function nestControllerGetCurrentNestsMethod(config: Partial<RequestConfig> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config

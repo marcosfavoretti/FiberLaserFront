@@ -8,12 +8,12 @@ import type { ProductionControllerRequestOrdersQueryResponse } from "../models/P
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getProductionControllerRequestOrdersUrl() {
-  const res = { method: 'GET', url: `http://192.168.99.129:9192/production` as const }
+  const res = { method: 'GET', url: `https://fiberlaser.ethos.ind.br/api/production` as const }
   return res
 }
 
 /**
- * {@link /production}
+ * {@link /api/production}
  */
 export async function productionControllerRequestOrders(config: Partial<RequestConfig> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config

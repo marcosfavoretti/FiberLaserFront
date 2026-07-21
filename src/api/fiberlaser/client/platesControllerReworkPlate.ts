@@ -8,12 +8,12 @@ import type { PlatesControllerReworkPlateMutationResponse, PlatesControllerRewor
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getPlatesControllerReworkPlateUrl(idPlate: PlatesControllerReworkPlatePathParams["idPlate"]) {
-  const res = { method: 'POST', url: `http://192.168.99.129:9192/plates/${idPlate}/rework` as const }
+  const res = { method: 'POST', url: `https://fiberlaser.ethos.ind.br/api/plates/${idPlate}/rework` as const }
   return res
 }
 
 /**
- * {@link /plates/:idPlate/rework}
+ * {@link /api/plates/:idPlate/rework}
  */
 export async function platesControllerReworkPlate(idPlate: PlatesControllerReworkPlatePathParams["idPlate"], config: Partial<RequestConfig> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config

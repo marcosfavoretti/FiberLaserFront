@@ -8,12 +8,12 @@ import type { PlatesControllerChangePlatesFifoMutationRequest, PlatesControllerC
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getPlatesControllerChangePlatesFifoUrl() {
-  const res = { method: 'POST', url: `http://192.168.99.129:9192/plates/fifo` as const }
+  const res = { method: 'POST', url: `https://fiberlaser.ethos.ind.br/api/plates/fifo` as const }
   return res
 }
 
 /**
- * {@link /plates/fifo}
+ * {@link /api/plates/fifo}
  */
 export async function platesControllerChangePlatesFifo(data: PlatesControllerChangePlatesFifoMutationRequest, config: Partial<RequestConfig<PlatesControllerChangePlatesFifoMutationRequest>> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config

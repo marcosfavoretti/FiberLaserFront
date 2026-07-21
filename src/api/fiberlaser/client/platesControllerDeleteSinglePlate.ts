@@ -8,12 +8,12 @@ import type { PlatesControllerDeleteSinglePlateMutationResponse, PlatesControlle
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getPlatesControllerDeleteSinglePlateUrl(idPlate: PlatesControllerDeleteSinglePlatePathParams["idPlate"]) {
-  const res = { method: 'DELETE', url: `http://192.168.99.129:9192/plates/${idPlate}` as const }
+  const res = { method: 'DELETE', url: `https://fiberlaser.ethos.ind.br/api/plates/${idPlate}` as const }
   return res
 }
 
 /**
- * {@link /plates/:idPlate}
+ * {@link /api/plates/:idPlate}
  */
 export async function platesControllerDeleteSinglePlate(idPlate: PlatesControllerDeleteSinglePlatePathParams["idPlate"], config: Partial<RequestConfig> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config

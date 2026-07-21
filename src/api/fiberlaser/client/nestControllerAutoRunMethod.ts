@@ -8,12 +8,12 @@ import type { NestControllerAutoRunMethodMutationResponse, NestControllerAutoRun
 import type { Client, RequestConfig, ResponseErrorConfig } from "@/client";
 
 function getNestControllerAutoRunMethodUrl() {
-  const res = { method: 'POST', url: `http://192.168.99.129:9192/nest/run` as const }
+  const res = { method: 'POST', url: `https://fiberlaser.ethos.ind.br/api/nest/run` as const }
   return res
 }
 
 /**
- * {@link /nest/run}
+ * {@link /api/nest/run}
  */
 export async function nestControllerAutoRunMethod(config: Partial<RequestConfig> & { client?: Client } = {}) {
   const { client: request = fetch, ...requestConfig } = config
