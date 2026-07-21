@@ -31,16 +31,6 @@ RUN npm ci
 # Copy source code
 COPY . .
 
-# Set production environment variables for Kubb generation
-ARG API_FIBERLASER
-ARG API_FIBERLASER_SWAGGER
-ENV API_FIBERLASER=${API_FIBERLASER}
-ENV API_FIBERLASER_SWAGGER=${API_FIBERLASER_SWAGGER}
-ENV TLS_REJECT_UNAUTHORIZED=0
-
-# Generate Kubb clients with production configuration
-RUN npm run generate
-
 # Build the Angular app in production mode (production is default config)
 RUN npm run build
 
