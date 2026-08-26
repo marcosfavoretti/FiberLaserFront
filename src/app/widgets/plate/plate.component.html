@@ -11,6 +11,8 @@
         </div>
     </div>
 
+    <plate-inox *ngSwitchCase="types.DEFAULT_PLATE_INOX" [plate]="plate" />
+
     <div *ngSwitchCase="types.DYNAPACFOPS" class="d-flex flex-column p-2 bg-secondary-subtle border border-black demo-plate">
         <div class="d-flex justify-content-between">
             <div class="d-flex flex-column">

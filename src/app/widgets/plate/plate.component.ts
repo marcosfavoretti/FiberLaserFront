@@ -3,12 +3,14 @@ import { IdentifiersPlate } from '../../shared/models/IdentifiersPlate';
 import { PlatesType } from '../../@core/enum/PlatesType.enum';
 import { QRCodeComponent } from 'angularx-qrcode';
 import { CommonModule } from '@angular/common';
+import { PlateInoxComponent } from '../plate-inox/plate-inox.component';
 
 @Component({
   selector: 'plate',
   imports: [
     CommonModule,
-    QRCodeComponent
+    QRCodeComponent,
+    PlateInoxComponent
   ],
   templateUrl: './plate.component.html',
   styleUrl: './plate.component.css'

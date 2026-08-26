@@ -1,0 +1,41 @@
+:host {
+    display: block;
+    max-width: 100%;
+    min-width: 0;
+}
+
+.demo-plate {
+    min-height: 80px;
+}
+
+.plate-inox {
+    background: linear-gradient(135deg, #e0f4ff 0%, #8fd3f4 48%, #d7f0ff 100%);
+    color: #0b3d5c;
+}
+
+.plate-inox-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+    color: #0b4f71;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+}
+
+.plate-inox-badge {
+    padding: 0.1rem 0.3rem;
+    border: 1px solid #0b4f71;
+    border-radius: 0.2rem;
+    background: #d9f1ff;
+}
+
+.title-responsive {
+    max-width: 100%;
+    margin: 0;
+    overflow-wrap: break-word;
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.2;
+}

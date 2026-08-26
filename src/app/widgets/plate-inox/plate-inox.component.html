@@ -1,0 +1,16 @@
+<div class="plate-inox d-flex flex-column p-2 border border-black demo-plate">
+    <div class="plate-inox-header">
+        <span>PLACA INOX</span>
+        <span class="plate-inox-badge">INOX</span>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <div style="height: 50px; width: 50px;">
+            <qrcode [qrdata]="plate.QrCode || 'DEFAULT_QR_CODE'" [errorCorrectionLevel]="'L'" [width]="50"></qrcode>
+        </div>
+        <div class="d-flex flex-column">
+            <span class="title-responsive">{{ plate.CodCliente || 'CLIENTE001' }}</span>
+            <span class="title-responsive">{{ plate.Serial || 'SN000001' }}</span>
+        </div>
+    </div>
+</div>

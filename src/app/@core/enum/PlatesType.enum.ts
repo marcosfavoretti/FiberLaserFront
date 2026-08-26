@@ -1,6 +1,7 @@
 export enum PlatesType {
     // JCB = 'JCB',
     DEFAULT = 'DEFAULT',
+    DEFAULT_PLATE_INOX = 'DefaultPlateInox',
     D600 = 'D600Plate',
     D1000 = 'D1000Plate',
     D800 = 'D800Plate',
