@@ -1,5 +1,6 @@
 export type { ChangePlatesFifoDTO } from "./models/ChangePlatesFifoDTO";
 export type { IdentifierPlateDto } from "./models/IdentifierPlateDto";
+export type { ListPlatesDeliveryResponseDto } from "./models/ListPlatesDeliveryResponseDto";
 export type { ListPlatesFiltersDto } from "./models/ListPlatesFiltersDto";
 export type { ListPlatesResponseDto } from "./models/ListPlatesResponseDto";
 export type { ManipulateScriptDto } from "./models/ManipulateScriptDto";
@@ -11,6 +12,7 @@ export type { NestControllerManipulateScript200, NestControllerManipulateScript5
 export type { NestControllerRemoveCurrentNestMethod200, NestControllerRemoveCurrentNestMethod400, NestControllerRemoveCurrentNestMethod500, NestControllerRemoveCurrentNestMethodMutation, NestControllerRemoveCurrentNestMethodMutationResponse } from "./models/NestControllerRemoveCurrentNestMethod";
 export type { NestControllerRestartScript200, NestControllerRestartScript500, NestControllerRestartScriptMutation, NestControllerRestartScriptMutationResponse } from "./models/NestControllerRestartScript";
 export type { NestScriptresponseDTO } from "./models/NestScriptresponseDTO";
+export type { PaginatedListPlatesDeliveryResponseDtoDto } from "./models/PaginatedListPlatesDeliveryResponseDtoDto";
 export type { PaginatedListPlatesResponseDtoDto } from "./models/PaginatedListPlatesResponseDtoDto";
 export type { PaginatedResponseDto } from "./models/PaginatedResponseDto";
 export type { PartNameDto } from "./models/PartNameDto";
@@ -20,8 +22,12 @@ export type { PlatesControllerDeletePlate200, PlatesControllerDeletePlate400, Pl
 export type { PlatesControllerDeleteSinglePlate200, PlatesControllerDeleteSinglePlate400, PlatesControllerDeleteSinglePlate404, PlatesControllerDeleteSinglePlate500, PlatesControllerDeleteSinglePlateMutation, PlatesControllerDeleteSinglePlateMutationResponse, PlatesControllerDeleteSinglePlatePathParams } from "./models/PlatesControllerDeleteSinglePlate";
 export type { PlatesControllerListPlates200, PlatesControllerListPlatesQuery, PlatesControllerListPlatesQueryParams, PlatesControllerListPlatesQueryResponse } from "./models/PlatesControllerListPlates";
 export type { PlatesControllerReworkPlate200, PlatesControllerReworkPlate400, PlatesControllerReworkPlate404, PlatesControllerReworkPlate500, PlatesControllerReworkPlateMutation, PlatesControllerReworkPlateMutationResponse, PlatesControllerReworkPlatePathParams } from "./models/PlatesControllerReworkPlate";
+export type { PlatesDelivery } from "./models/PlatesDelivery";
+export type { PlatesDeliveryControllerList200, PlatesDeliveryControllerListQuery, PlatesDeliveryControllerListQueryParams, PlatesDeliveryControllerListQueryResponse } from "./models/PlatesDeliveryControllerList";
+export type { PlatesDeliveryControllerRegister201, PlatesDeliveryControllerRegister404, PlatesDeliveryControllerRegister409, PlatesDeliveryControllerRegisterMutation, PlatesDeliveryControllerRegisterMutationRequest, PlatesDeliveryControllerRegisterMutationResponse } from "./models/PlatesDeliveryControllerRegister";
 export type { ProductionControllerRequestOrders200, ProductionControllerRequestOrdersQuery, ProductionControllerRequestOrdersQueryResponse } from "./models/ProductionControllerRequestOrders";
 export type { ProductionDto } from "./models/ProductionDto";
+export type { RegisterPlatesDeliveryDto } from "./models/RegisterPlatesDeliveryDto";
 export type { ResponsePaginatorDTO } from "./models/ResponsePaginatorDTO";
 export type { UserNestResponseDto } from "./models/UserNestResponseDto";
 export { nestControllerAutoRunMethod } from "./client/nestControllerAutoRunMethod";
@@ -36,6 +42,10 @@ export { platesControllerDeletePlate } from "./client/platesControllerDeletePlat
 export { platesControllerDeleteSinglePlate } from "./client/platesControllerDeleteSinglePlate";
 export { platesControllerListPlates } from "./client/platesControllerListPlates";
 export { platesControllerReworkPlate } from "./client/platesControllerReworkPlate";
+export { platesDeliveryControllerList } from "./client/platesDeliveryControllerList";
+export { platesDeliveryControllerRegister } from "./client/platesDeliveryControllerRegister";
 export { productionControllerRequestOrders } from "./client/productionControllerRequestOrders";
+export { ListPlatesDeliveryResponseDtoDeliveryStatusEnum } from "./models/ListPlatesDeliveryResponseDto";
 export { ListPlatesFiltersDtoModeEnum } from "./models/ListPlatesFiltersDto";
 export { PlatesControllerListPlatesQueryParamsModeEnum } from "./models/PlatesControllerListPlates";
+export { PlatesDeliveryControllerListQueryParamsStatusEnum } from "./models/PlatesDeliveryControllerList";

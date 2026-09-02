@@ -1,9 +1,10 @@
-import { Injectable } from '@angular/core';
+import { Injectable, isDevMode } from '@angular/core';
 import { io, Socket } from 'socket.io-client';
 import { Events } from '../../@core/enum/Events.enum';
 import { ProductionManagerService } from './ProductionManager.service';
 import { NestManagerService } from './NestManager.service';
 import { DataScriptService } from './DataScript.service';
+import { environment } from '@/app/@core/const/environment';
 
 @Injectable({
     providedIn: 'root'
@@ -19,8 +20,13 @@ export class WsClientService {
 
     ) {
         const wsProtocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const wsUrl = `${wsProtocol}//${window.location.host}/fiberlaser`;
-        console.log(wsUrl);
+        let wsUrl = `${wsProtocol}//${window.location.host}/fiberlaser`;
+        //se estiive em angular dev mode use o enviorment para pegar o host
+        if (isDevMode()) {
+            wsUrl = `${wsProtocol}//${environment.WS_IP}:${environment.WS_PORT}/fiberlaser`;
+            console.log('DEV MODE ON --> ' + wsUrl);
+        }
+        console.log('DEBUG: wsUrl: ', wsUrl);
         const socket = io(wsUrl, {
             forceNew: true,
             path: '/ws',
@@ -43,7 +49,7 @@ export class WsClientService {
             //nao tirar o nest automatico.. pois ele serve para conferencia.
         });
 
-        socket.on(Events.NEWDATA, (data:string) => {
+        socket.on(Events.NEWDATA, (data: string) => {
             console.log(`novo dado: ${data}`)
             this.dataService.setNewData(JSON.parse(data))
         })

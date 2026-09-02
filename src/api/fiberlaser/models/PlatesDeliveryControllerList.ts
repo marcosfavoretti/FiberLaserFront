@@ -3,14 +3,14 @@
 * Do not edit manually.
 */
 
+import type { PaginatedListPlatesDeliveryResponseDtoDto } from "./PaginatedListPlatesDeliveryResponseDtoDto";
 
-export enum ListPlatesFiltersDtoModeEnum {
-    all = "all",
-    avaiable = "avaiable",
-    notavaiable = "notavaiable"
+export enum PlatesDeliveryControllerListQueryParamsStatusEnum {
+    delivered = "delivered",
+    pending = "pending"
 }
 
-export type ListPlatesFiltersDto = {
+export type PlatesDeliveryControllerListQueryParams = {
     /**
      * @type number | undefined
     */
@@ -45,9 +45,19 @@ export type ListPlatesFiltersDto = {
     */
     productName?: string;
     /**
-     * @description Modo de filtragem por disponibilidade
-     * @default "all"
+     * @description Status da entrega; todas as placas retornadas já estão concluídas.
+     * @default "pending"
      * @type string | undefined
     */
-    mode?: ListPlatesFiltersDtoModeEnum;
+    status?: PlatesDeliveryControllerListQueryParamsStatusEnum;
+};
+
+export type PlatesDeliveryControllerList200 = PaginatedListPlatesDeliveryResponseDtoDto;
+
+export type PlatesDeliveryControllerListQueryResponse = PlatesDeliveryControllerList200;
+
+export type PlatesDeliveryControllerListQuery = {
+    Response: PlatesDeliveryControllerList200;
+    QueryParams: PlatesDeliveryControllerListQueryParams;
+    Errors: any;
 };

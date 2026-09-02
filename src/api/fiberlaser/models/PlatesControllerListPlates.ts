@@ -41,6 +41,11 @@ export type PlatesControllerListPlatesQueryParams = {
     */
     partCode?: string;
     /**
+     * @description Nome do produto
+     * @type string | undefined
+    */
+    productName?: string;
+    /**
      * @description Modo de filtragem por disponibilidade
      * @default "all"
      * @type string | undefined

@@ -37,6 +37,13 @@ export class HomeComponent {
       label: 'refazer',
       icon: 'pi pi-hammer'
     },
+    {
+      routerLink: 'plates-delivery',
+      type: 'button',
+      styleClass: '',
+      label: 'Entrega',
+      icon: 'pi pi-send'
+    },
     // {
     //   command: () => this.resService.request(),
     //   type: 'button',

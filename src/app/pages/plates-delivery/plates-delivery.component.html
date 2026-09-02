@@ -1,0 +1,92 @@
+<div class="delivery-page">
+  <div class="delivery-header">
+    <button class="back-button" routerLink="/home" type="button" title="Voltar">
+      <i class="pi pi-arrow-left"></i>
+    </button>
+    <div>
+      <h1>Entrega de plaquinhas</h1>
+      <p>Selecione as produções e informe o nome do separador.</p>
+    </div>
+  </div>
+
+  <div class="delivery-tabs card" role="tablist" aria-label="Tipo de consulta">
+    <button type="button" role="tab" [attr.aria-selected]="view === 'pending'" [class.active]="view === 'pending'"
+      (click)="setView('pending')">
+      <i class="pi pi-send"></i> Entrega de plaquinhas
+    </button>
+    <button type="button" role="tab" [attr.aria-selected]="view === 'history'" [class.active]="view === 'history'"
+      (click)="setView('history')">
+      <i class="pi pi-history"></i> Histórico de entrega
+    </button>
+  </div>
+
+  <div class="filters card">
+    <input pInputText [(ngModel)]="filters.product" (ngModelChange)="applyFilters()" placeholder="Filtrar por produto / nome" />
+    <input pInputText [(ngModel)]="filters.item" (ngModelChange)="applyFilters()" placeholder="Filtrar por item / código" />
+    <input pInputText [(ngModel)]="filters.serial" (ngModelChange)="applyFilters()" placeholder="Filtrar por serial" />
+    <input pInputText [(ngModel)]="filters.order" (ngModelChange)="applyFilters()" placeholder="Filtrar por ordem" />
+  </div>
+
+  <div class="delivery-actions card">
+    <span>{{ selectedGroups.length }} produção(ões) selecionada(s) · {{ totalRecords }} resultado(s)</span>
+    @if (!showSeparatorForm) {
+      <button pButton type="button" label="Registrar entrega" icon="pi pi-check"
+        [disabled]="selectedGroups.length === 0" (click)="startDelivery()"></button>
+    }
+  </div>
+
+  @if (loading) {
+    <div class="empty-state"><i class="pi pi-spin pi-spinner"></i><span>Carregando {{ view === 'pending' ? 'placas não entregues' : 'histórico de entrega' }}...</span></div>
+  } @else if (productions.length === 0) {
+    <div class="empty-state"><i class="pi pi-inbox"></i><span>{{ view === 'pending' ? 'Nenhuma placa pendente de entrega.' : 'Nenhuma entrega registrada.' }}</span></div>
+  } @else {
+    <div class="production-list">
+      @for (group of productions; track group.productionId) {
+        <section class="production-card card" [class.selected]="group.selected" (click)="selectProduction(group)">
+          <div class="production-heading">
+            @if (view === 'pending') {
+              <p-checkbox [(ngModel)]="group.selected" [binary]="true" (click)="$event.stopPropagation()" [inputId]="'production-' + group.productionId"></p-checkbox>
+            }
+            <label [for]="'production-' + group.productionId">
+              <strong>Produção {{ group.productionId }}</strong>
+              <span>Ordem {{ group.orderNum }} · {{ group.productName }} · {{ group.partCode }}</span>
+              @if (view === 'history') {
+                <span>Enviado em {{ group.deliveredAt ? (group.deliveredAt | date:'dd/MM/yyyy HH:mm') : '—' }} · Retirado por {{ group.separator || '—' }}</span>
+              }
+            </label>
+            <small>{{ group.plates.length }} placa(s)</small>
+          </div>
+          <div class="plate-list">
+            @for (plate of group.plates; track plate.IdentifiersPlatesID) {
+              <div class="plate-row">
+                <plate [plate]="plate"></plate>
+              </div>
+            }
+          </div>
+        </section>
+      }
+    </div>
+    <p-paginator [first]="(currentPage - 1) * pageSize" [rows]="pageSize" [totalRecords]="totalRecords"
+      [rowsPerPageOptions]="[5, 10, 20]" (onPageChange)="onPageChange($event)"></p-paginator>
+  }
+  @if (showSeparatorForm) {
+    <div class="separator-backdrop" (click)="!submitting && cancelDelivery()">
+      <section class="separator-modal card" role="dialog" aria-modal="true" aria-labelledby="separator-title" (click)="$event.stopPropagation()">
+        <div class="separator-modal-header">
+          <div>
+            <h2 id="separator-title">Confirmar entrega</h2>
+            <p>{{ selectedGroups.length }} lote(s) serão registrados para entrega.</p>
+          </div>
+          <button type="button" class="modal-close" [disabled]="submitting" (click)="cancelDelivery()" aria-label="Fechar">×</button>
+        </div>
+        <label for="separator">Nome do separador</label>
+        <input id="separator" pInputText [(ngModel)]="separator" placeholder="Digite o nome do separador" autofocus />
+        <div class="separator-actions">
+          <button pButton type="button" label="Cancelar" severity="secondary" [disabled]="submitting" (click)="cancelDelivery()"></button>
+          <button pButton type="button" label="Confirmar envio" icon="pi pi-check" [loading]="submitting" [disabled]="!separator.trim()" (click)="submit()"></button>
+        </div>
+      </section>
+    </div>
+  }
+  <p-toast></p-toast>
+</div>

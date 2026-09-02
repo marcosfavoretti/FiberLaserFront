@@ -14,14 +14,15 @@
             <span>{{item.label || ''}}</span>
         </button>
         }
+        }
+        }
+
         <!-- Botão Reabrir Câmera (só aparece quando fechado) -->
         @if (!cameraToggleService.cameraVisible()) {
         <button class="navbar-item" (click)="reopenCamera()" title="Reabrir Câmera">
             <i class="pi pi-camera"></i>
             <span>Câmera</span>
         </button>
-        }
-        }
         }
 
         <div class="navbar-items">

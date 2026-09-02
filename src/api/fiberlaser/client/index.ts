@@ -10,4 +10,6 @@ export { platesControllerDeletePlate } from "./platesControllerDeletePlate";
 export { platesControllerDeleteSinglePlate } from "./platesControllerDeleteSinglePlate";
 export { platesControllerListPlates } from "./platesControllerListPlates";
 export { platesControllerReworkPlate } from "./platesControllerReworkPlate";
+export { platesDeliveryControllerList } from "./platesDeliveryControllerList";
+export { platesDeliveryControllerRegister } from "./platesDeliveryControllerRegister";
 export { productionControllerRequestOrders } from "./productionControllerRequestOrders";

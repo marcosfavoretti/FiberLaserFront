@@ -1,0 +1,1 @@
+{"type":"object","properties":{"ProductionID":{"type":"number","description":"ProductionID do plano que está sendo entregue"},"Separator":{"type":"string","description":"Nome ou identificação do separador que retirou as plaquinhas"}},"required":["ProductionID","Separator"],"x-readme-ref-name":"RegisterPlatesDeliveryDto"}

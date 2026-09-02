@@ -1,5 +1,6 @@
 export type { ChangePlatesFifoDTO } from "./ChangePlatesFifoDTO";
 export type { IdentifierPlateDto } from "./IdentifierPlateDto";
+export type { ListPlatesDeliveryResponseDto } from "./ListPlatesDeliveryResponseDto";
 export type { ListPlatesFiltersDto } from "./ListPlatesFiltersDto";
 export type { ListPlatesResponseDto } from "./ListPlatesResponseDto";
 export type { ManipulateScriptDto } from "./ManipulateScriptDto";
@@ -11,6 +12,7 @@ export type { NestControllerManipulateScript200, NestControllerManipulateScript5
 export type { NestControllerRemoveCurrentNestMethod200, NestControllerRemoveCurrentNestMethod400, NestControllerRemoveCurrentNestMethod500, NestControllerRemoveCurrentNestMethodMutation, NestControllerRemoveCurrentNestMethodMutationResponse } from "./NestControllerRemoveCurrentNestMethod";
 export type { NestControllerRestartScript200, NestControllerRestartScript500, NestControllerRestartScriptMutation, NestControllerRestartScriptMutationResponse } from "./NestControllerRestartScript";
 export type { NestScriptresponseDTO } from "./NestScriptresponseDTO";
+export type { PaginatedListPlatesDeliveryResponseDtoDto } from "./PaginatedListPlatesDeliveryResponseDtoDto";
 export type { PaginatedListPlatesResponseDtoDto } from "./PaginatedListPlatesResponseDtoDto";
 export type { PaginatedResponseDto } from "./PaginatedResponseDto";
 export type { PartNameDto } from "./PartNameDto";
@@ -20,9 +22,15 @@ export type { PlatesControllerDeletePlate200, PlatesControllerDeletePlate400, Pl
 export type { PlatesControllerDeleteSinglePlate200, PlatesControllerDeleteSinglePlate400, PlatesControllerDeleteSinglePlate404, PlatesControllerDeleteSinglePlate500, PlatesControllerDeleteSinglePlateMutation, PlatesControllerDeleteSinglePlateMutationResponse, PlatesControllerDeleteSinglePlatePathParams } from "./PlatesControllerDeleteSinglePlate";
 export type { PlatesControllerListPlates200, PlatesControllerListPlatesQuery, PlatesControllerListPlatesQueryParams, PlatesControllerListPlatesQueryResponse } from "./PlatesControllerListPlates";
 export type { PlatesControllerReworkPlate200, PlatesControllerReworkPlate400, PlatesControllerReworkPlate404, PlatesControllerReworkPlate500, PlatesControllerReworkPlateMutation, PlatesControllerReworkPlateMutationResponse, PlatesControllerReworkPlatePathParams } from "./PlatesControllerReworkPlate";
+export type { PlatesDelivery } from "./PlatesDelivery";
+export type { PlatesDeliveryControllerList200, PlatesDeliveryControllerListQuery, PlatesDeliveryControllerListQueryParams, PlatesDeliveryControllerListQueryResponse } from "./PlatesDeliveryControllerList";
+export type { PlatesDeliveryControllerRegister201, PlatesDeliveryControllerRegister404, PlatesDeliveryControllerRegister409, PlatesDeliveryControllerRegisterMutation, PlatesDeliveryControllerRegisterMutationRequest, PlatesDeliveryControllerRegisterMutationResponse } from "./PlatesDeliveryControllerRegister";
 export type { ProductionControllerRequestOrders200, ProductionControllerRequestOrdersQuery, ProductionControllerRequestOrdersQueryResponse } from "./ProductionControllerRequestOrders";
 export type { ProductionDto } from "./ProductionDto";
+export type { RegisterPlatesDeliveryDto } from "./RegisterPlatesDeliveryDto";
 export type { ResponsePaginatorDTO } from "./ResponsePaginatorDTO";
 export type { UserNestResponseDto } from "./UserNestResponseDto";
+export { ListPlatesDeliveryResponseDtoDeliveryStatusEnum } from "./ListPlatesDeliveryResponseDto";
 export { ListPlatesFiltersDtoModeEnum } from "./ListPlatesFiltersDto";
 export { PlatesControllerListPlatesQueryParamsModeEnum } from "./PlatesControllerListPlates";
+export { PlatesDeliveryControllerListQueryParamsStatusEnum } from "./PlatesDeliveryControllerList";

@@ -4,6 +4,7 @@
 # Compiled output
 /dist
 /tmp
+/worktree/
 /out-tsc
 /bazel-out
 
