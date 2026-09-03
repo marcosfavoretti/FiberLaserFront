@@ -18,4 +18,10 @@ import { PlateInoxComponent } from '../plate-inox/plate-inox.component';
 export class PlateComponent{
   public types = PlatesType;
   @Input('plate') plate!: IdentifiersPlate;
+
+  get plateType(): string {
+    return this.plate?.platesType === PlatesType._3DXJCBPlate
+      ? PlatesType._3CXJCBPlate
+      : this.plate?.platesType;
+  }
 }

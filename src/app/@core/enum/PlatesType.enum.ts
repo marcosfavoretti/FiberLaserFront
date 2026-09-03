@@ -9,5 +9,7 @@ export enum PlatesType {
     DYNAPACFOPS = 'DYNAPACFOPS',
     DYNAPACROPS = 'DYNAPACROPS',
     _426JCBPLATE = '_426JCBPLATE',
-    _3CXJCBPlate = '_3CXJCBPlate'
+    _3CXJCBPlate = '_3CXJCBPlate',
+    // Valor enviado atualmente pelo backend; mantém o mesmo layout do 3CX.
+    _3DXJCBPlate = '_3DXJCBPlate'
 }
